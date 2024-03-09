@@ -11,21 +11,17 @@ using Game.Tools;
 using Game.UI.InGame;
 using Game.Prefabs;
 using Colossal.PSI.Common;
+using static ExtraLib.ExtraLib;
 
 namespace ExtraLib.Systems;
 
 public partial class MainSystem : GameSystemBase
 {
 
-	public struct EntityRequester {
-		public OnEditEnity onEditEnity;
-		public EntityQueryDesc entityQueryDesc;
-	}
-
 	public delegate void OnEditEnity(NativeArray<Entity> entities);
 	// private static OnEditEnity onEditEnity;
 
-	static private List<EntityRequester> entityRequesters = [];
+	static internal List<EntityRequester> entityRequesters = [];
 
 	private bool canEditEnties = true;
  
@@ -81,12 +77,10 @@ public partial class MainSystem : GameSystemBase
 
 		ExtraLib.m_NotificationUISystem.RemoveNotification(
 			identifier: notificationInfo.id, 
-			delay: 5f, 
+			delay: 3f, 
+			text: "Complete",
 			progressState: ProgressState.Complete, 
 			progress: 100
 		);
-
 	}
-
-
 }

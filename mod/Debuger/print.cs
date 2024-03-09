@@ -3,14 +3,14 @@ using System.Reflection;
 
 namespace ExtraLib.Debugger;
 
-public static class Print
+internal static class Print
 {
 	public static void Info(object LogMessage) {
 		#if DEBUG
 			MethodBase caller = new StackFrame(1, false).GetMethod();
 			UnityEngine.Debug.Log($"[{caller.DeclaringType} : {caller.Name}] {LogMessage}");
 		#else
-			ExtraLib.Logger.Info(LogMessage);
+			Mod.Logger.Info(LogMessage);
 		#endif
 	}
 
@@ -19,7 +19,7 @@ public static class Print
 			MethodBase caller = new StackFrame(1, false).GetMethod();
 			UnityEngine.Debug.LogWarning($"[{caller.DeclaringType} : {caller.Name}] {LogMessage}");
 		#else
-			ExtraLib.Logger.Warn(LogMessage);
+			Mod.Logger.Warn(LogMessage);
 		#endif
 	}
 
@@ -28,7 +28,7 @@ public static class Print
 			MethodBase caller = new StackFrame(1, false).GetMethod();
 			UnityEngine.Debug.LogError($"[{caller.DeclaringType} : {caller.Name}] {LogMessage}");
 		#else
-			ExtraLib.Logger.Error(LogMessage);
+			Mod.Logger.Error(LogMessage);
 		#endif
 	}	
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ExtraLib.Helper;
 
-class TextureHelper
+public static class TextureHelper
 {
         public static Texture2D ResizeTexture(Texture2D texture, int newSize, string savePath = null)
         {
