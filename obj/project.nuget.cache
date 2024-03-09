@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "XhOMGPzJnbr/2JHk5Em+q2yRJTsk9pePKDd/6R75F0qAX3IipT8FAXHyXGlCFtJdkpY8U+7EICGofy7/B+Fb7w==",
+  "success": true,
+  "projectFilePath": "E:\\__CODE\\ExtraDetailingTools\\ExtraDetailingTools.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Gebruiker\\.nuget\\packages\\lib.harmony\\2.2.2\\lib.harmony.2.2.2.nupkg.sha512",
+    "C:\\Users\\Gebruiker\\.nuget\\packages\\unityengine.modules\\2022.3.7\\unityengine.modules.2022.3.7.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,118 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<TargetFramework>net472</TargetFramework>
+		<Configurations>Debug;Release</Configurations>
+		<langVersion>latest</langVersion>
+    <!--<Nullable>enable</Nullable>-->
+		<AssemblyName>ExtraDetailingTools</AssemblyName>
+		<RootNamespace>ExtraDetailingTools</RootNamespace>
+		
+		<!--The folder where Game.dll is located. Set it only if the game is not installed in the default location, otherwise keep it empty-->
+		<CustomManagedPath>E:\SteamLibrary\steamapps\common\Cities Skylines II\Cities2_Data\Managed</CustomManagedPath>
+		
+		<!--Path to the text file where PDX account data is stored which is required to publish the mod-->
+		<!--Keep it outside of project in order to not commit it or share accidentally-->
+		<!--The file should contain 2 lines:-->
+		<!--Your.PDX@Account.login-->
+		<!--Your-PDX-Account-Pa$$word-->
+		<PDXAccountDataPath>$(USERPROFILE)\Desktop\pdx_account.txt</PDXAccountDataPath>
+		
+		<!--The file where Mod information which is required for publishing Mod on PDX Mod are stored-->
+		<PublishConfigurationPath>Properties\PublishConfiguration.xml</PublishConfigurationPath>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<EmbeddedResource Include="embedded\UI\TransformSection.js"></EmbeddedResource>
+		<EmbeddedResource Include="embedded\UI\UI.js"></EmbeddedResource>
+		<EmbeddedResource Include="embedded\UI\Setup.js"></EmbeddedResource>
+		<EmbeddedResource Include="embedded\UI\SetupSettings.js"></EmbeddedResource>
+		<EmbeddedResource Include="embedded\UI\SetupCustomAssetTopBar.js"></EmbeddedResource>
+		<EmbeddedResource Include="embedded\UI\ShowMarker.js"></EmbeddedResource>
+		<EmbeddedResource Include="embedded\UI\REMOVE_UI.js"></EmbeddedResource>
+		<EmbeddedResource Include="embedded\UI\REMOVE_Settings.js"></EmbeddedResource>
+		<EmbeddedResource Include="embedded\UI\REMOVE_ShowMarker.js"></EmbeddedResource>
+		<EmbeddedResource Include="embedded\UI\REMOVE_CustomAssetTopBar.js"></EmbeddedResource>
+		<EmbeddedResource Include="embedded\Localization\Localization.jsonc"></EmbeddedResource>
+	</ItemGroup>
+
+
+	<!--Imports must be after PropertyGroup block-->
+	<Import Project="$([System.Environment]::GetEnvironmentVariable('CSII_TOOLPATH', 'EnvironmentVariableTarget.User'))\Mod.props" />
+	<Import Project="$([System.Environment]::GetEnvironmentVariable('CSII_TOOLPATH', 'EnvironmentVariableTarget.User'))\Mod.targets" />
+
+
+  <ItemGroup>
+    <Reference Include="$(CustomManagedPath)\Colossal.*.dll" Private="False" />
+    <Reference Include="$(CustomManagedPath)\Game*.dll" Private="False" />
+    <Reference Include="$(CustomManagedPath)\Unity.*.dll" Private="False" />
+    <Reference Include="$(CustomManagedPath)\cohtml.Net.dll" Private="False" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony" Version="2.2.2" />
+    <PackageReference Include="UnityEngine.Modules" Version="2022.3.7" IncludeAssets="compile" />
+  </ItemGroup>
+
+  <!--<ItemGroup> 
+    
+		<Reference Include="Game">
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Colossal.Core">
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Colossal.Logging">
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Colossal.IO.AssetDatabase">
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Colossal.UI">
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Colossal.UI.Binding">
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Colossal.Localization">
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="UnityEngine.CoreELTule">
+			<Private>false</Private>
+		</Reference>
+    <Reference Include="UnityEngine.ImageConversionELTule">
+      <Private>false</Private>
+    </Reference>    
+    <Reference Include="Unity.Burst">
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Unity.Collections">
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Unity.Entities">
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Unity.Mathematics">
+			<Private>false</Private>
+		</Reference>
+	</ItemGroup>-->
+
+	<ItemGroup>
+		<Reference Update="System">
+			<Private>false</Private>
+		</Reference>
+		<Reference Update="System.Core">
+			<Private>false</Private>
+		</Reference>
+		<Reference Update="System.Data">
+			<Private>false</Private>
+		</Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="$(ELTPropsFile)" Link="Properties\ELT.props" />
+		<None Include="$(ELTTargetsFile)" Link="Properties\ELT.targets" />
+	</ItemGroup>
+
+</Project>
