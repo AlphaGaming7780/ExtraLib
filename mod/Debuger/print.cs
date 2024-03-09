@@ -1,9 +1,9 @@
 using System.Diagnostics;
 using System.Reflection;
 
-namespace ExtraLib.Debugger;
+namespace Extra.Lib.Debugger;
 
-internal static class Print
+public static class Print
 {
 	public static void Info(object LogMessage) {
 		#if DEBUG

@@ -1,33 +1,38 @@
-using ExtraLib.Debugger;
+using System;
+using System.Collections.Generic;
+using Colossal.Entities;
+using Extra.Lib.Debugger;
+using Game.Common;
 using Game.Prefabs;
 using Unity.Collections;
+using Unity.Entities;
 using UnityEngine;
 
-namespace ExtraLib.Helper;
+namespace Extra.Lib.Helper;
 
 public static class PrefabsHelper
 {
-	public static UIAssetCategoryPrefab GetExistingToolCategory(PrefabBase prefabBase ,string cat)
+	public static UIAssetCategoryPrefab GetExistingToolCategory(string cat)
 	{
 
 		if (!ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetCategoryPrefab), cat), out var p1)
-			|| p1 is not UIAssetCategoryPrefab terraformingCategory)
+			|| p1 is not UIAssetCategoryPrefab Category)
 		{	
 			Print.Error($"Failed to get the UIAssetCategoryPrefab with this name : {cat}");
 			return null;
 		}
 
-		return terraformingCategory;
+		return Category;
 
 	}
 
-	public static UIAssetCategoryPrefab GetOrCreateNewToolCategory(PrefabBase prefabBase, string menu, string cat, string iconPath, string behindcat = null)
+	public static UIAssetCategoryPrefab GetOrCreateNewToolCategory(string menu, string cat, string iconPath, string behindcat = null)
 	{
 
 		if (ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetCategoryPrefab), cat), out var p1)
-			&& p1 is UIAssetCategoryPrefab surfaceCategory)
+			&& p1 is UIAssetCategoryPrefab newCategory)
 		{
-			return surfaceCategory;
+			return newCategory;
 		}
 
 		UIAssetCategoryPrefab behindCategory = null;
@@ -50,36 +55,36 @@ public static class PrefabsHelper
 			return null;
 		}
 
-		surfaceCategory = ScriptableObject.CreateInstance<UIAssetCategoryPrefab>();
-		surfaceCategory.name = cat;
-		surfaceCategory.m_Menu = landscapingMenu;
-		var surfaceCategoryUI = surfaceCategory.AddComponent<UIObject>();
-		surfaceCategoryUI.m_Icon = iconPath; //?? ExtraLib.GetIcon(surfaceCategory);
-		if(behindCategory != null) surfaceCategoryUI.m_Priority = behindCategory.GetComponent<UIObject>().m_Priority+1;
-		surfaceCategoryUI.active = true;
-		surfaceCategoryUI.m_IsDebugObject = false;
+		newCategory = ScriptableObject.CreateInstance<UIAssetCategoryPrefab>();
+		newCategory.name = cat;
+		newCategory.m_Menu = landscapingMenu;
+		var newCategoryUI = newCategory.AddComponent<UIObject>();
+		newCategoryUI.m_Icon = iconPath; //?? ExtraLib.GetIcon(surfaceCategory);
+		if(behindCategory != null) newCategoryUI.m_Priority = behindCategory.GetComponent<UIObject>().m_Priority+1;
+		newCategoryUI.active = true;
+		newCategoryUI.m_IsDebugObject = false;
 
-		ExtraLib.m_PrefabSystem.AddPrefab(surfaceCategory);
+		ExtraLib.m_PrefabSystem.AddPrefab(newCategory);
 
-		return surfaceCategory;
+		return newCategory;
 	}
 
 	public static void CreateNewUiToolMenu(PrefabBase prefab, string menu, string iconPath, int offset = 1) {
-	if (!ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetMenuPrefab), menu), out var p2) //Landscaping
-		|| p2 is not UIAssetMenuPrefab SurfaceMenu)
+	if (!ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetMenuPrefab), menu), out var p2)
+		|| p2 is not UIAssetMenuPrefab Menu)
 		{
-			SurfaceMenu = ScriptableObject.CreateInstance<UIAssetMenuPrefab>();
-			SurfaceMenu.name = menu;
-			var SurfaceMenuUI = SurfaceMenu.AddComponent<UIObject>();
-			SurfaceMenuUI.m_Icon = iconPath; //ExtraLib.GetIcon(SurfaceMenu);
-			SurfaceMenuUI.m_Priority = prefab.GetComponent<UIObject>().m_Priority + offset;
-			SurfaceMenuUI.active = true;
-			SurfaceMenuUI.m_IsDebugObject = false;
-			SurfaceMenuUI.m_Group = prefab.GetComponent<UIObject>().m_Group;
+			Menu = ScriptableObject.CreateInstance<UIAssetMenuPrefab>();
+			Menu.name = menu;
+			var MenuUI = Menu.AddComponent<UIObject>();
+			MenuUI.m_Icon = iconPath; //ExtraLib.GetIcon(SurfaceMenu);
+			MenuUI.m_Priority = prefab.GetComponent<UIObject>().m_Priority + offset;
+			MenuUI.active = true;
+			MenuUI.m_IsDebugObject = false;
+			MenuUI.m_Group = prefab.GetComponent<UIObject>().m_Group;
 
 			// ELT_UI.validMenuForELTSettings.Add(menu);
 
-			ExtraLib.m_PrefabSystem.AddPrefab(SurfaceMenu);
+			ExtraLib.m_PrefabSystem.AddPrefab(Menu);
 		}
 	}
 }

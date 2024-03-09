@@ -1,23 +1,16 @@
-using System.Reflection;
-using System.IO;
 using Colossal.Logging;
 using Game;
 using Game.Modding;
-using Game.Prefabs;
-using Game.Rendering;
-using Game.Tools;
-using Game.UI.InGame;
-using Unity.Entities;
-using UnityEngine;
 using HarmonyLib;
 using System.Linq;
-using ExtraLib.Systems;
-using Game.UI.Menu;
+using Extra.Lib.Systems;
+using Extra.Lib;
 
-namespace ExtraLib
+namespace Extra
 {
 	public class Mod : IMod
 	{
+		
 		public static ILog Logger = LogManager.GetLogger($"{nameof(ExtraLib)}").SetShowsErrorsInUI(false); //.{nameof(ELT)}
 		// private GameSetting m_Setting;
 

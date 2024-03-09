@@ -1,7 +1,6 @@
 
 using Colossal.Serialization.Entities;
 using Game;
-using ExtraLib.Debugger;
 using Unity.Entities;
 using System.Collections.Generic;
 using Unity.Collections;
@@ -11,9 +10,10 @@ using Game.Tools;
 using Game.UI.InGame;
 using Game.Prefabs;
 using Colossal.PSI.Common;
-using static ExtraLib.ExtraLib;
+using static Extra.Lib.ExtraLib;
+using Extra.Lib.Debugger;
 
-namespace ExtraLib.Systems;
+namespace Extra.Lib.Systems;
 
 public partial class MainSystem : GameSystemBase
 {

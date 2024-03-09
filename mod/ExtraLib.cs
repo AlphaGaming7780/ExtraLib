@@ -9,9 +9,9 @@ using Game.Tools;
 using Game.UI.InGame;
 using Unity.Entities;
 using Game.UI.Menu;
-using static ExtraLib.Systems.MainSystem;
+using static Extra.Lib.Systems.MainSystem;
 
-namespace ExtraLib
+namespace Extra.Lib
 {
 	public class ExtraLib
 	{
