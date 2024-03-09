@@ -342,11 +342,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\__CODE\\ExtraDetailingTools\\ExtraDetailingTools.csproj",
-      "projectName": "ExtraDetailingTools",
-      "projectPath": "E:\\__CODE\\ExtraDetailingTools\\ExtraDetailingTools.csproj",
+      "projectUniqueName": "E:\\__CODE\\ExtraLib\\ExtraLib.csproj",
+      "projectName": "ExtraLib",
+      "projectPath": "E:\\__CODE\\ExtraLib\\ExtraLib.csproj",
       "packagesPath": "C:\\Users\\Gebruiker\\.nuget\\packages\\",
-      "outputPath": "E:\\__CODE\\ExtraDetailingTools\\obj\\",
+      "outputPath": "E:\\__CODE\\ExtraLib\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Gebruiker\\AppData\\Roaming\\NuGet\\NuGet.Config",

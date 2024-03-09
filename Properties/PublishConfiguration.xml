@@ -1,11 +1,11 @@
 ﻿<Publish>
-	<!--Id must be set in order to update existed ELT. it is not required for publishing ELT for the first time-->
-	<ELTId Value="" />
-	<!--Name of the ELT to display to players-->
-	<DisplayName Value="ExtraDetailingTools" />
-	<!--Short description of the ELT-->
+	<!--Id must be set in order to update existed Mod. it is not required for publishing Mod for the first time-->
+	<ModId Value="" />
+	<!--Name of the Mod to display to players-->
+	<DisplayName Value="ExtraLib" />
+	<!--Short description of the Mod-->
 	<ShortDescription Value="This is a short description" />
-	<!--Long description of the ELT. Single line or multi line. Supports minimal markdown subset-->
+	<!--Long description of the Mod. Single line or multi line. Supports minimal markdown subset-->
 	<!--LongDescription Value="This is a long description" /-->
 	<LongDescription>
 This is a long description
@@ -16,13 +16,13 @@ This is a long description
 	<Screenshot Value="" />
 	<!--Tag, can be set multiple times-->
 	<Tag Value="" />
-	<!--Link to the forum post where the ELT can be discussed-->
+	<!--Link to the forum post where the Mod can be discussed-->
 	<ForumLink Value="" />
-	<!--Version of the ELT-->
-	<ELTVersion Value="1.0" />
-	<!--Recommended version of the base game to use the ELT-->
+	<!--Version of the Mod-->
+	<ModVersion Value="1.0" />
+	<!--Recommended version of the base game to use the Mod-->
 	<GameVersion Value="1.0.*" />
-	<!--Dependency for the ELT, can be set multiple times-->
+	<!--Dependency for the Mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<ChangeLog Value="" />
