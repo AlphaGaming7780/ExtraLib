@@ -1,8 +1,3 @@
-dist/
-bin/
-obj/
-ts-build/
-.vs/
-text.txt
+/bin
 /Library
-*.pid
+/obj

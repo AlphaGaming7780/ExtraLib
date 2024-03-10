@@ -73,11 +73,18 @@ public partial class MainSystem : GameSystemBase
 		yield return null;
 
 		foreach(EntityRequester entityRequester in entityRequesters) {
+			
+			notificationInfo.progressState = ProgressState.Progressing;
+			notificationInfo.progress = curentIndex/entityRequesters.Count*100;
+			notificationInfo.text = entityRequester.onEditEnities.Method.DeclaringType.ToString();			
+			yield return null;
+			
 			EntityQuery entityQuery = GetEntityQuery(entityRequester.entityQueryDesc);
 			try{
 				entityRequester.onEditEnities.Invoke(entityQuery.ToEntityArray(AllocatorManager.Temp));
 			} catch (Exception e) {Print.Error(e);}
 			curentIndex++;
+
 			notificationInfo.progressState = ProgressState.Progressing;
 			notificationInfo.progress = curentIndex/entityRequesters.Count*100;
 			notificationInfo.text = entityRequester.onEditEnities.Method.DeclaringType.ToString();			
@@ -86,7 +93,7 @@ public partial class MainSystem : GameSystemBase
 
 		m_NotificationUISystem.RemoveNotification(
 			identifier: notificationInfo.id, 
-			delay: 3f, 
+			delay: 5f, 
 			text: "Complete",
 			progressState: ProgressState.Complete, 
 			progress: 100
