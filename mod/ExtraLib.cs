@@ -16,8 +16,8 @@ namespace Extra.Lib
 	public class ExtraLib
 	{
 
-		public struct EntityRequester(OnEditEnity onEditEnity, EntityQueryDesc entityQueryDesc) {
-			public OnEditEnity onEditEnity = onEditEnity;
+		public struct EntityRequester(OnEditEnities onEditEnities, EntityQueryDesc entityQueryDesc) {
+			public OnEditEnities onEditEnities = onEditEnities;
 			public EntityQueryDesc entityQueryDesc = entityQueryDesc;
 		}
 
@@ -36,11 +36,11 @@ namespace Extra.Lib
 			return Assembly.GetExecutingAssembly().GetManifestResourceStream("ExtraDetailingTools.embedded." + embeddedPath);
 		}
 
-		public static void AddOnEditEnity(OnEditEnity onEditEnity, EntityQueryDesc entityQueryDesc) {
-			AddOnEditEnity(new(onEditEnity, entityQueryDesc));
+		public static void AddOnEditEnities(OnEditEnities onEditEnities, EntityQueryDesc entityQueryDesc) {
+			AddOnEditEnities(new(onEditEnities, entityQueryDesc));
 		}
 
-		public static void AddOnEditEnity(EntityRequester entityRequester) {
+		public static void AddOnEditEnities(EntityRequester entityRequester) {
 			entityRequesters.Add(entityRequester);
 		}
 

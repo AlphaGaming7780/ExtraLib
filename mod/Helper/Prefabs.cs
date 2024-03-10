@@ -12,7 +12,7 @@ namespace Extra.Lib.Helper;
 
 public static class PrefabsHelper
 {
-	public static UIAssetCategoryPrefab GetExistingToolCategory(string cat)
+	public static UIAssetCategoryPrefab GetUIAssetCategoryPrefab(string cat)
 	{
 
 		if (!ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetCategoryPrefab), cat), out var p1)
@@ -26,7 +26,7 @@ public static class PrefabsHelper
 
 	}
 
-	public static UIAssetCategoryPrefab GetOrCreateNewToolCategory(string menu, string cat, string iconPath, string behindcat = null)
+	public static UIAssetCategoryPrefab GetOrCreateUIAssetCategoryPrefab(string menu, string cat, string iconPath, string behindcat = null)
 	{
 
 		if (ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetCategoryPrefab), cat), out var p1)
@@ -69,7 +69,7 @@ public static class PrefabsHelper
 		return newCategory;
 	}
 
-	public static void CreateNewUiToolMenu(PrefabBase prefab, string menu, string iconPath, int offset = 1) {
+	public static void CreateNewUIAssetMenuPrefab(PrefabBase prefab, string menu, string iconPath, int offset = 1) {
 	if (!ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetMenuPrefab), menu), out var p2)
 		|| p2 is not UIAssetMenuPrefab Menu)
 		{

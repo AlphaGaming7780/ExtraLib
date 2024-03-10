@@ -12,13 +12,17 @@ using Game.Prefabs;
 using Colossal.PSI.Common;
 using static Extra.Lib.ExtraLib;
 using Extra.Lib.Debugger;
+using System;
+using System.Threading;
+using System.Collections;
+using UnityEngine;
 
 namespace Extra.Lib.Systems;
 
 public partial class MainSystem : GameSystemBase
 {
 
-	public delegate void OnEditEnity(NativeArray<Entity> entities);
+	public delegate void OnEditEnities(NativeArray<Entity> entities);
 	// private static OnEditEnity onEditEnity;
 
 	static internal List<EntityRequester> entityRequesters = [];
@@ -50,32 +54,37 @@ public partial class MainSystem : GameSystemBase
 		base.OnGameLoadingComplete(purpose, mode);
 		Print.Info($"OnGameLoadingComplete {purpose} | {mode}");
 
-		if(mode == GameMode.MainMenu && canEditEnties) EditEntities();
+		if(mode == GameMode.MainMenu && canEditEnties) ExtraLibUI.extraLibMonoScript.FStartCoroutine(EditEntities());
 
 	}
 
-	private void EditEntities () {
+	private IEnumerator EditEntities () {
 
 		canEditEnties = false;
 		int curentIndex = 0;
 
-		var notificationInfo = ExtraLib.m_NotificationUISystem.AddOrUpdateNotification(
+		var notificationInfo = m_NotificationUISystem.AddOrUpdateNotification(
 			$"{nameof(ExtraLib)}.{nameof(MainSystem)}.{nameof(EditEntities)}", 
 			title: "ExtraLib, Editing Entities",
 			progressState: ProgressState.Indeterminate, 
 			progress: 0
 		);
 
+		yield return null;
+
 		foreach(EntityRequester entityRequester in entityRequesters) {
+			EntityQuery entityQuery = GetEntityQuery(entityRequester.entityQueryDesc);
+			try{
+				entityRequester.onEditEnities.Invoke(entityQuery.ToEntityArray(AllocatorManager.Temp));
+			} catch (Exception e) {Print.Error(e);}
+			curentIndex++;
 			notificationInfo.progressState = ProgressState.Progressing;
 			notificationInfo.progress = curentIndex/entityRequesters.Count*100;
-			notificationInfo.text = entityRequester.onEditEnity.Method.DeclaringType.ToString();
-			EntityQuery entityQuery = GetEntityQuery(entityRequester.entityQueryDesc);
-			entityRequester.onEditEnity.Invoke(entityQuery.ToEntityArray(AllocatorManager.Temp));
-			curentIndex++;
+			notificationInfo.text = entityRequester.onEditEnities.Method.DeclaringType.ToString();			
+			yield return null;
 		}
 
-		ExtraLib.m_NotificationUISystem.RemoveNotification(
+		m_NotificationUISystem.RemoveNotification(
 			identifier: notificationInfo.id, 
 			delay: 3f, 
 			text: "Complete",

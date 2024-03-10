@@ -5,6 +5,7 @@ using HarmonyLib;
 using System.Linq;
 using Extra.Lib.Systems;
 using Extra.Lib;
+using Extra.Lib.Debugger;
 
 namespace Extra
 {
@@ -30,14 +31,15 @@ namespace Extra
 			// AssetDatabase.global.LoadSettings(nameof(ExtraDetailingTools), m_Setting, new GameSetting(this));
 
 			updateSystem.UpdateAt<MainSystem>(SystemUpdatePhase.LateUpdate);
+			updateSystem.UpdateAt<ExtraLibUI>(SystemUpdatePhase.UIUpdate);
 
 			harmony = new($"{nameof(ExtraLib)}.{nameof(ExtraLib)}");
 			harmony.PatchAll(typeof(ExtraLib).Assembly);
 			var patchedMethods = harmony.GetPatchedMethods().ToArray();
-			Logger.Info($"Plugin ExtraDetailingTools made patches! Patched methods: " + patchedMethods.Length);
+			Print.Info($"Plugin ExtraDetailingTools made patches! Patched methods: " + patchedMethods.Length);
 			foreach (var patchedMethod in patchedMethods)
 			{
-				Logger.Info($"Patched method: {patchedMethod.Module.Name}:{patchedMethod.Name}");
+				Print.Info($"Patched method: {patchedMethod.Module.Name}:{patchedMethod.Name}");
 			}
 		}
 
