@@ -33,12 +33,12 @@ public partial class MainSystem : GameSystemBase
 	{
 		base.OnCreate();
 		Enabled = false;
-		ExtraLib.m_PrefabSystem = base.World.GetOrCreateSystemManaged<PrefabSystem>();
-		ExtraLib.m_RenderingSystem = base.World.GetOrCreateSystemManaged<RenderingSystem>();
-		ExtraLib.m_ToolSystem = base.World.GetOrCreateSystemManaged<ToolSystem>();
-		ExtraLib.m_ToolbarUISystem = base.World.GetOrCreateSystemManaged<ToolbarUISystem>();
-		ExtraLib.m_NotificationUISystem = base.World.GetOrCreateSystemManaged<NotificationUISystem>();
-		ExtraLib.m_EntityManager = EntityManager;
+		m_PrefabSystem = base.World.GetOrCreateSystemManaged<PrefabSystem>();
+		m_RenderingSystem = base.World.GetOrCreateSystemManaged<RenderingSystem>();
+		m_ToolSystem = base.World.GetOrCreateSystemManaged<ToolSystem>();
+		m_ToolbarUISystem = base.World.GetOrCreateSystemManaged<ToolbarUISystem>();
+		m_NotificationUISystem = base.World.GetOrCreateSystemManaged<NotificationUISystem>();
+		m_EntityManager = EntityManager;
 	}
 
 	protected override void OnUpdate() {}
@@ -46,13 +46,13 @@ public partial class MainSystem : GameSystemBase
 	protected override void OnGamePreload(Purpose purpose, GameMode mode)
 	{
 		base.OnGamePreload(purpose, mode);
-		Print.Info($"OnGamePreload {purpose} | {mode}");
+		// Print.Info($"OnGamePreload {purpose} | {mode}");
 	}
 
 	protected override void OnGameLoadingComplete(Purpose purpose, GameMode mode)
 	{
 		base.OnGameLoadingComplete(purpose, mode);
-		Print.Info($"OnGameLoadingComplete {purpose} | {mode}");
+		// Print.Info($"OnGameLoadingComplete {purpose} | {mode}");
 
 		if(mode == GameMode.MainMenu && canEditEnties) ExtraLibUI.extraLibMonoScript.FStartCoroutine(EditEntities());
 
