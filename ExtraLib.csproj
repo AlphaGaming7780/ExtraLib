@@ -3,16 +3,15 @@
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 		<TargetFramework>net472</TargetFramework>
-		<Configurations>Debug</Configurations> <!--;Release-->
+		<Configurations>Debug;Release</Configurations> <!---->
 		<langVersion>latest</langVersion>
-    <!--<Nullable>enable</Nullable>-->
-		<AssemblyName>ExtraLib</AssemblyName>
-		<RootNamespace>ExtraLib</RootNamespace>
 
 		<!--The folder where Game.dll is located. Set it only if the game is not installed in the default location, otherwise keep it empty-->
 		<CustomManagedPath>E:\SteamLibrary\steamapps\common\Cities Skylines II\Cities2_Data\Managed</CustomManagedPath>
 		<CustomManagedPath>C:\Program Files (x86)\Steam\steamapps\common\Cities Skylines II\Cities2_Data\Managed</CustomManagedPath>
 		
+		<AdditionalFilesDirectory>Resources</AdditionalFilesDirectory>
+
 		<!--Path to the text file where PDX account data is stored which is required to publish the mod-->
 		<!--Keep it outside of project in order to not commit it or share accidentally-->
 		<!--The file should contain 2 lines:-->
@@ -56,49 +55,6 @@
     <PackageReference Include="UnityEngine.Modules" Version="2022.3.7" IncludeAssets="compile" />
   </ItemGroup>
 
-  <!--<ItemGroup> 
-    
-		<Reference Include="Game">
-			<Private>false</Private>
-		</Reference>
-		<Reference Include="Colossal.Core">
-			<Private>false</Private>
-		</Reference>
-		<Reference Include="Colossal.Logging">
-			<Private>false</Private>
-		</Reference>
-		<Reference Include="Colossal.IO.AssetDatabase">
-			<Private>false</Private>
-		</Reference>
-		<Reference Include="Colossal.UI">
-			<Private>false</Private>
-		</Reference>
-		<Reference Include="Colossal.UI.Binding">
-			<Private>false</Private>
-		</Reference>
-		<Reference Include="Colossal.Localization">
-			<Private>false</Private>
-		</Reference>
-		<Reference Include="UnityEngine.CoreELTule">
-			<Private>false</Private>
-		</Reference>
-    <Reference Include="UnityEngine.ImageConversionELTule">
-      <Private>false</Private>
-    </Reference>    
-    <Reference Include="Unity.Burst">
-			<Private>false</Private>
-		</Reference>
-		<Reference Include="Unity.Collections">
-			<Private>false</Private>
-		</Reference>
-		<Reference Include="Unity.Entities">
-			<Private>false</Private>
-		</Reference>
-		<Reference Include="Unity.Mathematics">
-			<Private>false</Private>
-		</Reference>
-	</ItemGroup>-->
-
 	<ItemGroup>
 		<Reference Update="System">
 			<Private>false</Private>
@@ -115,5 +71,12 @@
 		<None Include="$(ELTPropsFile)" Link="Properties\ELT.props" />
 		<None Include="$(ELTTargetsFile)" Link="Properties\ELT.targets" />
 	</ItemGroup>
+
+	<Target Name="GetAdditionalFiles" AfterTargets="DeployWIP">
+		<ItemGroup>
+		  	<AdditionalFilesToDeploy Include="$(AdditionalFilesDirectory)\**\*.*" />
+		</ItemGroup>
+		<Copy SourceFiles="@(AdditionalFilesToDeploy)" DestinationFiles="@(AdditionalFilesToDeploy->'$(DeployDir)\%(AdditionalFilesDirectory)\%(RecursiveDir)%(Filename)%(Extension)')" />
+	</Target>
 
 </Project>

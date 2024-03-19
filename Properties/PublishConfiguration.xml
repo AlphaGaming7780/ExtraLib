@@ -4,30 +4,31 @@
 	<!--Name of the Mod to display to players-->
 	<DisplayName Value="ExtraLib" />
 	<!--Short description of the Mod-->
-	<ShortDescription Value="This is a short description" />
+	<ShortDescription Value="Do not download this. This mod do nothing." />
 	<!--Long description of the Mod. Single line or multi line. Supports minimal markdown subset-->
 	<!--LongDescription Value="This is a long description" /-->
 	<LongDescription>
-This is a long description
+		That's a test, to see if the icon fit and also to see how to publish a mod on PDX mods.
+		This mod is actually useful, not on its own, but for my next mods.
 	</LongDescription>
 	<!--Thumbnail-->
-	<Thumbnail Value="Properties/Thumbnail.png" />
+	<Thumbnail Value="Properties/ExtraLib_Thumbnail.png" />
 	<!--Screenshot, can be set multiple times-->
 	<Screenshot Value="" />
 	<!--Tag, can be set multiple times-->
-	<Tag Value="" />
+	<Tag Value="Code Mod" />
 	<!--Link to the forum post where the Mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the Mod-->
-	<ModVersion Value="1.0" />
+	<ModVersion Value="0.1.0" />
 	<!--Recommended version of the base game to use the Mod-->
 	<GameVersion Value="1.0.*" />
 	<!--Dependency for the Mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
-	<ChangeLog Value="" />
+	<ChangeLog Value="TEST" />
 	<!--ChangeLog>
 	</ChangeLog-->
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
-	<ExternalLink Type="" Url="" />
+	<ExternalLink Type="github" Url="https://github.com/AlphaGaming7780/ExtraLib" />
 </Publish>
