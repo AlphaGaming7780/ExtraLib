@@ -10,11 +10,22 @@ using Game.UI.InGame;
 using Unity.Entities;
 using Game.UI.Menu;
 using static Extra.Lib.Systems.MainSystem;
+using Unity.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Extra.Lib
 {
 	public class ExtraLib
 	{
+		internal static readonly GameObject ExtraLibMonoObject = new();
+		public static ExtraLibMonoScript extraLibMonoScript;
+
+		public delegate void OnEditEnities(NativeArray<Entity> entities);
+		public delegate void OnMainMenu();
+		internal static OnMainMenu onMainMenu;
+
+		static internal List<EntityRequester> entityRequesters = [];
 
 		public struct EntityRequester(OnEditEnities onEditEnities, EntityQueryDesc entityQueryDesc) {
 			public OnEditEnities onEditEnities = onEditEnities;
@@ -42,6 +53,10 @@ namespace Extra.Lib
 
 		public static void AddOnEditEnities(EntityRequester entityRequester) {
 			entityRequesters.Add(entityRequester);
+		}
+
+		public static void AddOnMainMenu(OnMainMenu OnMainMenu) {
+			onMainMenu += OnMainMenu;
 		}
 
 	}

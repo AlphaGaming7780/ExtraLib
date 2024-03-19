@@ -11,13 +11,9 @@ namespace Extra.Lib
 	public partial class ExtraLibUI : UISystemBase
 	{	
 
-		private static readonly GameObject ExtraLibMonoObject = new();
-		internal static ExtraLibMonoScript extraLibMonoScript;
-
 		protected override void OnCreate() {
 
 			base.OnCreate();
-			extraLibMonoScript = ExtraLibMonoObject.AddComponent<ExtraLibMonoScript>();
             
 		}
 
@@ -26,30 +22,8 @@ namespace Extra.Lib
 		}
 
         public static void RunUIScript(string JS) {
-            extraLibMonoScript.ChangeUiNextFrame(JS);
+            ExtraLib.extraLibMonoScript.ChangeUiNextFrame(JS);
         }
 
-	}
-
-	internal class ExtraLibMonoScript : MonoBehaviour
-	{
-        void Awake()
-        {
-            DontDestroyOnLoad(transform.gameObject);
-        }
-
-		internal void ChangeUiNextFrame(string js) {
-			StartCoroutine(ChangeUI(js));
-		}
-
-        internal void FStartCoroutine(IEnumerator routine) {
-            StartCoroutine(routine);
-        }
-
-		private IEnumerator ChangeUI(string js) {
-			yield return new WaitForEndOfFrame();
-			GameManager.instance.userInterface.view.View.ExecuteScript(js);
-			yield return null;
-		}
 	}
 }

@@ -21,12 +21,6 @@ namespace Extra.Lib.Systems;
 
 public partial class MainSystem : GameSystemBase
 {
-
-	public delegate void OnEditEnities(NativeArray<Entity> entities);
-	// private static OnEditEnity onEditEnity;
-
-	static internal List<EntityRequester> entityRequesters = [];
-
 	private bool canEditEnties = true;
  
 	protected override void OnCreate()
@@ -54,8 +48,11 @@ public partial class MainSystem : GameSystemBase
 		base.OnGameLoadingComplete(purpose, mode);
 		// Print.Info($"OnGameLoadingComplete {purpose} | {mode}");
 
-		if(mode == GameMode.MainMenu && canEditEnties) ExtraLibUI.extraLibMonoScript.FStartCoroutine(EditEntities());
-
+		if(mode == GameMode.MainMenu) {
+			if(canEditEnties) extraLibMonoScript.StartCoroutine(EditEntities());
+			onMainMenu.Invoke();
+		}
+		
 	}
 
 	private IEnumerator EditEntities () {

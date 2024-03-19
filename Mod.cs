@@ -30,6 +30,8 @@ namespace Extra
 
 			// AssetDatabase.global.LoadSettings(nameof(ExtraDetailingTools), m_Setting, new GameSetting(this));
 
+			ExtraLib.extraLibMonoScript = ExtraLib.ExtraLibMonoObject.AddComponent<ExtraLibMonoScript>();
+
 			updateSystem.UpdateAt<MainSystem>(SystemUpdatePhase.LateUpdate);
 			updateSystem.UpdateAt<ExtraLibUI>(SystemUpdatePhase.UIUpdate);
 
