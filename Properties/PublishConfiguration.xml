@@ -1,15 +1,16 @@
 ﻿<Publish>
 	<!--Id must be set in order to update existed Mod. it is not required for publishing Mod for the first time-->
-	<ModId Value="" />
+	<ModId Value="75724" />
 	<!--Name of the Mod to display to players-->
 	<DisplayName Value="ExtraLib" />
 	<!--Short description of the Mod-->
-	<ShortDescription Value="Do not download this. This mod do nothing." />
+	<ShortDescription Value="Extra Lib is a necessary dependency module needed to operate all EXTRA modifications." />
 	<!--Long description of the Mod. Single line or multi line. Supports minimal markdown subset-->
 	<!--LongDescription Value="This is a long description" /-->
 	<LongDescription>
-		That's a test, to see if the icon fit and also to see how to publish a mod on PDX mods.
-		This mod is actually useful, not on its own, but for my next mods.
+Extra Lib is a crucial dependency mod that is indispensable for the operation of any tools within the EXTRA mod suite. It ensures seamless integration and enhanced functionality across the entire mod collection.
+
+Special thanks to YenYan and T.D.W for their invaluable tips and assistance with coding, as well as to CityRat for their exceptional contributions to thumbnails and all related graphic design work.
 	</LongDescription>
 	<!--Thumbnail-->
 	<Thumbnail Value="Properties/ExtraLib_Thumbnail.png" />
