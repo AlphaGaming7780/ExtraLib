@@ -5,7 +5,7 @@ using Game.SceneFlow;
 using Game.UI;
 using UnityEngine;
 
-namespace Extra.Lib
+namespace Extra.Lib.UI
 {
 	
 	public partial class ExtraLibUI : UISystemBase

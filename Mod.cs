@@ -6,6 +6,10 @@ using System.Linq;
 using Extra.Lib.Systems;
 using Extra.Lib;
 using Extra.Lib.Debugger;
+using Extra.Lib.UI;
+using Game.SceneFlow;
+using System.Drawing;
+using System.IO;
 
 namespace Extra
 {
@@ -21,8 +25,11 @@ namespace Extra
 		{
 			Logger.Info(nameof(OnLoad));
 
-			// if (GameManager.instance.modManager.TryGetExecutableAsset(this, out var asset))
-			//    Logger.Info($"Current ELT asset at {asset.path}");
+			if (!GameManager.instance.modManager.TryGetExecutableAsset(this, out var asset)) return;
+
+			Logger.Info($"Current ExtraLib asset at {asset.path}");
+
+			Icons.LoadIconsFolder(Icons.IconsResourceKey, new FileInfo(asset.path).Directory.FullName);
 
 			// m_Setting = new GameSetting(this);
 			// m_Setting.RegisterInOptionsUI();
@@ -49,6 +56,7 @@ namespace Extra
 		{
 			Logger.Info(nameof(OnDispose));
 			harmony.UnpatchAll($"{nameof(ExtraLib)}.{nameof(ExtraLib)}");
+			Icons.UnLoadAllIconsFolder();
 			//if (m_Setting != null)
 			//{
 			//    m_Setting.UnregisterInOptionsUI();

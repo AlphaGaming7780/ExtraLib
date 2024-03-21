@@ -16,6 +16,7 @@ using System;
 using System.Threading;
 using System.Collections;
 using UnityEngine;
+using Extra.Lib.UI;
 
 namespace Extra.Lib.Systems;
 
@@ -64,7 +65,8 @@ public partial class MainSystem : GameSystemBase
 			$"{nameof(ExtraLib)}.{nameof(MainSystem)}.{nameof(EditEntities)}", 
 			title: "ExtraLib, Editing Entities",
 			progressState: ProgressState.Indeterminate, 
-			progress: 0
+			progress: 0,
+			thumbnail: $"{Icons.COUIBaseLocation}/Icon.svg"
 		);
 
 		yield return null;

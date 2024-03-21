@@ -3,6 +3,8 @@ import { ModuleRegistry } from "cs2/modding";
 import { FocusKey } from "cs2/ui";
 import { HTMLAttributes, ReactNode } from "react";
 
+export const version : string = "1.1.0" 
+
 // These are specific to the types of components that this mod uses.
 // In the UI developer tools at http://localhost:9444/ go to Sources -> Index.js. Pretty print if it is formatted in a single line.
 // Search for the tsx or scss files. Look at the function referenced and then find the properies for the component you're interested in.
