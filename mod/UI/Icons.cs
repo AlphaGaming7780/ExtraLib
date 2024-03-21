@@ -47,6 +47,4 @@ public static class Icons
 			UIManager.defaultUISystem.RemoveHostLocation(key);
 		}
 	}
-
-
 }
