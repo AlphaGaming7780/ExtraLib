@@ -17,8 +17,8 @@ public static class PrefabsHelper
 
 		if (!ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetCategoryPrefab), cat), out var p1)
 			|| p1 is not UIAssetCategoryPrefab Category)
-		{	
-			Print.Error($"Failed to get the UIAssetCategoryPrefab with this name : {cat}");
+		{
+            Mod.Logger.Error($"Failed to get the UIAssetCategoryPrefab with this name : {cat}");
 			return null;
 		}
 
@@ -41,7 +41,7 @@ public static class PrefabsHelper
 			if (!ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetCategoryPrefab), behindcat), out var p3)
 				|| p3 is not UIAssetCategoryPrefab behindCategory2)
 			{
-				Print.Error($"Failed to get the UIAssetCategoryPrefab with this name : {behindcat}");
+				Mod.Logger.Error($"Failed to get the UIAssetCategoryPrefab with this name : {behindcat}");
 				return null;
 			} else {
 				behindCategory = behindCategory2;
@@ -50,8 +50,8 @@ public static class PrefabsHelper
 
 		if (!ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetMenuPrefab), menu), out var p2)
 			|| p2 is not UIAssetMenuPrefab landscapingMenu)
-		{	
-			Print.Error($"Failed to get the UIAssetMenuPrefab with this name : {menu}");
+		{
+            Mod.Logger.Error($"Failed to get the UIAssetMenuPrefab with this name : {menu}");
 			return null;
 		}
 

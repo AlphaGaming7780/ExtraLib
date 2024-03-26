@@ -16,7 +16,8 @@ namespace Extra
 	public class Mod : IMod
 	{
 		
-		public static ILog Logger = LogManager.GetLogger($"{nameof(ExtraLib)}").SetShowsErrorsInUI(false); //.{nameof(ELT)}
+		public static ILog log = LogManager.GetLogger($"{nameof(ExtraLib)}").SetShowsErrorsInUI(false); //.{nameof(ELT)}
+		internal static Logger Logger = new(log);
 		// private GameSetting m_Setting;
 
 		private Harmony harmony;
@@ -45,10 +46,10 @@ namespace Extra
 			harmony = new($"{nameof(ExtraLib)}.{nameof(ExtraLib)}");
 			harmony.PatchAll(typeof(ExtraLib).Assembly);
 			var patchedMethods = harmony.GetPatchedMethods().ToArray();
-			Print.Info($"Plugin ExtraDetailingTools made patches! Patched methods: " + patchedMethods.Length);
+			Logger.Info($"Plugin ExtraDetailingTools made patches! Patched methods: " + patchedMethods.Length);
 			foreach (var patchedMethod in patchedMethods)
 			{
-				Print.Info($"Patched method: {patchedMethod.Module.Name}:{patchedMethod.Name}");
+				Logger.Info($"Patched method: {patchedMethod.Module.Name}:{patchedMethod.Name}");
 			}
 		}
 

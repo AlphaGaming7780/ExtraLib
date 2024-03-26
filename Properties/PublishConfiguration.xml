@@ -11,25 +11,28 @@
 Extra Lib is a crucial dependency mod that is indispensable for the operation of any tools within the EXTRA mod suite. It ensures seamless integration and enhanced functionality across the entire mod collection.
 
 Special thanks to YenYan and T.D.W for their invaluable tips and assistance with coding, as well as to CityRat for their exceptional contributions to thumbnails and all related graphic design work.
-	</LongDescription>
+  </LongDescription>
 	<!--Thumbnail-->
 	<Thumbnail Value="Properties/ExtraLib_Thumbnail.png" />
 	<!--Screenshot, can be set multiple times-->
-	<Screenshot Value="" />
+	<Screenshot Value="Properties/ExtraLib_Thumbnail.png" />
 	<!--Tag, can be set multiple times-->
 	<Tag Value="Code Mod" />
 	<!--Link to the forum post where the Mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the Mod-->
-	<ModVersion Value="0.1.0" />
+	<ModVersion Value="1.1.0" />
 	<!--Recommended version of the base game to use the Mod-->
-	<GameVersion Value="1.0.*" />
+	<GameVersion Value="1.1.*" />
 	<!--Dependency for the Mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
-	<ChangeLog Value="TEST" />
-	<!--ChangeLog>
-	</ChangeLog-->
+	<!--<ChangeLog Value="TEST" />-->
+  <ChangeLog>
+# 1.1.0
+* Update the Logger.
+* Update the game-ui folder.
+  </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="github" Url="https://github.com/AlphaGaming7780/ExtraLib" />
 </Publish>

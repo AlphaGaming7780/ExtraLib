@@ -40,7 +40,9 @@ namespace Extra.Lib
 		public static ToolbarUISystem m_ToolbarUISystem;
 		public static NotificationUISystem m_NotificationUISystem;
 		public static ILog Logger = LogManager.GetLogger($"{nameof(ExtraLib)}").SetShowsErrorsInUI(false); //.{nameof(ELT)}
-		// private GameSetting m_Setting;
+																										   // private GameSetting m_Setting;
+
+		public static bool debugMod = false;
 
 		internal static Stream GetEmbedded(string embeddedPath)
 		{
@@ -58,6 +60,5 @@ namespace Extra.Lib
 		public static void AddOnMainMenu(OnMainMenu OnMainMenu) {
 			onMainMenu += OnMainMenu;
 		}
-
 	}
 }
