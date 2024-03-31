@@ -13,7 +13,7 @@ using System.IO;
 
 namespace Extra
 {
-	public class Mod : IMod
+	public class EL : IMod
 	{
 		
 		public static ILog log = LogManager.GetLogger($"{nameof(ExtraLib)}").SetShowsErrorsInUI(false); //.{nameof(ELT)}

@@ -21,7 +21,7 @@ Special thanks to YenYan and T.D.W for their invaluable tips and assistance with
 	<!--Link to the forum post where the Mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the Mod-->
-	<ModVersion Value="1.1.0" />
+	<ModVersion Value="1.2.0" />
 	<!--Recommended version of the base game to use the Mod-->
 	<GameVersion Value="1.1.*" />
 	<!--Dependency for the Mod, can be set multiple times-->
@@ -29,9 +29,10 @@ Special thanks to YenYan and T.D.W for their invaluable tips and assistance with
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--<ChangeLog Value="TEST" />-->
   <ChangeLog>
-# 1.1.0
+# 1.2.0
 * Update the Logger.
 * Update the game-ui folder.
+* Improve Prefab Helper
   </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="github" Url="https://github.com/AlphaGaming7780/ExtraLib" />

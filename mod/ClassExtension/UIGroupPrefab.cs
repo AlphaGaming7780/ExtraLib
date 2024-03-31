@@ -1,4 +1,3 @@
-using Extra.Lib.Debugger;
 using Game.Prefabs;
 using Unity.Entities;
 
@@ -12,8 +11,11 @@ public static class UIGroupPrefabExtension
 		var uiGroupBuffer = ExtraLib.m_EntityManager.GetBuffer<UIGroupElement>(entity2);//.Add(new UIGroupElement(entity));
 		var unlockRequirementBuffer = ExtraLib.m_EntityManager.GetBuffer<UnlockRequirement>(entity2);//.Add(new UnlockRequirement(entity, UnlockFlags.RequireAny));
 
-		for (int i = 0; i < uiGroupBuffer.Length; i++) {
-			if(uiGroupBuffer.ElementAt(i).m_Prefab == entity) {
+
+        for (int i = 0; i < uiGroupBuffer.Length; i++) 
+		{
+			if(uiGroupBuffer.ElementAt(i).m_Prefab == entity) 
+			{
 				uiGroupBuffer.RemoveAt(i);
 				break;
 			}

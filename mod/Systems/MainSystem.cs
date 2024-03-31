@@ -81,7 +81,7 @@ public partial class MainSystem : GameSystemBase
 			EntityQuery entityQuery = GetEntityQuery(entityRequester.entityQueryDesc);
 			try{
 				entityRequester.onEditEnities.Invoke(entityQuery.ToEntityArray(AllocatorManager.Temp));
-			} catch (Exception e) {Mod.Logger.Error(e);}
+			} catch (Exception e) {EL.Logger.Error(e);}
 			curentIndex++;
 
 			notificationInfo.progressState = ProgressState.Progressing;
