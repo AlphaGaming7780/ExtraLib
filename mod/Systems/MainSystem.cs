@@ -51,7 +51,7 @@ public partial class MainSystem : GameSystemBase
 
 		if(mode == GameMode.MainMenu) {
 			if(canEditEnties) extraLibMonoScript.StartCoroutine(EditEntities());
-			onMainMenu.Invoke();
+			onMainMenu?.Invoke();
 		}
 		
 	}

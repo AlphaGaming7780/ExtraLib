@@ -26,7 +26,7 @@ public static class PrefabsHelper
 
 	}
 
-	public static UIAssetCategoryPrefab GetOrCreateUIAssetCategoryPrefab(string menu, string cat, string iconPath, string behindcat = null)
+	public static UIAssetCategoryPrefab GetOrCreateUIAssetCategoryPrefab(string menu, string cat, Func<PrefabBase, string> getIcons, string behindcat = null)
 	{
 
 		if (ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetCategoryPrefab), cat), out var p1)
@@ -59,7 +59,7 @@ public static class PrefabsHelper
 		newCategory.name = cat;
 		newCategory.m_Menu = landscapingMenu;
 		var newCategoryUI = newCategory.AddComponent<UIObject>();
-		newCategoryUI.m_Icon = iconPath; //?? ExtraLib.GetIcon(surfaceCategory);
+		newCategoryUI.m_Icon = getIcons.Invoke(newCategory);
 		if(behindCategory != null) newCategoryUI.m_Priority = behindCategory.GetComponent<UIObject>().m_Priority+1;
 		newCategoryUI.active = true;
 		newCategoryUI.m_IsDebugObject = false;
