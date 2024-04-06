@@ -1,11 +1,5 @@
 using System;
-using System.Collections.Generic;
-using Colossal.Entities;
-using Extra.Lib.Debugger;
-using Game.Common;
 using Game.Prefabs;
-using Unity.Collections;
-using Unity.Entities;
 using UnityEngine;
 
 namespace Extra.Lib.Helper;
@@ -26,10 +20,27 @@ public static class PrefabsHelper
 
 	}
 
-	public static UIAssetCategoryPrefab GetOrCreateUIAssetCategoryPrefab(string menu, string cat, Func<PrefabBase, string> getIcons, string behindcat = null)
+    public static UIAssetCategoryPrefab GetOrCreateUIAssetCategoryPrefab(UIAssetMenuPrefab menuPrefab, string catName, Func<PrefabBase, string> getIcons, string behindcat = null)
+    {
+        UIAssetCategoryPrefab uIAssetMenuPrefab = GetOrCreateUIAssetCategoryPrefab(menuPrefab, catName, "", behindcat);
+        uIAssetMenuPrefab.GetComponent<UIObject>().m_Icon = getIcons(uIAssetMenuPrefab);
+        return uIAssetMenuPrefab;
+    }
+
+    public static UIAssetCategoryPrefab GetOrCreateUIAssetCategoryPrefab(string menuName, string catName, Func<PrefabBase, string> getIcons, string behindcat = null)
+    {
+        return GetOrCreateUIAssetCategoryPrefab(GetUIAssetMenuPrefab(menuName), catName, getIcons, behindcat);
+    }
+
+    public static UIAssetCategoryPrefab GetOrCreateUIAssetCategoryPrefab(string menuName, string catName, string iconPath, string behindcat = null)
+    {
+        return GetOrCreateUIAssetCategoryPrefab(GetUIAssetMenuPrefab(menuName), catName, iconPath, behindcat);
+    }
+
+    public static UIAssetCategoryPrefab GetOrCreateUIAssetCategoryPrefab(UIAssetMenuPrefab menuPrefab, string catName, string iconPath, string behindcat = null)
 	{
 
-		if (ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetCategoryPrefab), cat), out var p1)
+		if (ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetCategoryPrefab), catName), out var p1)
 			&& p1 is UIAssetCategoryPrefab newCategory)
 		{
 			return newCategory;
@@ -48,18 +59,11 @@ public static class PrefabsHelper
 			}
 		}
 
-		if (!ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetMenuPrefab), menu), out var p2)
-			|| p2 is not UIAssetMenuPrefab landscapingMenu)
-		{
-            EL.Logger.Error($"Failed to get the UIAssetMenuPrefab with this name : {menu}");
-			return null;
-		}
-
 		newCategory = ScriptableObject.CreateInstance<UIAssetCategoryPrefab>();
-		newCategory.name = cat;
-		newCategory.m_Menu = landscapingMenu;
+		newCategory.name = catName;
+		newCategory.m_Menu = menuPrefab;
 		var newCategoryUI = newCategory.AddComponent<UIObject>();
-		newCategoryUI.m_Icon = getIcons.Invoke(newCategory);
+        newCategoryUI.m_Icon = iconPath;
 		if(behindCategory != null) newCategoryUI.m_Priority = behindCategory.GetComponent<UIObject>().m_Priority+1;
 		newCategoryUI.active = true;
 		newCategoryUI.m_IsDebugObject = false;
@@ -69,22 +73,82 @@ public static class PrefabsHelper
 		return newCategory;
 	}
 
-	public static void CreateNewUIAssetMenuPrefab(PrefabBase prefab, string menu, string iconPath, int offset = 1) {
-	if (!ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetMenuPrefab), menu), out var p2)
-		|| p2 is not UIAssetMenuPrefab Menu)
-		{
-			Menu = ScriptableObject.CreateInstance<UIAssetMenuPrefab>();
-			Menu.name = menu;
-			var MenuUI = Menu.AddComponent<UIObject>();
-			MenuUI.m_Icon = iconPath; //ExtraLib.GetIcon(SurfaceMenu);
-			MenuUI.m_Priority = prefab.GetComponent<UIObject>().m_Priority + offset;
-			MenuUI.active = true;
-			MenuUI.m_IsDebugObject = false;
-			MenuUI.m_Group = prefab.GetComponent<UIObject>().m_Group;
+    public static UIAssetMenuPrefab GetUIAssetMenuPrefab(string menuName)
+    {
+        if (!ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetMenuPrefab), menuName), out var p1)
+            || p1 is not UIAssetMenuPrefab menuPrefab)
+        {
+            EL.Logger.Error($"Failed to get the UIAssetMenuPrefab with this name : {menuName}");
+            return null;
+        }
 
-			// ELT_UI.validMenuForELTSettings.Add(menu);
+        return menuPrefab;
+    }
 
-			ExtraLib.m_PrefabSystem.AddPrefab(Menu);
-		}
+    /// <summary>
+    /// Create a new menu in the ToolBar.
+    /// </summary>
+    /// <param name="menuName">The name of the menu</param>
+    /// <param name="getIcons">the function called that return the icon path.</param>
+    /// <param name="toolBarGroup">The Tool bar group, can be : `Services Toolbar Group`, `Zones Toolbar Group` and `Tools Toolbar Group` or your custom tool bar group.</param>
+    /// <param name="offset">The position of the menu in is group.</param>
+    public static void CreateUIAssetMenuPrefab(string menuName, Func<PrefabBase, string> getIcons, string toolBarGroup = "Services Toolbar Group", int offset = 1)
+    {
+        if (!ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetMenuPrefab), menuName), out var p1)
+            || p1 is not UIAssetMenuPrefab menuPrefab)
+        {
+
+			if(!ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIToolbarGroupPrefab), toolBarGroup), out PrefabBase prefab) || prefab is not UIToolbarGroupPrefab uIToolbarGroupPrefab) {
+                EL.Logger.Error($"Failed to get the UIToolbarGroupPrefab with this name : {toolBarGroup}");
+				return;
+            }
+
+            menuPrefab = ScriptableObject.CreateInstance<UIAssetMenuPrefab>();
+            menuPrefab.name = menuName;
+            var MenuUI = menuPrefab.AddComponent<UIObject>();
+            MenuUI.m_Icon = getIcons(menuPrefab);
+            MenuUI.m_Priority = offset;
+            MenuUI.active = true;
+            MenuUI.m_IsDebugObject = false;
+            MenuUI.m_Group = uIToolbarGroupPrefab;
+
+            ExtraLib.m_PrefabSystem.AddPrefab(menuPrefab);
+        }
+    }
+
+
+    /// <summary>
+    /// Get or Create a menu in the ToolBar.
+    /// </summary>
+    /// <param name="menuName">The name of the menu</param>
+    /// <param name="getIcons">the function called that return the icon path.</param>
+    /// <param name="toolBarGroup">The Tool bar group, can be : `Services Toolbar Group`, `Zones Toolbar Group` and `Tools Toolbar Group` or your custom tool bar group.</param>
+    /// <param name="offset">The position of the menu in is group.</param>
+    public static UIAssetMenuPrefab GetOrCreateNewUIAssetMenuPrefab(string menuName, Func<PrefabBase, string> getIcons, string toolBarGroup = "Services Toolbar Group", int offset = 1)
+    {
+
+        if (ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetMenuPrefab), menuName), out var p1) && p1 is UIAssetMenuPrefab menuPrefab)
+        {
+            return menuPrefab;
+        }
+
+        if (!ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIToolbarGroupPrefab), toolBarGroup), out PrefabBase prefab) || prefab is not UIToolbarGroupPrefab uIToolbarGroupPrefab)
+        {
+            EL.Logger.Error($"Failed to get the UIToolbarGroupPrefab with this name : {toolBarGroup}");
+            return null;
+        }
+
+        menuPrefab = ScriptableObject.CreateInstance<UIAssetMenuPrefab>();
+        menuPrefab.name = menuName;
+        var MenuUI = menuPrefab.AddComponent<UIObject>();
+        MenuUI.m_Icon = getIcons(menuPrefab);
+        MenuUI.m_Priority = offset;
+        MenuUI.active = true;
+        MenuUI.m_IsDebugObject = false;
+        MenuUI.m_Group = uIToolbarGroupPrefab;
+
+        ExtraLib.m_PrefabSystem.AddPrefab(menuPrefab);
+
+        return menuPrefab;
 	}
 }
