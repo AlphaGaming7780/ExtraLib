@@ -66,7 +66,7 @@ public partial class MainSystem : GameSystemBase
 			title: "ExtraLib, Editing Entities",
 			progressState: ProgressState.Indeterminate, 
 			progress: 0,
-			thumbnail: $"{Icons.COUIBaseLocation}/Icon.svg"
+			thumbnail: $"{Icons.COUIBaseLocation}/Icons/Icon.svg"
 		);
 
 		yield return null;

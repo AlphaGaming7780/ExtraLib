@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Colossal.UI;
+using Game.Objects;
+using Game.Prefabs;
 
 namespace Extra.Lib.UI;
 
@@ -11,11 +13,14 @@ public static class Icons
 	internal static readonly string IconsResourceKey = "extralib";
 	internal static readonly string COUIBaseLocation = $"coui://{IconsResourceKey}";
 
-	// internal static void AddNewIconsFolder(string pathToFolder) {
-	// 	if(!pathToIconToLoad.Contains(pathToFolder)) pathToIconToLoad.Add(pathToFolder);
-	// }
+    public static readonly string Placeholder = $"{COUIBaseLocation}/Icons/Misc/placeholder.svg";
+    public static readonly string GameCrashWarning = $"{COUIBaseLocation}/Icons/Misc/GameCrashWarning.svg";
 
-	public static void LoadIconsFolder(string uri, string path, bool shouldWatch = false) {
+    // internal static void AddNewIconsFolder(string pathToFolder) {
+    // 	if(!pathToIconToLoad.Contains(pathToFolder)) pathToIconToLoad.Add(pathToFolder);
+    // }
+
+    public static void LoadIconsFolder(string uri, string path, bool shouldWatch = false) {
 
 		if(pathToIconLoaded.ContainsKey(uri)) {
 			if(pathToIconLoaded[uri].Contains(path)) return;
@@ -47,4 +52,26 @@ public static class Icons
 			UIManager.defaultUISystem.RemoveHostLocation(key);
 		}
 	}
+
+    internal static string GetIcon(PrefabBase prefab)
+    {
+
+        if (prefab is null) return $"{COUIBaseLocation}/Icons/Misc/placeholder.svg";
+
+        if (File.Exists($"{EL.ResourcesIcons}/{prefab.GetType().Name}/{prefab.name}.svg")) return $"{COUIBaseLocation}/Icons/{prefab.GetType().Name}/{prefab.name}.svg";
+
+        else if (prefab is UIAssetCategoryPrefab)
+        {
+
+            return $"{COUIBaseLocation}/Icons/Misc/placeholder.svg";
+        }
+        else if (prefab is UIAssetMenuPrefab)
+        {
+
+            return $"{COUIBaseLocation}/Icons/Misc/placeholder.svg";
+        }
+
+        return Placeholder;
+    }
+
 }

@@ -39,14 +39,10 @@ namespace Extra.Lib
 		// public static ToolUISystem m_ToolUISystem;
 		public static ToolbarUISystem m_ToolbarUISystem;
 		public static NotificationUISystem m_NotificationUISystem;
-		public static ILog Logger = LogManager.GetLogger($"{nameof(ExtraLib)}").SetShowsErrorsInUI(false); //.{nameof(ELT)}
-																										   // private GameSetting m_Setting;
-
-		public static bool debugMod = false;
 
 		internal static Stream GetEmbedded(string embeddedPath)
 		{
-			return Assembly.GetExecutingAssembly().GetManifestResourceStream("ExtraDetailingTools.embedded." + embeddedPath);
+			return Assembly.GetExecutingAssembly().GetManifestResourceStream("ExtraLib.embedded." + embeddedPath);
 		}
 
 		public static void AddOnEditEnities(OnEditEnities onEditEnities, EntityQueryDesc entityQueryDesc) {

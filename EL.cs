@@ -17,20 +17,31 @@ namespace Extra
 	{
 		
 		public static ILog log = LogManager.GetLogger($"{nameof(ExtraLib)}").SetShowsErrorsInUI(false); //.{nameof(ELT)}
-		internal static Logger Logger = new(log);
+#if DEBUG
+		internal static Logger Logger = new(log, true);
+#else
+		internal static Logger Logger = new(log, false);
+#endif
 		// private GameSetting m_Setting;
 
 		private Harmony harmony;
+		internal static string ResourcesIcons { get; private set; }
 
 		public void OnLoad(UpdateSystem updateSystem)
 		{
 			Logger.Info(nameof(OnLoad));
 
-			if (!GameManager.instance.modManager.TryGetExecutableAsset(this, out var asset)) return;
+			if (!GameManager.instance.modManager.TryGetExecutableAsset(this, out var asset))
+			{
+				Logger.Fatal("Failed to get the ExecutableAsset. The mod isn't loaded.");
+				return;
+			}
 
 			Logger.Info($"Current ExtraLib asset at {asset.path}");
 
-			Icons.LoadIconsFolder(Icons.IconsResourceKey, new FileInfo(asset.path).Directory.FullName);
+			FileInfo fileInfo = new(asset.path);
+			Icons.LoadIconsFolder(Icons.IconsResourceKey, fileInfo.Directory.FullName);
+			ResourcesIcons = Path.Combine(fileInfo.DirectoryName, "Icons");
 
 			// m_Setting = new GameSetting(this);
 			// m_Setting.RegisterInOptionsUI();
@@ -42,11 +53,12 @@ namespace Extra
 
 			updateSystem.UpdateAt<MainSystem>(SystemUpdatePhase.LateUpdate);
 			updateSystem.UpdateAt<ExtraLibUI>(SystemUpdatePhase.UIUpdate);
+			updateSystem.UpdateAt<ExtraAssetsMenu>(SystemUpdatePhase.UIUpdate);
 
 			harmony = new($"{nameof(ExtraLib)}.{nameof(ExtraLib)}");
 			harmony.PatchAll(typeof(ExtraLib).Assembly);
 			var patchedMethods = harmony.GetPatchedMethods().ToArray();
-			Logger.Info($"Plugin ExtraDetailingTools made patches! Patched methods: " + patchedMethods.Length);
+			Logger.Info($"Plugin ExtraLib made patches! Patched methods: " + patchedMethods.Length);
 			foreach (var patchedMethod in patchedMethods)
 			{
 				Logger.Info($"Patched method: {patchedMethod.Module.Name}:{patchedMethod.Name}");
