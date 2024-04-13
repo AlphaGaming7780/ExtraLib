@@ -11,7 +11,6 @@ namespace Extra.Lib.Patches;
 
 public class ToolbarUISystemPatch
 {
-
     [HarmonyPatch(typeof(ToolbarUISystem), "SelectAssetMenu")]
     class SelectAssetMenu
     {

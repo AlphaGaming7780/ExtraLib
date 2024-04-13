@@ -69,24 +69,17 @@ public partial class MainSystem : GameSystemBase
 			thumbnail: $"{Icons.COUIBaseLocation}/Icons/Icon.svg"
 		);
 
-		yield return null;
-
 		foreach(EntityRequester entityRequester in entityRequesters) {
 			
 			notificationInfo.progressState = ProgressState.Progressing;
-			notificationInfo.progress = curentIndex/entityRequesters.Count*100;
-			notificationInfo.text = entityRequester.onEditEnities.Method.DeclaringType.ToString();			
-			yield return null;
+			notificationInfo.progress = (int)(curentIndex / (float)entityRequesters.Count * 100);
+            notificationInfo.text = entityRequester.onEditEnities.Method.DeclaringType.ToString();			
 			
 			EntityQuery entityQuery = GetEntityQuery(entityRequester.entityQueryDesc);
 			try{
 				entityRequester.onEditEnities.Invoke(entityQuery.ToEntityArray(AllocatorManager.Temp));
 			} catch (Exception e) {EL.Logger.Error(e);}
-			curentIndex++;
-
-			notificationInfo.progressState = ProgressState.Progressing;
-			notificationInfo.progress = curentIndex/entityRequesters.Count*100;
-			notificationInfo.text = entityRequester.onEditEnities.Method.DeclaringType.ToString();			
+			curentIndex++;		
 			yield return null;
 		}
 
