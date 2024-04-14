@@ -25,7 +25,7 @@ namespace Extra.Lib
 		public delegate void OnMainMenu();
 		internal static OnMainMenu onMainMenu;
 
-		static internal List<EntityRequester> entityRequesters = [];
+        static internal List<EntityRequester> entityRequesters = [];
 
 		public struct EntityRequester(OnEditEnities onEditEnities, EntityQueryDesc entityQueryDesc) {
 			public OnEditEnities onEditEnities = onEditEnities;

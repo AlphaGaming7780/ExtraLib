@@ -14,7 +14,7 @@ namespace Extra.Lib.UI;
 public partial class ExtraAssetsMenu : UISystemBase
 {
     
-    public struct AssetCat : IJsonWritable
+    public class AssetCat : IJsonWritable, IJsonReadable
     {
         public string name = "Not Good";
         public string icon = Icons.GetIcon(null);
@@ -30,7 +30,9 @@ public partial class ExtraAssetsMenu : UISystemBase
         {
         }
 
-        public readonly void Write(IJsonWriter writer)
+        public static AssetCat Null = new("null", "null");
+
+        public void Write(IJsonWriter writer)
         {
             writer.TypeBegin("AssetCat");
             writer.PropertyName("name");
@@ -38,6 +40,16 @@ public partial class ExtraAssetsMenu : UISystemBase
             writer.PropertyName("icon");
             writer.Write(icon);
             writer.TypeEnd();
+        }
+
+        public void Read(IJsonReader reader)
+        {
+            reader.ReadMapBegin();
+            reader.ReadProperty("name");
+            reader.Read(out name);
+            reader.ReadProperty("icon");
+            reader.Read(out icon);
+            reader.ReadMapEnd();
         }
     }
 
@@ -51,10 +63,12 @@ public partial class ExtraAssetsMenu : UISystemBase
     private static readonly Dictionary<string, List<UIAssetCategoryPrefab>> categories = [];
     private static string selectedCat = "";
     internal static bool showCatTab = false;
+    private AssetCat mouseOverAssetCat = AssetCat.Null;
 
     static ValueBinding<AssetCat[]> VB_assetsCats;
     static GetterValueBinding<bool> GVB_ShowCatTab;
     static GetterValueBinding<string> GVB_SelectedCat;
+    static GetterValueBinding<AssetCat> GVB_MouserOnAssetCat;
 
     protected override void OnCreate()
     {
@@ -63,15 +77,9 @@ public partial class ExtraAssetsMenu : UISystemBase
         AddBinding(VB_assetsCats = new ValueBinding<AssetCat[]>("el", "assetscat", [..assetsCats], new ArrayWriter<AssetCat>(new ValueWriter<AssetCat>())));
         AddBinding(GVB_ShowCatTab = new GetterValueBinding<bool>("el", "showcattab", () => showCatTab));
         AddBinding(GVB_SelectedCat = new GetterValueBinding<string>("el", "selectedtab", () => selectedCat));
+        AddBinding(GVB_MouserOnAssetCat = new GetterValueBinding<AssetCat>("el", "mouseoverassetcat", () => mouseOverAssetCat));
         AddBinding(new TriggerBinding<string>("el", "selectassetcat", new Action<string>(OnAssetCatClick)));
-
-        //UIAssetCategoryQuery = GetEntityQuery(new EntityQueryDesc
-        //{
-        //    All =
-        //       [
-        //            ComponentType.ReadOnly<UIAssetCategoryData>()
-        //       ],
-        //});
+        AddBinding(new TriggerBinding<AssetCat>("el", "mouseoverassetcat", new Action<AssetCat>((AssetCat) => { mouseOverAssetCat = AssetCat; GVB_MouserOnAssetCat.Update(); })));
 
     }
 

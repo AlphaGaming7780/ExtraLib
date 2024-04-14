@@ -53,6 +53,8 @@ public partial class MainSystem : GameSystemBase
 			if(canEditEnties) extraLibMonoScript.StartCoroutine(EditEntities());
 			onMainMenu?.Invoke();
 		}
+
+
 		
 	}
 
