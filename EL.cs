@@ -8,7 +8,6 @@ using Extra.Lib;
 using Extra.Lib.Debugger;
 using Extra.Lib.UI;
 using Game.SceneFlow;
-using System.Drawing;
 using System.IO;
 
 namespace Extra

@@ -5,6 +5,7 @@ import { AssetCategoryTabBarSCSS } from "../../game-ui/game/components/asset-men
 import { CategoryItemSCSS } from "../../game-ui/game/components/asset-menu/asset-category-tab-bar/category-item.module.scss";
 import { ForwardedRef, MouseEvent } from "react";
 import { time } from "cs2/bindings";
+import { useLocalization } from "cs2/l10n";
 
 export const visible$ = bindValue<boolean>("el", 'showcattab');
 export const SelectedTab$ = bindValue<string>("el", 'selectedtab');
@@ -46,7 +47,7 @@ export const ExtraAssetsMenu: ModuleRegistryExtend = (Component: any) => {
 		}
 
 		// translation handling. Translates using locale keys that are defined in C# or fallback string here.
-		// const { translate } = useLocalization();
+		 const { translate } = useLocalization();
 
 		var result: JSX.Element = <>
 			{visible && CustomAssetCategoryTabBar(assetCats, selectedTab, OnClick)}
@@ -66,34 +67,32 @@ export const ExtraDetailingDetails: ModuleRegistryExtend = (
 
         var mouseOverAssetCat : AssetCat = useValue(MouseOverAssetCats$);
 
-        if (mouseOverAssetCat.name === NullAssetCat.name) {
-            return <Component {...otherProps}>{children}</Component> 
-        }
-
         return (
             <>
-                <div
-                    style={{
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        position: "absolute",
-                        height: "255rem",
-                    }}
-                >
-                    <div style={{ position: "relative" }}>
-                        <div className="asset-detail-panel_hf8 detail-panel_izf">
-                            <div className="title-bar_I7O child-opacity-transition_nkS">
-                                <div className="title_qub">{mouseOverAssetCat.name}</div>
-                            </div>
-                            <div className="content_rep row_H0d child-opacity-transition_nkS">
-                                <div className="preview-container_sPA">
-                                    <img className="preview_MDY" src={mouseOverAssetCat.icon}/>
+                {(mouseOverAssetCat.name !== NullAssetCat.name &&
+                    <div
+                        style={{
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            position: "absolute",
+                            height: "254rem",
+                        }}
+                    >
+                        <div style={{ position: "relative" }}>
+                            <div className="asset-detail-panel_hf8 detail-panel_izf">
+                                <div className="title-bar_I7O child-opacity-transition_nkS">
+                                    <div className="title_qub">{mouseOverAssetCat.name}</div>
+                                </div>
+                                <div className="content_rep row_H0d child-opacity-transition_nkS">
+                                    <div className="preview-container_sPA">
+                                        <img className="preview_MDY" src={mouseOverAssetCat.icon} />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                )}
                 <Component {...otherProps}>{children}</Component>
             </>
         );
