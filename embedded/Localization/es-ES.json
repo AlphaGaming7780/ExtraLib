@@ -1,6 +1,8 @@
 {
-		"SubServices.NAME[Surfaces]": "Surfaces",
-		"Assets.SUB_SERVICE_DESCRIPTION[Surfaces]": "Surfaces",
-		"SubServices.NAME[Decals]": "Decals",
-		"Assets.SUB_SERVICE_DESCRIPTION[Decals]": "Decals"
+	"SubServices.NAME[Surfaces]": "Surfaces",
+	"Assets.SUB_SERVICE_DESCRIPTION[Surfaces]": "This category contains all the surfaces, you can use these surfaces to draw textures on the ground.",
+	"SubServices.NAME[Decals]": "Decals",
+	"Assets.SUB_SERVICE_DESCRIPTION[Decals]": "Decals",
+	"Services.NAME[ExtraAssetsMenu]": "Extra Assets",
+	"Services.DESCRIPTION[ExtraAssetsMenu]": "This menu is a custom menu with multiple categories to store multiple types of assets that mods wants to display in the UI."
 }
