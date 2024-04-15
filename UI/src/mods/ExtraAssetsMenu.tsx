@@ -71,6 +71,9 @@ export const ExtraDetailingDetails: ModuleRegistryExtend = (
         var mouseOverAssetCat : AssetCat = useValue(MouseOverAssetCats$);
         const { translate } = useLocalization();
 
+        const titleTranslated = translate("SubServices.NAME[" + mouseOverAssetCat.name + "]") ? translate("SubServices.NAME[" + mouseOverAssetCat.name + "]") : mouseOverAssetCat.name
+        const descTranslated = translate("Assets.SUB_SERVICE_DESCRIPTION[" + mouseOverAssetCat.name + "]") ? translate("Assets.SUB_SERVICE_DESCRIPTION[" + mouseOverAssetCat.name + "]") : mouseOverAssetCat.name
+
         return (
             <>
                 {(mouseOverAssetCat.name !== NullAssetCat.name &&
@@ -86,7 +89,7 @@ export const ExtraDetailingDetails: ModuleRegistryExtend = (
                         <div style={{ position: "relative" }}>
                             <div className={AssetDetailPanelSCSS.assetDetailPanel + " " + AssetMenuSCSS.detailPanel}>
                                 <div className={AssetDetailPanelSCSS.titleBar}>
-                                    <div className={AssetDetailPanelSCSS.title}>{translate("SubServices.NAME[" + mouseOverAssetCat.name + "]")}</div>
+                                    <div className={AssetDetailPanelSCSS.title}>{titleTranslated}</div>
                                 </div>
                                 <div className={AssetDetailPanelSCSS.content}>
                                     <div className={AssetDetailPanelSCSS.previewContainer}>
@@ -94,7 +97,7 @@ export const ExtraDetailingDetails: ModuleRegistryExtend = (
                                     </div>
                                     <div className={AssetDetailPanelSCSS.column}>
                                         <div className={AssetDetailPanelSCSS.description + " " + FormattedParagraphsSCSS.paragraphs}>
-                                            <p className={FormattedTextSCSS.p} cohinline="cohinline">{"Assets.SUB_SERVICE_DESCRIPTION[" + mouseOverAssetCat.name + "]"}</p>
+                                            <p className={FormattedTextSCSS.p} cohinline="cohinline">{descTranslated}</p>
                                         </div>
                                     </div>
                                 </div>
