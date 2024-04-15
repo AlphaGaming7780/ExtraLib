@@ -1,4 +1,6 @@
 {
-  "SubServices.NAME[Surfaces]": "Oberflächen",
-  "Assets.SUB_SERVICE_DESCRIPTION[Surfaces]": "Oberflächen"
+		"SubServices.NAME[Surfaces]": "Oberfl?chen",
+		"Assets.SUB_SERVICE_DESCRIPTION[Surfaces]": "Oberfl?chen",
+		"SubServices.NAME[Decals]": "Decals",
+		"Assets.SUB_SERVICE_DESCRIPTION[Decals]": "Decals"
 }
