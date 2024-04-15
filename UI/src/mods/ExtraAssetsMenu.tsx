@@ -3,9 +3,12 @@ import { ModuleRegistryExtend } from "cs2/modding";
 import { PropsAssetCategoryTabBar } from "../../game-ui/game/components/asset-menu/asset-category-tab-bar/asset-category-tab-bar";
 import { AssetCategoryTabBarSCSS } from "../../game-ui/game/components/asset-menu/asset-category-tab-bar/asset-category-tab-bar.module.scss";
 import { CategoryItemSCSS } from "../../game-ui/game/components/asset-menu/asset-category-tab-bar/category-item.module.scss";
-import { ForwardedRef, MouseEvent } from "react";
-import { time } from "cs2/bindings";
+import { MouseEvent } from "react";
 import { useLocalization } from "cs2/l10n";
+import { AssetDetailPanelSCSS } from "../../game-ui/game-ui/game/components/asset-menu/asset-detail-panel/asset-detail-panel.module.scss";
+import { AssetMenuSCSS } from "../../game-ui/game/components/asset-menu/asset-menu.module.scss";
+import { FormattedParagraphsSCSS } from "../../game-ui/common/text/formatted-paragraphs.module.scss";
+import { FormattedTextSCSS } from "../../game-ui/common/text/formatted-text.module.scss";
 
 export const visible$ = bindValue<boolean>("el", 'showcattab');
 export const SelectedTab$ = bindValue<string>("el", 'selectedtab');
@@ -66,6 +69,7 @@ export const ExtraDetailingDetails: ModuleRegistryExtend = (
         const { children, ...otherProps } = props || {};
 
         var mouseOverAssetCat : AssetCat = useValue(MouseOverAssetCats$);
+        const { translate } = useLocalization();
 
         return (
             <>
@@ -80,13 +84,18 @@ export const ExtraDetailingDetails: ModuleRegistryExtend = (
                         }}
                     >
                         <div style={{ position: "relative" }}>
-                            <div className="asset-detail-panel_hf8 detail-panel_izf">
-                                <div className="title-bar_I7O child-opacity-transition_nkS">
-                                    <div className="title_qub">{mouseOverAssetCat.name}</div>
+                            <div className={AssetDetailPanelSCSS.assetDetailPanel + " " + AssetMenuSCSS.detailPanel}>
+                                <div className={AssetDetailPanelSCSS.titleBar}>
+                                    <div className={AssetDetailPanelSCSS.title}>{translate("SubServices.NAME[" + mouseOverAssetCat.name + "]")}</div>
                                 </div>
-                                <div className="content_rep row_H0d child-opacity-transition_nkS">
-                                    <div className="preview-container_sPA">
-                                        <img className="preview_MDY" src={mouseOverAssetCat.icon} />
+                                <div className={AssetDetailPanelSCSS.content}>
+                                    <div className={AssetDetailPanelSCSS.previewContainer}>
+                                        <img className={AssetDetailPanelSCSS.preview} src={mouseOverAssetCat.icon} />
+                                    </div>
+                                    <div className={AssetDetailPanelSCSS.column}>
+                                        <div className={AssetDetailPanelSCSS.description + " " + FormattedParagraphsSCSS.paragraphs}>
+                                            <p className={FormattedTextSCSS.p} cohinline="cohinline">{"Assets.SUB_SERVICE_DESCRIPTION[" + mouseOverAssetCat.name + "]"}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
