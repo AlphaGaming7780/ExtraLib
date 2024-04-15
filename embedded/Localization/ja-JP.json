@@ -1,6 +1,6 @@
 {
 	"SubServices.NAME[Surfaces]": "Surfaces",
-	"Assets.SUB_SERVICE_DESCRIPTION[Surfaces]": "Surfaces",
+	"Assets.SUB_SERVICE_DESCRIPTION[Surfaces]": "This category contains all the surfaces, you can use these surfaces to draw textures on the ground.",
 	"SubServices.NAME[Decals]": "Decals",
 	"Assets.SUB_SERVICE_DESCRIPTION[Decals]": "Decals",
 	"Services.NAME[ExtraAssetsMenu]": "Extra Assets",
