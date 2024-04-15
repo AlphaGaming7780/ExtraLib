@@ -15,22 +15,22 @@ namespace Extra.Lib.Localization;
 
 public class ExtraLocalization
 {
-	/// <summary>
-	/// Load the Localization file/files.
-	/// To use this function your embedded files need to be in embedded/Localization/... .json
-	/// - logger => The logger of your mod, used in case something need to be printed.
-	/// - assemnby => The assemby of your mod, used to get the embedded files
-	/// - globalFile => true if you have one localizaton file for all the local id.
-	/// </summary>
-	/// <param name="logger"></param>
-	/// <param name="assembly"></param>
-	/// <param name="globalFile"></param>
-	public static void LoadLocalization(Logger logger, Assembly assembly, bool globalFile, string defaultLocalID = "en-US") 
+    /// <summary>
+    /// Load the Localization file/files.
+    /// To use this function your embedded files need to be in embedded/Localization/... .json
+    /// - logger => The logger of your mod, used in case something need to be printed.
+    /// - assemnby => The assemby of your mod, used to get the embedded files
+    /// - globalFile => true if you have one localizaton file for all the local id.
+    /// </summary>
+    /// <param name="logger">The logger of your mod, used in case something need to be printed.</param>
+    /// <param name="assembly">The assemby of your mod, used to get the embedded files</param>
+    /// <param name="singleFile">true if you have one localizaton file for all the local id.</param>
+    public static void LoadLocalization(Logger logger, Assembly assembly, bool singleFile, string defaultLocalID = "en-US") 
 	{
         logger.Info("Start loading the localization.");
 		try
 		{
-            if (globalFile)
+            if (singleFile)
             {
                 logger.Info("Loading Global Localization file");
                 Dictionary<string, Dictionary<string, string>> localization = Decoder.Decode(new StreamReader(assembly.GetManifestResourceStream($"{assembly.GetName().Name}.embedded.Localization.Localization.json")).ReadToEnd()).Make<Dictionary<string, Dictionary<string, string>>>();

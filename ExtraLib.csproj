@@ -22,10 +22,10 @@
 		<!--The file where Mod information which is required for publishing Mod on PDX Mod are stored-->
 		<PublishConfigurationPath>Properties\PublishConfiguration.xml</PublishConfigurationPath>
 	</PropertyGroup>
-	
-	<ItemGroup>
-		<EmbeddedResource Include="embedded\Localization\Localization.jsonc"></EmbeddedResource>
-	</ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="embedded\**\*.*" />
+  </ItemGroup>
 
 
 	<!--Imports must be after PropertyGroup block-->
@@ -37,6 +37,10 @@
     <Reference Include="$(CustomManagedPath)\Colossal.*.dll" Private="False" />
     <Reference Include="$(CustomManagedPath)\Game*.dll" Private="False" />
     <Reference Include="$(CustomManagedPath)\Unity.*.dll" Private="False" />
+    <None Remove="embedded\localization\de-DE.json" />
+    <None Remove="embedded\localization\en-US.json" />
+    <None Remove="embedded\localization\fr-FR.json" />
+    <None Remove="embedded\localization\ko-KR.json" />
     <Reference Include="$(CustomManagedPath)\cohtml.Net.dll" Private="False" />
   </ItemGroup>
 

@@ -9,6 +9,8 @@ using Extra.Lib.Debugger;
 using Extra.Lib.UI;
 using Game.SceneFlow;
 using System.IO;
+using Extra.Lib.Localization;
+using System.Reflection;
 
 namespace Extra
 {
@@ -41,6 +43,8 @@ namespace Extra
 			FileInfo fileInfo = new(asset.path);
 			Icons.LoadIconsFolder(Icons.IconsResourceKey, fileInfo.Directory.FullName);
 			ResourcesIcons = Path.Combine(fileInfo.DirectoryName, "Icons");
+
+			ExtraLocalization.LoadLocalization(Logger, Assembly.GetExecutingAssembly(), false);
 
 			// m_Setting = new GameSetting(this);
 			// m_Setting.RegisterInOptionsUI();
