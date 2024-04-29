@@ -15,6 +15,8 @@ public static class Icons
 
     public static readonly string Placeholder = $"{COUIBaseLocation}/Icons/Misc/placeholder.svg";
     public static readonly string GameCrashWarning = $"{COUIBaseLocation}/Icons/Misc/GameCrashWarning.svg";
+    //public static readonly string Copy = $"{COUIBaseLocation}/Icons/Misc/Copy.svg";
+    //public static readonly string Past = $"{COUIBaseLocation}/Icons/Misc/Past.svg";
 
     // internal static void AddNewIconsFolder(string pathToFolder) {
     // 	if(!pathToIconToLoad.Contains(pathToFolder)) pathToIconToLoad.Add(pathToFolder);
