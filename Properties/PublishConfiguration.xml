@@ -11,17 +11,32 @@
 Extra Lib is a crucial dependency mod that is indispensable for the operation of any tools within the EXTRA mod suite. It ensures seamless integration and enhanced functionality across the entire mod collection.
 
 Special thanks to YenYan and T.D.W for their invaluable tips and assistance with coding and is help with the UI, as well as to CityRat for their exceptional contributions to thumbnails and all related graphic design work.
+
+# Translation
+| Language							| Progress	| Participants |
+| --------------------- | ---------	| ------------ |
+| French								| 0%				| |
+| Chinese Simplified		| 0%				| |
+| Chinese Traditional		| 0%				| |
+| German								| 0%				| |
+| Italian								| 0%				| |
+| Japanese							| 0%				| |
+| Korean								| 0%				| |
+| Polish								| 100%			| Lisek |
+| Portuguese, Brazilian | 0%				| |
+| Russian								| 0%				| |
+| Spanish								| 0%				| |
   </LongDescription>
 	<!--Thumbnail-->
-	<Thumbnail Value="Properties/ExtraLib_Thumbnail.png" />
+	<Thumbnail Value="Properties/EL.png" />
 	<!--Screenshot, can be set multiple times-->
-	<Screenshot Value="Properties/ExtraLib_Thumbnail.png" />
+	<Screenshot Value="Properties/EL_LONG.png" />
 	<!--Tag, can be set multiple times-->
 	<Tag Value="Code Mod" />
 	<!--Link to the forum post where the Mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the Mod-->
-	<ModVersion Value="1.3.0" /> <!--Tu as déja mis a la bonne version, le mod sur PDX est en 1.2.0-->
+	<ModVersion Value="1.3.0" />
 	<!--Recommended version of the base game to use the Mod-->
 	<GameVersion Value="1.1.*" />
 	<!--Dependency for the Mod, can be set multiple times-->
@@ -34,8 +49,11 @@ Special thanks to YenYan and T.D.W for their invaluable tips and assistance with
 * Added ExtraAssetsMenu.
 * Added 2 new icons, Placeholder and game crash warning.
 * Clear the code.
+* Localization support for the mod and all the mod that use ExtraLib
   </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
-	<ExternalLink Type="github" Url="https://github.com/AlphaGaming7780/ExtraLib" />
-	<ExternalLink Type="paypal" Url="paypal.me/TritonSupreme" />
+  <ExternalLink Type="crowdin" Url="https://crowdin.com/project/extralib" />
+  <ExternalLink Type="discord" Url="https://discord.gg/HTav7ARPs2" />
+  <ExternalLink Type="github" Url="https://github.com/AlphaGaming7780/ExtraLib" />
+	<ExternalLink Type="paypal" Url="https://www.paypal.com/paypalme/TritonSupreme" />
 </Publish>
