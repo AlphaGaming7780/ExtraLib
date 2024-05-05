@@ -18,7 +18,6 @@ public partial class ExtraAssetsMenu : UISystemBase
     {
         public string name = "Not Good";
         public string icon = Icons.GetIcon(null);
-        //internal bool selected = false;
 
         public AssetCat(string name, string icon)
         {

@@ -33,9 +33,9 @@ namespace Extra.Lib
 		}
 
 		public static PrefabSystem m_PrefabSystem;
-		public static RenderingSystem m_RenderingSystem;
+		//public static RenderingSystem m_RenderingSystem;
 		public static EntityManager m_EntityManager;
-		public static ToolSystem m_ToolSystem;
+		//public static ToolSystem m_ToolSystem;
 		// public static ToolUISystem m_ToolUISystem;
 		public static ToolbarUISystem m_ToolbarUISystem;
 		public static NotificationUISystem m_NotificationUISystem;

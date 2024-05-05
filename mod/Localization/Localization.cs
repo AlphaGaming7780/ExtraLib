@@ -1,5 +1,6 @@
 ﻿using Colossal.Json;
 using Colossal.Localization;
+using Colossal.Logging;
 using Extra;
 using Extra.Lib.Debugger;
 using Game.Prefabs;
@@ -25,15 +26,16 @@ public class ExtraLocalization
     /// <param name="logger">The logger of your mod, used in case something need to be printed.</param>
     /// <param name="assembly">The assemby of your mod, used to get the embedded files</param>
     /// <param name="singleFile">true if you have one localizaton file for all the local id.</param>
-    public static void LoadLocalization(Logger logger, Assembly assembly, bool singleFile, string defaultLocalID = "en-US") 
+    public static void LoadLocalization(Logger logger, Assembly assembly, bool singleFile = false, string namespaceName = null, string defaultLocalID = "en-US") 
 	{
+        namespaceName ??= assembly.GetName().Name;
         logger.Info("Start loading the localization.");
 		try
 		{
             if (singleFile)
             {
                 logger.Info("Loading Global Localization file");
-                Dictionary<string, Dictionary<string, string>> localization = Decoder.Decode(new StreamReader(assembly.GetManifestResourceStream($"{assembly.GetName().Name}.embedded.Localization.Localization.json")).ReadToEnd()).Make<Dictionary<string, Dictionary<string, string>>>();
+                Dictionary<string, Dictionary<string, string>> localization = Decoder.Decode(new StreamReader(assembly.GetManifestResourceStream($"{namespaceName}.embedded.Localization.Localization.json")).ReadToEnd()).Make<Dictionary<string, Dictionary<string, string>>>();
                 foreach (string localeID in GameManager.instance.localizationManager.GetSupportedLocales())
                 {
                     logger.Info($"Loading {localeID}");
@@ -54,12 +56,16 @@ public class ExtraLocalization
                     logger.Info($"Loading {localeID}");
                     Dictionary<string, string> localization;
 
-                    if (assembly.GetManifestResourceNames().Contains($"{assembly.GetName().Name}.embedded.Localization.{localeID}.json"))
-                        localization = Decoder.Decode(new StreamReader(assembly.GetManifestResourceStream($"{assembly.GetName().Name}.embedded.Localization.{localeID}.json")).ReadToEnd()).Make<Dictionary<string, string>>();
-                    else
+                    if (assembly.GetManifestResourceNames().Contains($"{namespaceName}.embedded.Localization.{localeID}.json"))
+                        localization = Decoder.Decode(new StreamReader(assembly.GetManifestResourceStream($"{namespaceName}.embedded.Localization.{localeID}.json")).ReadToEnd()).Make<Dictionary<string, string>>();
+                    else if (assembly.GetManifestResourceNames().Contains($"{namespaceName}.embedded.Localization.{defaultLocalID}.json"))
                     {
-                        localization = Decoder.Decode(new StreamReader(assembly.GetManifestResourceStream($"{assembly.GetName().Name}.embedded.Localization.{defaultLocalID}.json")).ReadToEnd()).Make<Dictionary<string, string>>();
+                        localization = Decoder.Decode(new StreamReader(assembly.GetManifestResourceStream($"{namespaceName}.embedded.Localization.{defaultLocalID}.json")).ReadToEnd()).Make<Dictionary<string, string>>();
                         logger.Warn($"No {localeID} in the files, using {defaultLocalID} instead.");
+                    } else
+                    {
+                        logger.Error($"No {localeID} in the files, and no {defaultLocalID}. This maybe due of an assembly name different from the namespace name.");
+                        continue;
                     }
 
                     GameManager.instance.localizationManager.AddSource(localeID, new MemorySource(localization));
@@ -67,17 +73,10 @@ public class ExtraLocalization
             }
         } catch (Exception ex) { logger.Error(ex); }
 	}
+
+    public static void LoadLocalization(ILog log, Assembly assembly, bool singleFile = false, string namespaceName = null, string defaultLocalID = "en-US")
+    {
+        LoadLocalization(new Logger(log), assembly, singleFile, namespaceName, defaultLocalID);
+    }
+
 }
-
-//[Serializable]
-//internal class GlobaleLocalizationJS
-//{
-//	public Dictionary<string, Dictionary<string, string>> Localization = [];
-
-//}
-
-//[Serializable]
-//internal class LocalLocalizationJS
-//{
-//	public Dictionary<string, string> Localization = [];
-//}

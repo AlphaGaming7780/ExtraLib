@@ -29,8 +29,8 @@ public partial class MainSystem : GameSystemBase
 		base.OnCreate();
 		Enabled = false;
 		m_PrefabSystem = base.World.GetOrCreateSystemManaged<PrefabSystem>();
-		m_RenderingSystem = base.World.GetOrCreateSystemManaged<RenderingSystem>();
-		m_ToolSystem = base.World.GetOrCreateSystemManaged<ToolSystem>();
+		//m_RenderingSystem = base.World.GetOrCreateSystemManaged<RenderingSystem>();
+		//m_ToolSystem = base.World.GetOrCreateSystemManaged<ToolSystem>();
 		m_ToolbarUISystem = base.World.GetOrCreateSystemManaged<ToolbarUISystem>();
 		m_NotificationUISystem = base.World.GetOrCreateSystemManaged<NotificationUISystem>();
 		m_EntityManager = EntityManager;
