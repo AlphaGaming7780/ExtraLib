@@ -1,7 +1,7 @@
 {
 	"Services.NAME[ExtraAssetsMenu]": "Extra Assets",
 	"Services.DESCRIPTION[ExtraAssetsMenu]": "This menu is a custom menu with multiple categories to store multiple types of assets that mods wants to display in the UI.",
-	"SubServices.NAME[Surfaces]": "Surfaces",
+	"SubServices.NAME[Surfaces]": "지면 도구",
 	"Assets.SUB_SERVICE_DESCRIPTION[Surfaces]": "This category contains all the surfaces, you can use these surfaces to draw textures on the ground.",
 	"SubServices.NAME[Grass Surfaces]": "Grass Surface",
 	"Assets.SUB_SERVICE_DESCRIPTION[Grass Surfaces]": "This category contains all the grass surfaces.",
