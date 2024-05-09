@@ -13,7 +13,7 @@ Extra Lib is a crucial dependency mod that is indispensable for the operation of
 Special thanks to YenYan and T.D.W for their invaluable tips and assistance with coding and is help with the UI, as well as to CityRat for their exceptional contributions to thumbnails and all related graphic design work.
 
 # Translation
-⚠️ I DON'T CHECK THE TRANSLATION, I DON'T TAKE THE RESPONSABILITY FOR WHAT YOU ARE GOING TO READ⚠️
+⚠️ This mod uses crowdin so there maybe inconsistencies with translations due to translations from different translators ⚠️
 - ❌French 0%
 - ❌Chinese Simplified 0%
 - ❌Chinese Traditional 0%
@@ -35,7 +35,7 @@ Special thanks to YenYan and T.D.W for their invaluable tips and assistance with
 	<!--Link to the forum post where the Mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the Mod-->
-	<ModVersion Value="1.3.0" />
+	<ModVersion Value="1.3.1" />
 	<!--Recommended version of the base game to use the Mod-->
 	<GameVersion Value="1.1.*" />
 	<!--Dependency for the Mod, can be set multiple times-->
@@ -43,12 +43,10 @@ Special thanks to YenYan and T.D.W for their invaluable tips and assistance with
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--<ChangeLog Value="TEST" />-->
   <ChangeLog>
-# 1.3.0
-* More Prefab Helper function.
-* Added ExtraAssetsMenu.
-* Added 2 new icons, Placeholder and game crash warning.
-* Clear the code.
-* Localization support for the mod and all the mod that use ExtraLib
+# 1.3.1
+- Add: German localization by Konsi
+- Add: Polish localization by Lisek
+- Add: Spanish localization by elGendo87
   </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
   <ExternalLink Type="crowdin" Url="https://crowdin.com/project/extralib" />
