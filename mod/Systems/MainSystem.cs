@@ -17,6 +17,7 @@ using System.Threading;
 using System.Collections;
 using UnityEngine;
 using Extra.Lib.UI;
+using Game.SceneFlow;
 
 namespace Extra.Lib.Systems;
 
@@ -53,9 +54,6 @@ public partial class MainSystem : GameSystemBase
 			if(canEditEnties) extraLibMonoScript.StartCoroutine(EditEntities());
 			onMainMenu?.Invoke();
 		}
-
-
-		
 	}
 
 	private IEnumerator EditEntities () {
