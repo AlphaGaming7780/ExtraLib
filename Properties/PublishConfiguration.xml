@@ -14,8 +14,8 @@ Special thanks to YenYan and T.D.W for their invaluable tips and assistance with
 
 # Translation
 ⚠️ This mod uses crowdin so there maybe inconsistencies with translations due to translations from different translators ⚠️
-- ❌French 0%
-- ❌Chinese Simplified 0%
+- ✔️French 100% : aricoseco
+- ✔️Chinese Simplified 100% : RilkeXS(无手文) (RilkeXS)
 - ❌Chinese Traditional 0%
 - ✔️German 100% : Konsi
 - ❌Italian 0%
@@ -35,7 +35,7 @@ Special thanks to YenYan and T.D.W for their invaluable tips and assistance with
 	<!--Link to the forum post where the Mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the Mod-->
-	<ModVersion Value="1.3.1" />
+	<ModVersion Value="1.3.2.2" />
 	<!--Recommended version of the base game to use the Mod-->
 	<GameVersion Value="1.1.*" />
 	<!--Dependency for the Mod, can be set multiple times-->
@@ -43,10 +43,11 @@ Special thanks to YenYan and T.D.W for their invaluable tips and assistance with
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--<ChangeLog Value="TEST" />-->
   <ChangeLog>
-# 1.3.1
-- Add: German localization by Konsi
-- Add: Polish localization by Lisek
-- Add: Spanish localization by elGendo87
+# 1.3.2.2
+I forgot to merge the PR whit the translation.
+- Add: French localization by aricoseco
+- Add: Chinese Simplified localization by RilkeXS(无手文) (RilkeXS)
+- Update: Spanish localization by elGendo87
   </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
   <ExternalLink Type="crowdin" Url="https://crowdin.com/project/extralib" />
