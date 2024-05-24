@@ -2,22 +2,15 @@
 using Colossal.Serialization.Entities;
 using Game;
 using Unity.Entities;
-using System.Collections.Generic;
 using Unity.Collections;
 using Game.UI.Menu;
-using Game.Rendering;
-using Game.Tools;
 using Game.UI.InGame;
 using Game.Prefabs;
 using Colossal.PSI.Common;
-using static Extra.Lib.ExtraLib;
-using Extra.Lib.Debugger;
 using System;
-using System.Threading;
 using System.Collections;
-using UnityEngine;
 using Extra.Lib.UI;
-using Game.SceneFlow;
+using Extra.Lib.mod.ClassExtension;
 
 namespace Extra.Lib.Systems;
 
@@ -29,12 +22,12 @@ public partial class MainSystem : GameSystemBase
 	{
 		base.OnCreate();
 		Enabled = false;
-		m_PrefabSystem = base.World.GetOrCreateSystemManaged<PrefabSystem>();
-		//m_RenderingSystem = base.World.GetOrCreateSystemManaged<RenderingSystem>();
-		//m_ToolSystem = base.World.GetOrCreateSystemManaged<ToolSystem>();
-		m_ToolbarUISystem = base.World.GetOrCreateSystemManaged<ToolbarUISystem>();
-		m_NotificationUISystem = base.World.GetOrCreateSystemManaged<NotificationUISystem>();
-		m_EntityManager = EntityManager;
+		ExtraLib.m_PrefabSystem = base.World.GetOrCreateSystemManaged<PrefabSystem>();
+        //m_RenderingSystem = base.World.GetOrCreateSystemManaged<RenderingSystem>();
+        //m_ToolSystem = base.World.GetOrCreateSystemManaged<ToolSystem>();
+        ExtraLib.m_ToolbarUISystem = base.World.GetOrCreateSystemManaged<ToolbarUISystem>();
+        ExtraLib.m_NotificationUISystem = base.World.GetOrCreateSystemManaged<NotificationUISystem>();
+        ExtraLib.m_EntityManager = EntityManager;
 	}
 
 	protected override void OnUpdate() {}
@@ -51,8 +44,8 @@ public partial class MainSystem : GameSystemBase
 		// Print.Info($"OnGameLoadingComplete {purpose} | {mode}");
 
 		if(mode == GameMode.MainMenu) {
-			if(canEditEnties) extraLibMonoScript.StartCoroutine(EditEntities());
-			onMainMenu?.Invoke();
+			if(canEditEnties) ExtraLib.extraLibMonoScript.StartCoroutine(EditEntities());
+            ExtraLib.onMainMenu?.Invoke();
 		}
 	}
 
@@ -61,7 +54,7 @@ public partial class MainSystem : GameSystemBase
 		canEditEnties = false;
 		int curentIndex = 0;
 
-		var notificationInfo = m_NotificationUISystem.AddOrUpdateNotification(
+		var notificationInfo = ExtraLib.m_NotificationUISystem.AddOrUpdateNotification(
 			$"{nameof(ExtraLib)}.{nameof(MainSystem)}.{nameof(EditEntities)}", 
 			title: "ExtraLib, Editing Entities",
 			progressState: ProgressState.Indeterminate, 
@@ -69,12 +62,13 @@ public partial class MainSystem : GameSystemBase
 			thumbnail: $"{Icons.COUIBaseLocation}/Icons/Icon.svg"
 		);
 
-		foreach(EntityRequester entityRequester in entityRequesters) {
+		foreach(ExtraLib.EntityRequester entityRequester in ExtraLib.entityRequesters) {
 			
 			notificationInfo.progressState = ProgressState.Progressing;
-			notificationInfo.progress = (int)(curentIndex / (float)entityRequesters.Count * 100);
-            notificationInfo.text = entityRequester.onEditEnities.Method.DeclaringType.ToString();			
-			
+			notificationInfo.progress = (int)(curentIndex / (float)ExtraLib.entityRequesters.Count * 100);
+            notificationInfo.text = entityRequester.onEditEnities.Method.DeclaringType.ToString();
+			ExtraLib.m_NotificationUISystem.AddOrUpdateNotification(ref notificationInfo);
+
 			EntityQuery entityQuery = GetEntityQuery(entityRequester.entityQueryDesc);
 			try{
 				entityRequester.onEditEnities.Invoke(entityQuery.ToEntityArray(AllocatorManager.Temp));
@@ -83,7 +77,7 @@ public partial class MainSystem : GameSystemBase
 			yield return null;
 		}
 
-		m_NotificationUISystem.RemoveNotification(
+		ExtraLib.m_NotificationUISystem.RemoveNotification(
 			identifier: notificationInfo.id, 
 			delay: 5f, 
 			text: "Complete",
