@@ -49,12 +49,9 @@ export const ExtraAssetsMenu: ModuleRegistryExtend = (Component: any) => {
 			trigger("el", "selectassetcat", mouseEvent.currentTarget.id)
 		}
 
-		// translation handling. Translates using locale keys that are defined in C# or fallback string here.
-		 const { translate } = useLocalization();
-
 		var result: JSX.Element = <>
 			{visible && CustomAssetCategoryTabBar(assetCats, selectedTab, OnClick)}
-			{Component(props)}
+            <Component categories={props.categories} selectedCategory={props.selectedCategory} onChange={props.onChange} onClose={props.onClose} /> 
 		</>
 
 
