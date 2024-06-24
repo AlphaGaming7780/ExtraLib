@@ -35,7 +35,7 @@ Special thanks to YenYan and T.D.W for their invaluable tips and assistance with
 	<!--Link to the forum post where the Mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the Mod-->
-	<ModVersion Value="1.3.3" />
+	<ModVersion Value="1.3.4" />
 	<!--Recommended version of the base game to use the Mod-->
 	<GameVersion Value="1.1.*" />
 	<!--Dependency for the Mod, can be set multiple times-->
@@ -43,12 +43,9 @@ Special thanks to YenYan and T.D.W for their invaluable tips and assistance with
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--<ChangeLog Value="TEST" />-->
   <ChangeLog>
-# 1.3.3
-- Make change to the notification code. Nothing change for the users.
-- Update: Chinese Simplified translation by RilkeXS(无手文) (RilkeXS)
-- Add : Korean translation by Hinanchovo
-- Add : Portuguese, Brazilian translation by Miguel Pereira Campos (mpcamposz
-- Add : Russian translation by MrSandcraft and Mihail (kaktyc)
+# 1.3.4
+- Support for 1.1.5f1 game version.
+- Add a notification in case ExtraLib didn't load properly, so you can reload it.
   </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
   <ExternalLink Type="crowdin" Url="https://crowdin.com/project/extralib" />

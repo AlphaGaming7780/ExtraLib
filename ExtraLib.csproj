@@ -9,7 +9,7 @@
 
 		<!--The folder where Game.dll is located. Set it only if the game is not installed in the default location, otherwise keep it empty-->
 		<CustomManagedPath>E:\SteamLibrary\steamapps\common\Cities Skylines II\Cities2_Data\Managed</CustomManagedPath>
-		<CustomManagedPath>C:\Program Files (x86)\Steam\steamapps\common\Cities Skylines II\Cities2_Data\Managed</CustomManagedPath>
+		<!--<CustomManagedPath>C:\Program Files (x86)\Steam\steamapps\common\Cities Skylines II\Cities2_Data\Managed</CustomManagedPath>-->
 		
 		<AdditionalFilesDirectory>Resources</AdditionalFilesDirectory>
 
@@ -18,7 +18,7 @@
 		<!--The file should contain 2 lines:-->
 		<!--Your.PDX@Account.login-->
 		<!--Your-PDX-Account-Pa$$word-->
-		<PDXAccountDataPath>$(USERPROFILE)\Desktop\pdx_account.txt</PDXAccountDataPath>
+		<!--<PDXAccountDataPath>$(USERPROFILE)\Desktop\pdx_account.txt</PDXAccountDataPath>-->
 		
 		<!--The file where Mod information which is required for publishing Mod on PDX Mod are stored-->
 		<PublishConfigurationPath>Properties\PublishConfiguration.xml</PublishConfigurationPath>

@@ -11,12 +11,19 @@ using System;
 using System.Collections;
 using Extra.Lib.UI;
 using Extra.Lib.mod.ClassExtension;
+using Game.Modding;
+using Game.SceneFlow;
+using UnityEngine;
 
 namespace Extra.Lib.Systems;
 
 public partial class MainSystem : GameSystemBase
 {
-	private bool canEditEnties = true;
+	private bool _canEditEnties = true;
+	//private bool _modInitialized = false;
+	//private bool _mainMenuInitialized = false;
+
+    private NotificationUISystem.NotificationInfo _extraLibNotLoadedNotification;
  
 	protected override void OnCreate()
 	{
@@ -28,9 +35,30 @@ public partial class MainSystem : GameSystemBase
         ExtraLib.m_ToolbarUISystem = base.World.GetOrCreateSystemManaged<ToolbarUISystem>();
         ExtraLib.m_NotificationUISystem = base.World.GetOrCreateSystemManaged<NotificationUISystem>();
         ExtraLib.m_EntityManager = EntityManager;
+
+		_extraLibNotLoadedNotification = ExtraLib.m_NotificationUISystem.AddOrUpdateNotification(
+			$"{nameof(ExtraLib)}.{nameof(MainSystem)}.{nameof(_extraLibNotLoadedNotification)}",
+			title: "ExtraLib didn't load !!!",
+			text: "Click here to load ExtraLib.",
+			progressState: ProgressState.Indeterminate,
+			progress: 0,
+			thumbnail: Icons.GameCrashWarning,
+			onClicked: new Action(OnMainMenu)
+		);
+
 	}
 
-	protected override void OnUpdate() {}
+	protected override void OnUpdate() {
+		//Debug.Log(GameManager.instance.isLoading);
+		//if (GameManager.instance.modManager.isInitialized)
+		//{
+		//	Enabled = false;
+		//	if (_mainMenuInitialized || (GameManager.instance.gameMode == GameMode.MainMenu && !GameManager.instance.isLoading))
+		//	{
+		//		OnMainMenu();
+		//	}
+		//}
+	}
 
 	protected override void OnGamePreload(Purpose purpose, GameMode mode)
 	{
@@ -38,20 +66,32 @@ public partial class MainSystem : GameSystemBase
 		// Print.Info($"OnGamePreload {purpose} | {mode}");
 	}
 
-	protected override void OnGameLoadingComplete(Purpose purpose, GameMode mode)
+    protected override void OnGameLoaded(Context serializationContext)
+    {
+        base.OnGameLoaded(serializationContext);
+    }
+
+    protected override void OnGameLoadingComplete(Purpose purpose, GameMode mode)
 	{
 		base.OnGameLoadingComplete(purpose, mode);
 		// Print.Info($"OnGameLoadingComplete {purpose} | {mode}");
 
 		if(mode == GameMode.MainMenu) {
-			if(canEditEnties) ExtraLib.extraLibMonoScript.StartCoroutine(EditEntities());
-            ExtraLib.onMainMenu?.Invoke();
-		}
+			//_mainMenuInitialized = true;
+            if (GameManager.instance.modManager.isInitialized) OnMainMenu();
+        }
 	}
+
+	private void OnMainMenu()
+	{
+        if (_canEditEnties) ExtraLib.extraLibMonoScript.StartCoroutine(EditEntities());
+        ExtraLib.onMainMenu?.Invoke();
+		ExtraLib.m_NotificationUISystem.RemoveNotification(_extraLibNotLoadedNotification);
+    }
 
 	private IEnumerator EditEntities () {
 
-		canEditEnties = false;
+		_canEditEnties = false;
 		int curentIndex = 0;
 
 		var notificationInfo = ExtraLib.m_NotificationUISystem.AddOrUpdateNotification(
