@@ -21,6 +21,8 @@
 	"Assets.SUB_SERVICE_DESCRIPTION[Misc Surfaces]": "Cette catégorie contient toutes les autres surfaces.",
 	"SubServices.NAME[Rock Surfaces]": "Surfaces de roche",
 	"Assets.SUB_SERVICE_DESCRIPTION[Rock Surfaces]": "Cette catégorie contient toutes les surfaces de roche.",
+	"SubServices.NAME[Water Surfaces]": "Water Surfaces",
+	"Assets.SUB_SERVICE_DESCRIPTION[Water Surfaces]": "This category contains all the water surfaces.",
 	"SubServices.NAME[Wood Surfaces]": "Surfaces de bois",
 	"Assets.SUB_SERVICE_DESCRIPTION[Wood Surfaces]": "Cette catégorie contient toutes les surfaces de bois.",
 	"SubServices.NAME[Decals]": "Décalcomanies",
