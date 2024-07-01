@@ -21,6 +21,8 @@
 	"Assets.SUB_SERVICE_DESCRIPTION[Misc Surfaces]": "Эта категория содержит все прочие поверхности.",
 	"SubServices.NAME[Rock Surfaces]": "Каменные поверхности",
 	"Assets.SUB_SERVICE_DESCRIPTION[Rock Surfaces]": "Эта категория содержит все каменные поверхности.",
+	"SubServices.NAME[Water Surfaces]": "Water Surfaces",
+	"Assets.SUB_SERVICE_DESCRIPTION[Water Surfaces]": "This category contains all the water surfaces.",
 	"SubServices.NAME[Wood Surfaces]": "Деревянные поверхности",
 	"Assets.SUB_SERVICE_DESCRIPTION[Wood Surfaces]": "Эта категория содержит все деревянные поверхности.",
 	"SubServices.NAME[Decals]": "Наклейки",
