@@ -21,6 +21,8 @@
 	"Assets.SUB_SERVICE_DESCRIPTION[Misc Surfaces]": "이 카테고리는 모든 기타 지면을 포함합니다.",
 	"SubServices.NAME[Rock Surfaces]": "바위 지면",
 	"Assets.SUB_SERVICE_DESCRIPTION[Rock Surfaces]": "이 카테고리는 모든 바위 지면을 포함합니다.",
+	"SubServices.NAME[Water Surfaces]": "Water Surfaces",
+	"Assets.SUB_SERVICE_DESCRIPTION[Water Surfaces]": "This category contains all the water surfaces.",
 	"SubServices.NAME[Wood Surfaces]": "나무 지면",
 	"Assets.SUB_SERVICE_DESCRIPTION[Wood Surfaces]": "이 카테고리는 모든 나무 지면을 포함합니다.",
 	"SubServices.NAME[Decals]": "데칼",
