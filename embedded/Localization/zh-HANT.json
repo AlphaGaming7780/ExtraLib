@@ -1,5 +1,5 @@
 {
-	"Services.NAME[ExtraAssetsMenu]": "Extra Assets",
+	"Services.NAME[ExtraAssetsMenu]": "更多美化资产",
 	"Services.DESCRIPTION[ExtraAssetsMenu]": "This menu is a custom menu with multiple categories to store multiple types of assets that mods wants to display in the UI.",
 	"SubServices.NAME[Surfaces]": "Surfaces",
 	"Assets.SUB_SERVICE_DESCRIPTION[Surfaces]": "This category contains all the surfaces, you can use these surfaces to draw textures on the ground.",
