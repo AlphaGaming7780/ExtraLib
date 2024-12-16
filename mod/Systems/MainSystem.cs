@@ -19,11 +19,11 @@ namespace Extra.Lib.Systems;
 
 public partial class MainSystem : GameSystemBase
 {
-	private bool _canEditEnties = true;
+	//private bool _canEditEnties = true;
 	//private bool _modInitialized = false;
 	//private bool _mainMenuInitialized = false;
 
-    private NotificationUISystem.NotificationInfo _extraLibNotLoadedNotification;
+    //private NotificationUISystem.NotificationInfo _extraLibNotLoadedNotification;
  
 	protected override void OnCreate()
 	{
@@ -36,15 +36,17 @@ public partial class MainSystem : GameSystemBase
         ExtraLib.m_NotificationUISystem = base.World.GetOrCreateSystemManaged<NotificationUISystem>();
         ExtraLib.m_EntityManager = EntityManager;
 
-		_extraLibNotLoadedNotification = ExtraLib.m_NotificationUISystem.AddOrUpdateNotification(
-			$"{nameof(ExtraLib)}.{nameof(MainSystem)}.{nameof(_extraLibNotLoadedNotification)}",
-			title: "ExtraLib didn't load !!!",
-			text: "Click here to load ExtraLib.",
-			progressState: ProgressState.Indeterminate,
-			progress: 0,
-			thumbnail: Icons.GameCrashWarning,
-			onClicked: new Action(OnMainMenu)
-		);
+        GameManager.instance.RegisterUpdater(() => ExtraLib.extraLibMonoScript.StartCoroutine(EditEntities()));
+
+		//_extraLibNotLoadedNotification = ExtraLib.m_NotificationUISystem.AddOrUpdateNotification(
+		//	$"{nameof(ExtraLib)}.{nameof(MainSystem)}.{nameof(_extraLibNotLoadedNotification)}",
+		//	title: "ExtraLib didn't load !!!",
+		//	text: "Click here to load ExtraLib.",
+		//	progressState: ProgressState.Indeterminate,
+		//	progress: 0,
+		//	thumbnail: Icons.GameCrashWarning,
+		//	onClicked: new Action(OnMainMenu)
+		//);
 
 	}
 
@@ -77,52 +79,48 @@ public partial class MainSystem : GameSystemBase
 		// Print.Info($"OnGameLoadingComplete {purpose} | {mode}");
 
 		if(mode == GameMode.MainMenu) {
-			//_mainMenuInitialized = true;
-            if (GameManager.instance.modManager.isInitialized) OnMainMenu();
+            //_mainMenuInitialized = true;
+            ExtraLib.onMainMenu?.Invoke();
+            //if (GameManager.instance.modManager.isInitialized)
         }
 	}
 
-	private void OnMainMenu()
-	{
-        if (_canEditEnties) ExtraLib.extraLibMonoScript.StartCoroutine(EditEntities());
-        ExtraLib.onMainMenu?.Invoke();
-		ExtraLib.m_NotificationUISystem.RemoveNotification(_extraLibNotLoadedNotification);
-    }
-
 	private IEnumerator EditEntities () {
-
-		_canEditEnties = false;
 		int curentIndex = 0;
 
-		var notificationInfo = ExtraLib.m_NotificationUISystem.AddOrUpdateNotification(
-			$"{nameof(ExtraLib)}.{nameof(MainSystem)}.{nameof(EditEntities)}", 
-			title: "ExtraLib, Editing Entities",
-			progressState: ProgressState.Indeterminate, 
-			progress: 0,
-			thumbnail: $"{Icons.COUIBaseLocation}/Icons/Icon.svg"
-		);
+        var notificationInfo = ExtraLib.m_NotificationUISystem.AddOrUpdateNotification(
+            $"{nameof(ExtraLib)}.{nameof(MainSystem)}.{nameof(EditEntities)}",
+            title: "ExtraLib, Editing Entities",
+            progressState: ProgressState.Indeterminate,
+            progress: 0,
+            thumbnail: $"{Icons.COUIBaseLocation}/Icons/Icon.svg"
+        );
 
-		foreach(ExtraLib.EntityRequester entityRequester in ExtraLib.entityRequesters) {
-			
-			notificationInfo.progressState = ProgressState.Progressing;
-			notificationInfo.progress = (int)(curentIndex / (float)ExtraLib.entityRequesters.Count * 100);
+        foreach (ExtraLib.EntityRequester entityRequester in ExtraLib.entityRequesters)
+        {
+
+            notificationInfo.progressState = ProgressState.Progressing;
+            notificationInfo.progress = (int)(curentIndex / (float)ExtraLib.entityRequesters.Count * 100);
             notificationInfo.text = entityRequester.onEditEnities.Method.DeclaringType.ToString();
-			ExtraLib.m_NotificationUISystem.AddOrUpdateNotification(ref notificationInfo);
+            ExtraLib.m_NotificationUISystem.AddOrUpdateNotification(ref notificationInfo);
 
-			EntityQuery entityQuery = GetEntityQuery(entityRequester.entityQueryDesc);
-			try{
-				entityRequester.onEditEnities.Invoke(entityQuery.ToEntityArray(AllocatorManager.Temp));
-			} catch (Exception e) {EL.Logger.Error(e);}
-			curentIndex++;		
-			yield return null;
-		}
+            EntityQuery entityQuery = GetEntityQuery(entityRequester.entityQueryDesc);
+            try
+            {
+                entityRequester.onEditEnities.Invoke(entityQuery.ToEntityArray(AllocatorManager.Temp));
+            }
+            catch (Exception e) { EL.Logger.Error(e); }
+            curentIndex++;
+            yield return null;
+        }
 
-		ExtraLib.m_NotificationUISystem.RemoveNotification(
-			identifier: notificationInfo.id, 
-			delay: 5f, 
-			text: "Complete",
-			progressState: ProgressState.Complete, 
-			progress: 100
-		);
-	}
+        ExtraLib.m_NotificationUISystem.RemoveNotification(
+            identifier: notificationInfo.id,
+            delay: 5f,
+            text: "Complete",
+            progressState: ProgressState.Complete,
+            progress: 100
+        );
+    }
+
 }

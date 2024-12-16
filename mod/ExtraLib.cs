@@ -13,6 +13,11 @@ using static Extra.Lib.Systems.MainSystem;
 using Unity.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Colossal.PSI.Common;
+using Extra.Lib.Systems;
+using Extra.Lib.UI;
+using System.Collections;
+using System;
 
 namespace Extra.Lib
 {
@@ -56,5 +61,6 @@ namespace Extra.Lib
 		public static void AddOnMainMenu(OnMainMenu OnMainMenu) {
 			onMainMenu += OnMainMenu;
 		}
-	}
+
+    }
 }
