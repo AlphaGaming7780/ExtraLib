@@ -54,11 +54,11 @@ namespace Extra
 
 			ExtraLib.extraLibMonoScript = ExtraLib.ExtraLibMonoObject.AddComponent<ExtraLibMonoScript>();
 
-			updateSystem.UpdateAt<MainSystem>(SystemUpdatePhase.LateUpdate);
 			updateSystem.UpdateAt<ExtraLibUI>(SystemUpdatePhase.UIUpdate);
 			updateSystem.UpdateAt<ExtraAssetsMenu>(SystemUpdatePhase.UIUpdate);
+            updateSystem.UpdateAt<MainSystem>(SystemUpdatePhase.LateUpdate);
 
-			harmony = new($"{nameof(ExtraLib)}.{nameof(ExtraLib)}");
+            harmony = new($"{nameof(ExtraLib)}.{nameof(ExtraLib)}");
 			harmony.PatchAll(typeof(ExtraLib).Assembly);
 			var patchedMethods = harmony.GetPatchedMethods().ToArray();
 			Logger.Info($"Plugin ExtraLib made patches! Patched methods: " + patchedMethods.Length);
@@ -66,8 +66,7 @@ namespace Extra
 			{
 				Logger.Info($"Patched method: {patchedMethod.Module.Name}:{patchedMethod.Name}");
 			}
-
-		}
+        }
 
 		public void OnDispose()
 		{
@@ -80,5 +79,5 @@ namespace Extra
 			//    m_Setting = null;
 			//}
 		}
-	}
+    }
 }

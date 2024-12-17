@@ -1,23 +1,12 @@
 using System.Reflection;
 using System.IO;
-using Colossal.Logging;
-using Game;
-using Game.Modding;
 using Game.Prefabs;
-using Game.Rendering;
-using Game.Tools;
 using Game.UI.InGame;
 using Unity.Entities;
 using Game.UI.Menu;
-using static Extra.Lib.Systems.MainSystem;
 using Unity.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Colossal.PSI.Common;
-using Extra.Lib.Systems;
-using Extra.Lib.UI;
-using System.Collections;
-using System;
 
 namespace Extra.Lib
 {
@@ -30,7 +19,10 @@ namespace Extra.Lib
 		public delegate void OnMainMenu();
 		internal static OnMainMenu onMainMenu;
 
-        static internal List<EntityRequester> entityRequesters = [];
+		public delegate void OnInitialize();
+		internal static OnInitialize onInitialize;
+
+		static internal List<EntityRequester> entityRequesters = [];
 
 		public struct EntityRequester(OnEditEnities onEditEnities, EntityQueryDesc entityQueryDesc) {
 			public OnEditEnities onEditEnities = onEditEnities;
@@ -38,10 +30,7 @@ namespace Extra.Lib
 		}
 
 		public static PrefabSystem m_PrefabSystem;
-		//public static RenderingSystem m_RenderingSystem;
 		public static EntityManager m_EntityManager;
-		//public static ToolSystem m_ToolSystem;
-		// public static ToolUISystem m_ToolUISystem;
 		public static ToolbarUISystem m_ToolbarUISystem;
 		public static NotificationUISystem m_NotificationUISystem;
 
@@ -60,6 +49,11 @@ namespace Extra.Lib
 
 		public static void AddOnMainMenu(OnMainMenu OnMainMenu) {
 			onMainMenu += OnMainMenu;
+		}
+
+		public static void AddOnInitialize(OnInitialize OnInitialize)
+		{
+			onInitialize += OnInitialize;
 		}
 
     }

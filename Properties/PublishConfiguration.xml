@@ -36,27 +36,17 @@ Special thanks to YenYan and T.D.W for their invaluable tips and assistance with
 	<!--Link to the forum post where the Mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the Mod-->
-	<ModVersion Value="1.3.6" />
+	<ModVersion Value="1.3.7" />
 	<!--Recommended version of the base game to use the Mod-->
-	<GameVersion Value="1.1.*" />
+	<GameVersion Value="1.2.*" />
 	<!--Dependency for the Mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--<ChangeLog Value="TEST" />-->
   <ChangeLog>
-# 1.3.6
+# 1.3.7
 ## Fixes
-- remove the need to click on the notification.
-
-## Translation
-- ✔️Chinese Simplified 100% : RilkeXS(无手文) (RilkeXS), 一叶杳舟 (Yao_Zhou)
-- ✔️Chinese Traditional 100% : CBEdwin, allegretic, Hans Law (ZENITHALIZE)
-- ✔️German 100% : Konsi, Jannik Bartmann (raptor09), KaeseKuchen (KaeseMitKuchen)
-- ✔️Korean 100% : Hinanchovo
-- ✔️Polish 100% : Lisek, karmel68
-- ✔️Portuguese 100% -> [European Portuguese Localization mod](https://mods.paradoxplaza.com/mods/92599/Windows)
-- ✔️Russian 100% :  MrSandcraft, Mihail (kaktyc), Denis Lee (B3lka), Sergey (TraceXR)
-- ✔️Spanish 100% : elGendo87
+- Issue where EL was Initializing before the game as the time to initialize.
   </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
   <ExternalLink Type="crowdin" Url="https://crowdin.com/project/extralib" />

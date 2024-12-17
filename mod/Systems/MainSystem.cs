@@ -34,21 +34,21 @@ public partial class MainSystem : GameSystemBase
         ExtraLib.m_NotificationUISystem = base.World.GetOrCreateSystemManaged<NotificationUISystem>();
         ExtraLib.m_EntityManager = EntityManager;
 
-        GameManager.instance.RegisterUpdater(() => ExtraLib.extraLibMonoScript.StartCoroutine(EditEntities()));
+        GameManager.instance.RegisterUpdater(Initialize);
 
-		//_extraLibNotLoadedNotification = ExtraLib.m_NotificationUISystem.AddOrUpdateNotification(
-		//	$"{nameof(ExtraLib)}.{nameof(MainSystem)}.{nameof(_extraLibNotLoadedNotification)}",
-		//	title: "ExtraLib didn't load !!!",
-		//	text: "Click here to load ExtraLib.",
-		//	progressState: ProgressState.Indeterminate,
-		//	progress: 0,
-		//	thumbnail: Icons.GameCrashWarning,
-		//	onClicked: new Action(OnMainMenu)
-		//);
+        //_extraLibNotLoadedNotification = ExtraLib.m_NotificationUISystem.AddOrUpdateNotification(
+        //	$"{nameof(ExtraLib)}.{nameof(MainSystem)}.{nameof(_extraLibNotLoadedNotification)}",
+        //	title: "ExtraLib didn't load !!!",
+        //	text: "Click here to load ExtraLib.",
+        //	progressState: ProgressState.Indeterminate,
+        //	progress: 0,
+        //	thumbnail: Icons.GameCrashWarning,
+        //	onClicked: new Action(OnMainMenu)
+        //);
 
-	}
+    }
 
-	protected override void OnUpdate() {
+    protected override void OnUpdate() {
 		//Debug.Log(GameManager.instance.isLoading);
 		//if (GameManager.instance.modManager.isInitialized)
 		//{
@@ -83,7 +83,22 @@ public partial class MainSystem : GameSystemBase
         }
 	}
 
-	private IEnumerator EditEntities () {
+    public bool Initialize()
+    {
+        if (!GameManager.instance.modManager.isInitialized ||
+            GameManager.instance.gameMode != GameMode.MainMenu ||
+            GameManager.instance.state == GameManager.State.Loading ||
+            GameManager.instance.state == GameManager.State.Booting
+            ) return false;
+
+        ExtraLib.extraLibMonoScript.StartCoroutine(EditEntities());
+
+        ExtraLib.onInitialize?.Invoke();
+
+        return true;
+    }
+
+    internal IEnumerator EditEntities () {
 		int curentIndex = 0;
 
         var notificationInfo = ExtraLib.m_NotificationUISystem.AddOrUpdateNotification(
