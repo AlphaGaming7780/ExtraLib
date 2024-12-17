@@ -11,9 +11,7 @@ using System;
 using System.Collections;
 using Extra.Lib.UI;
 using Extra.Lib.mod.ClassExtension;
-using Game.Modding;
 using Game.SceneFlow;
-using UnityEngine;
 
 namespace Extra.Lib.Systems;
 

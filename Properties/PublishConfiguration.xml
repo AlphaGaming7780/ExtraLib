@@ -15,15 +15,16 @@ Special thanks to YenYan and T.D.W for their invaluable tips and assistance with
 # Translation
 ⚠️ This mod uses crowdin so there maybe inconsistencies with translations due to translations from different translators ⚠️
 - ✔️French 100% : aricoseco, Morgan Touverey Quilling (mtouverey)
-- ⚠️Chinese Simplified 97% : RilkeXS(无手文) (RilkeXS), 一叶杳舟 (Yao_Zhou)
-- ❌Chinese Traditional 0%
-- ⚠️German 97% : Konsi
+- ✔️Chinese Simplified 100% : RilkeXS(无手文) (RilkeXS), 一叶杳舟 (Yao_Zhou)
+- ✔️Chinese Traditional 100% : CBEdwin, allegretic, Hans Law (ZENITHALIZE)
+- ✔️German 100% : Konsi, Jannik Bartmann (raptor09), KaeseKuchen (KaeseMitKuchen)
 - ⚠️Italian 97% : Stefano (Furios)
 - ❌Japanese 0%
-- ⚠️Korean 97% : Hinanchovo
+- ✔️Korean 100% : Hinanchovo
 - ✔️Polish 100% : Lisek, karmel68
+- ✔️Portuguese 100% -> [European Portuguese Localization mod](https://mods.paradoxplaza.com/mods/92599/Windows)
 - ⚠️Portuguese, Brazilian 97% : Miguel Pereira Campos (mpcamposz)
-- ⚠️Russian 53% :  MrSandcraft, Mihail (kaktyc)
+- ✔️Russian 100% :  MrSandcraft, Mihail (kaktyc), Denis Lee (B3lka), Sergey (TraceXR)
 - ✔️Spanish 100% : elGendo87
   </LongDescription>
 	<!--Thumbnail-->
@@ -44,7 +45,18 @@ Special thanks to YenYan and T.D.W for their invaluable tips and assistance with
 	<!--<ChangeLog Value="TEST" />-->
   <ChangeLog>
 # 1.3.6
+## Fixes
 - remove the need to click on the notification.
+
+## Translation
+- ✔️Chinese Simplified 100% : RilkeXS(无手文) (RilkeXS), 一叶杳舟 (Yao_Zhou)
+- ✔️Chinese Traditional 100% : CBEdwin, allegretic, Hans Law (ZENITHALIZE)
+- ✔️German 100% : Konsi, Jannik Bartmann (raptor09), KaeseKuchen (KaeseMitKuchen)
+- ✔️Korean 100% : Hinanchovo
+- ✔️Polish 100% : Lisek, karmel68
+- ✔️Portuguese 100% -> [European Portuguese Localization mod](https://mods.paradoxplaza.com/mods/92599/Windows)
+- ✔️Russian 100% :  MrSandcraft, Mihail (kaktyc), Denis Lee (B3lka), Sergey (TraceXR)
+- ✔️Spanish 100% : elGendo87
   </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
   <ExternalLink Type="crowdin" Url="https://crowdin.com/project/extralib" />
