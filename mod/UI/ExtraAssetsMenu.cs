@@ -54,11 +54,7 @@ public partial class ExtraAssetsMenu : UISystemBase
 
     internal const string CatTabName = "ExtraAssetsMenu";
 
-    //private static EntityQuery UIAssetCategoryQuery;
-    private static readonly List<AssetCat> assetsCats = [
-        //new("Surfaces", $"{Icons.COUIBaseLocation}/resources/Icons/UIAssetCategoryPrefab/Surfaces.svg"),
-        //new("Decals", $"{Icons.COUIBaseLocation}/resources/Icons/UIAssetCategoryPrefab/Decals.svg")
-    ];
+    private static readonly List<AssetCat> assetsCats = [];
     private static readonly Dictionary<string, List<UIAssetCategoryPrefab>> categories = [];
     private static string selectedCat = "";
     internal static bool showCatTab = false;
