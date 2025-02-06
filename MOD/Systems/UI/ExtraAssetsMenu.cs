@@ -1,19 +1,19 @@
 ﻿using Colossal.UI.Binding;
-using Extra.Lib.Helper;
-using Extra.Lib.Patches;
+using ExtraLib.Helpers;
+using ExtraLib.Patches;
+using ExtraLib.ClassExtension;
 using Game.Prefabs;
 using Game.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Burst;
 using Unity.Entities;
 
-namespace Extra.Lib.UI;
+namespace ExtraLib.Systems.UI;
 
 public partial class ExtraAssetsMenu : UISystemBase
 {
-    
+
     public class AssetCat : IJsonWritable, IJsonReadable
     {
         public string name = "Not Good";
@@ -69,7 +69,7 @@ public partial class ExtraAssetsMenu : UISystemBase
     {
 
         base.OnCreate();
-        AddBinding(VB_assetsCats = new ValueBinding<AssetCat[]>("el", "assetscat", [..assetsCats], new ArrayWriter<AssetCat>(new ValueWriter<AssetCat>())));
+        AddBinding(VB_assetsCats = new ValueBinding<AssetCat[]>("el", "assetscat", [.. assetsCats], new ArrayWriter<AssetCat>(new ValueWriter<AssetCat>())));
         AddBinding(GVB_ShowCatTab = new GetterValueBinding<bool>("el", "showcattab", () => showCatTab));
         AddBinding(GVB_SelectedCat = new GetterValueBinding<string>("el", "selectedtab", () => selectedCat));
         AddBinding(GVB_MouserOnAssetCat = new GetterValueBinding<AssetCat>("el", "mouseoverassetcat", () => mouseOverAssetCat));
@@ -81,18 +81,18 @@ public partial class ExtraAssetsMenu : UISystemBase
     internal static void ShowCatsTab(bool value)
     {
         showCatTab = value;
-        if(showCatTab && string.IsNullOrEmpty(selectedCat) ) OnAssetCatClick(assetsCats.First().name);
+        if (showCatTab && string.IsNullOrEmpty(selectedCat)) OnAssetCatClick(assetsCats.First().name);
         GVB_ShowCatTab.Update();
     }
 
     private static void OnAssetCatClick(string assetCatName)
     {
         bool first = true;
-        foreach(string assetCat in categories.Keys)
+        foreach (string assetCat in categories.Keys)
         {
-            foreach(UIAssetCategoryPrefab uIAssetCategoryPrefab in categories[assetCat])
+            foreach (UIAssetCategoryPrefab uIAssetCategoryPrefab in categories[assetCat])
             {
-                Entity entity = ExtraLib.m_PrefabSystem.GetEntity(uIAssetCategoryPrefab);
+                Entity entity = EL.m_PrefabSystem.GetEntity(uIAssetCategoryPrefab);
                 if (assetCat == assetCatName)
                 {
                     uIAssetCategoryPrefab.m_Menu.AddElement(entity);
@@ -101,7 +101,8 @@ public partial class ExtraAssetsMenu : UISystemBase
                         ToolbarUISystemPatch.SelectCatUI(entity);
                         first = false;
                     }
-                } else uIAssetCategoryPrefab.m_Menu.RemoveElement(entity);
+                }
+                else uIAssetCategoryPrefab.m_Menu.RemoveElement(entity);
             }
         }
 
@@ -146,7 +147,7 @@ public partial class ExtraAssetsMenu : UISystemBase
 
     public static UIAssetCategoryPrefab GetOrCreateNewUIAssetCategoryPrefab(string name, string icon, string assetCatName)
     {
-        if(!TryGetAssetCatByName(assetCatName, out AssetCat assetCat)) return null;
+        if (!TryGetAssetCatByName(assetCatName, out AssetCat assetCat)) return null;
         return GetOrCreateNewUIAssetCategoryPrefab(name, icon, assetCat);
     }
 
@@ -162,9 +163,9 @@ public partial class ExtraAssetsMenu : UISystemBase
     public static bool TryGetAssetCatByName(string name, out AssetCat assetCat)
     {
         assetCat = new();
-        foreach(AssetCat a in assetsCats)
+        foreach (AssetCat a in assetsCats)
         {
-            if(a.name != name) continue;
+            if (a.name != name) continue;
             assetCat = a;
             return true;
         }

@@ -1,7 +1,7 @@
 ﻿using Game.UI.Menu;
 using static Game.UI.Menu.NotificationUISystem;
 
-namespace Extra.Lib.mod.ClassExtension;
+namespace ExtraLib.ClassExtension;
 
 public static class NotificationUIExtension
 {
@@ -34,6 +34,6 @@ public static class NotificationUIExtension
 
     public static void Update(this NotificationInfo notificationInfo)
     {
-        ExtraLib.m_NotificationUISystem.AddOrUpdateNotification(ref notificationInfo);
+        EL.m_NotificationUISystem.AddOrUpdateNotification(ref notificationInfo);
     }
 }

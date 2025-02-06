@@ -2,7 +2,7 @@ using System.Collections;
 using Game.SceneFlow;
 using UnityEngine;
 
-namespace Extra.Lib;
+namespace ExtraLib.Mono;
 
 public class ExtraLibMonoScript : MonoBehaviour
 {

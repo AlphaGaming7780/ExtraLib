@@ -4,7 +4,7 @@ using UnityEngine;
 using static Colossal.AssetPipeline.Importers.DidimoImporter.DidimoData;
 using static Game.Rendering.Debug.RenderPrefabRenderer;
 
-namespace Extra.Lib;
+namespace ExtraLib.ClassExtension;
 
 public static class Texture2DExtension
 {

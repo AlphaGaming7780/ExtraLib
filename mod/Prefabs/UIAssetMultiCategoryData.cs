@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-namespace Extra.Lib.Prefabs
+namespace ExtraLib.Prefabs
 {
     public struct UIAssetMultiCategoryData : IComponentData, IQueryTypeParameter
     {

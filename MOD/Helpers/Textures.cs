@@ -1,7 +1,7 @@
 using System.IO;
 using UnityEngine;
 
-namespace Extra.Lib.Helper;
+namespace ExtraLib.Helpers;
 
 public static class TextureHelper
 {

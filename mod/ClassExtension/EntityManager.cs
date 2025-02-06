@@ -1,8 +1,6 @@
-using Extra.Lib.Debugger;
-using Game.Prefabs;
 using Unity.Entities;
 
-namespace Extra.Lib;
+namespace ExtraLib.ClassExtension;
 
 public static class EntityManagerExtension
 {

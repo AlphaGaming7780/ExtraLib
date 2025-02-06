@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Unity.Entities;
 
-namespace Extra.Lib.Prefabs
+namespace ExtraLib.Prefabs
 {
 
     [ComponentMenu("Extra/", new Type[]

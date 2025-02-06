@@ -1,6 +1,6 @@
 using Game.Prefabs;
 
-namespace Extra.Lib;
+namespace ExtraLib.ClassExtension;
 
 public static class UIObjectExtension
 {
@@ -8,7 +8,7 @@ public static class UIObjectExtension
 	{
         return new UIObjectData
         {
-            m_Group = ExtraLib.m_PrefabSystem.GetEntity(UIObject.m_Group),
+            m_Group = EL.m_PrefabSystem.GetEntity(UIObject.m_Group),
             m_Priority = UIObject.m_Priority
         };
 	}

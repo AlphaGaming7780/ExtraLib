@@ -9,59 +9,49 @@ using Game.Prefabs;
 using Colossal.PSI.Common;
 using System;
 using System.Collections;
-using Extra.Lib.UI;
-using Extra.Lib.mod.ClassExtension;
+using ExtraLib.ClassExtension;
 using Game.SceneFlow;
 using UnityEngine;
-using Extra.Lib.Prefabs;
-using Extra.Lib.mod.Prefabs;
-using Colossal.IO.AssetDatabase;
+using ExtraLib.Prefabs;
+using System.Collections.Generic;
+using ExtraLib.Helpers;
 
-namespace Extra.Lib.Systems;
+namespace ExtraLib.Systems;
 
 public partial class MainSystem : GameSystemBase
 {
-	//private bool _canEditEnties = true;
-	//private bool _modInitialized = false;
-	//private bool _mainMenuInitialized = false;
 
-    //private NotificationUISystem.NotificationInfo _extraLibNotLoadedNotification;
- 
-	protected override void OnCreate()
+    public delegate void OnEditEnities(NativeArray<Entity> entities);
+    public delegate void OnMainMenu();
+    internal static OnMainMenu onMainMenu;
+
+    public delegate void OnInitialize();
+    internal static OnInitialize onInitialize;
+
+    static internal List<EntityRequester> entityRequesters = [];
+
+    public struct EntityRequester(OnEditEnities onEditEnities, EntityQueryDesc entityQueryDesc)
+    {
+        public OnEditEnities onEditEnities = onEditEnities;
+        public EntityQueryDesc entityQueryDesc = entityQueryDesc;
+    }
+
+    protected override void OnCreate()
 	{
 		base.OnCreate();
 		Enabled = false;
-		ExtraLib.m_PrefabSystem = base.World.GetOrCreateSystemManaged<PrefabSystem>();
+		EL.m_PrefabSystem = base.World.GetOrCreateSystemManaged<PrefabSystem>();
         //m_RenderingSystem = base.World.GetOrCreateSystemManaged<RenderingSystem>();
         //m_ToolSystem = base.World.GetOrCreateSystemManaged<ToolSystem>();
-        ExtraLib.m_ToolbarUISystem = base.World.GetOrCreateSystemManaged<ToolbarUISystem>();
-        ExtraLib.m_NotificationUISystem = base.World.GetOrCreateSystemManaged<NotificationUISystem>();
-        ExtraLib.m_EntityManager = EntityManager;
+        EL.m_ToolbarUISystem = base.World.GetOrCreateSystemManaged<ToolbarUISystem>();
+        EL.m_NotificationUISystem = base.World.GetOrCreateSystemManaged<NotificationUISystem>();
+        EL.m_EntityManager = EntityManager;
 
         GameManager.instance.RegisterUpdater(Initialize);
-
-        //_extraLibNotLoadedNotification = ExtraLib.m_NotificationUISystem.AddOrUpdateNotification(
-        //	$"{nameof(ExtraLib)}.{nameof(MainSystem)}.{nameof(_extraLibNotLoadedNotification)}",
-        //	title: "ExtraLib didn't load !!!",
-        //	text: "Click here to load ExtraLib.",
-        //	progressState: ProgressState.Indeterminate,
-        //	progress: 0,
-        //	thumbnail: Icons.GameCrashWarning,
-        //	onClicked: new Action(OnMainMenu)
-        //);
 
     }
 
     protected override void OnUpdate() {
-		//Debug.Log(GameManager.instance.isLoading);
-		//if (GameManager.instance.modManager.isInitialized)
-		//{
-		//	Enabled = false;
-		//	if (_mainMenuInitialized || (GameManager.instance.gameMode == GameMode.MainMenu && !GameManager.instance.isLoading))
-		//	{
-		//		OnMainMenu();
-		//	}
-		//}
 	}
 
 	protected override void OnGamePreload(Purpose purpose, GameMode mode)
@@ -82,7 +72,7 @@ public partial class MainSystem : GameSystemBase
 
 		if(mode == GameMode.MainMenu) {
             //_mainMenuInitialized = true;
-            ExtraLib.onMainMenu?.Invoke();
+            onMainMenu?.Invoke();
             //if (GameManager.instance.modManager.isInitialized)
         }
 	}
@@ -97,9 +87,9 @@ public partial class MainSystem : GameSystemBase
 
         //CreateCustomPrefab();
 
-        ExtraLib.extraLibMonoScript.StartCoroutine(EditEntities());
+        EL.extraLibMonoScript.StartCoroutine(EditEntities());
 
-        ExtraLib.onInitialize?.Invoke();
+        onInitialize?.Invoke();
 
         return true;
     }
@@ -107,21 +97,21 @@ public partial class MainSystem : GameSystemBase
     internal IEnumerator EditEntities () {
 		int curentIndex = 0;
 
-        var notificationInfo = ExtraLib.m_NotificationUISystem.AddOrUpdateNotification(
-            $"{nameof(ExtraLib)}.{nameof(MainSystem)}.{nameof(EditEntities)}",
+        var notificationInfo = EL.m_NotificationUISystem.AddOrUpdateNotification(
+            $"{nameof(EL)}.{nameof(MainSystem)}.{nameof(EditEntities)}",
             title: "ExtraLib, Editing Entities",
             progressState: ProgressState.Indeterminate,
             progress: 0,
             thumbnail: $"{Icons.COUIBaseLocation}/Icons/Icon.svg"
         );
 
-        foreach (ExtraLib.EntityRequester entityRequester in ExtraLib.entityRequesters)
+        foreach (EntityRequester entityRequester in entityRequesters)
         {
 
             notificationInfo.progressState = ProgressState.Progressing;
-            notificationInfo.progress = (int)(curentIndex / (float)ExtraLib.entityRequesters.Count * 100);
+            notificationInfo.progress = (int)(curentIndex / (float)entityRequesters.Count * 100);
             notificationInfo.text = entityRequester.onEditEnities.Method.DeclaringType.ToString();
-            ExtraLib.m_NotificationUISystem.AddOrUpdateNotification(ref notificationInfo);
+            EL.m_NotificationUISystem.AddOrUpdateNotification(ref notificationInfo);
 
             EntityQuery entityQuery = GetEntityQuery(entityRequester.entityQueryDesc);
             try
@@ -133,7 +123,7 @@ public partial class MainSystem : GameSystemBase
             yield return null;
         }
 
-        ExtraLib.m_NotificationUISystem.RemoveNotification(
+        EL.m_NotificationUISystem.RemoveNotification(
             identifier: notificationInfo.id,
             delay: 5f,
             text: "Complete",
@@ -145,7 +135,7 @@ public partial class MainSystem : GameSystemBase
     private void CreateCustomPrefab()
     {
 
-        if (!ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetMenuPrefab), "Landscaping"), out var p1) || p1 is not UIAssetMenuPrefab newCategory)
+        if (!EL.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetMenuPrefab), "Landscaping"), out var p1) || p1 is not UIAssetMenuPrefab newCategory)
         {
             return;
         }
@@ -153,7 +143,7 @@ public partial class MainSystem : GameSystemBase
         UIAssetMultiCategoryPrefab uIAssetParentCategoryPrefab = CreateDummyUIAssetMultiCategoryPrefab("Test Parent Cat 1", null, newCategory);
         UIAssetMultiCategoryPrefab uIAssetCategoryPrefab = CreateDummyUIAssetMultiCategoryPrefab("Test Parent Cat 2", uIAssetParentCategoryPrefab);
         CreateDummyPrefab("test object 1", uIAssetCategoryPrefab);
-        CreateDummyTestPrefab("test object 2", uIAssetCategoryPrefab);
+        CreateDummyPrefab("test object 2", uIAssetCategoryPrefab);
     }
 
     private UIAssetMultiCategoryPrefab CreateDummyUIAssetMultiCategoryPrefab(string name, UIAssetMultiCategoryPrefab parentCategory = null, UIAssetMenuPrefab m_Menu = null)
@@ -163,7 +153,7 @@ public partial class MainSystem : GameSystemBase
         uIAssetMultiCategoryPrefab.parentCategory = parentCategory;
         uIAssetMultiCategoryPrefab.m_Menu = m_Menu;
         UIObject uIObject = uIAssetMultiCategoryPrefab.AddComponent<UIObject>();
-        ExtraLib.m_PrefabSystem.AddPrefab(uIAssetMultiCategoryPrefab);
+        EL.m_PrefabSystem.AddPrefab(uIAssetMultiCategoryPrefab);
         return uIAssetMultiCategoryPrefab;
     }
 
@@ -173,7 +163,7 @@ public partial class MainSystem : GameSystemBase
         uIAssetCategoryPrefab.name = name;
         uIAssetCategoryPrefab.m_Menu = uIAssetMenuPrefab;
         UIObject uIObject = uIAssetCategoryPrefab.AddComponent<UIObject>();
-        ExtraLib.m_PrefabSystem.AddPrefab(uIAssetCategoryPrefab);
+        EL.m_PrefabSystem.AddPrefab(uIAssetCategoryPrefab);
         return uIAssetCategoryPrefab;
     }
 
@@ -183,16 +173,7 @@ public partial class MainSystem : GameSystemBase
         prefabBase.name = name;
         UIObject uIObject = prefabBase.AddComponent<UIObject>();
         uIObject.m_Group = uIGroupPrefab;
-        ExtraLib.m_PrefabSystem.AddPrefab(prefabBase);
-    }
-
-    private void CreateDummyTestPrefab(string name, UIGroupPrefab uIGroupPrefab)
-    {
-        TestPrefabCustomPrefab prefabBase = ScriptableObject.CreateInstance<TestPrefabCustomPrefab>();
-        prefabBase.name = name;
-        UIObject uIObject = prefabBase.AddComponent<UIObject>();
-        uIObject.m_Group = uIGroupPrefab;
-        ExtraLib.m_PrefabSystem.AddPrefab(prefabBase);
+        EL.m_PrefabSystem.AddPrefab(prefabBase);
     }
 
 }

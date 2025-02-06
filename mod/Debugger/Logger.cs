@@ -2,7 +2,7 @@ using Colossal.Logging;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace Extra.Lib.Debugger;
+namespace ExtraLib.Debugger;
 
 public class Logger(ILog log, bool debugMod = false)
 {

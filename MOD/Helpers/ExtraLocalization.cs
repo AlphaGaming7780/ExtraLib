@@ -1,18 +1,15 @@
 ﻿using Colossal.Json;
 using Colossal.Localization;
 using Colossal.Logging;
-using Extra;
-using Extra.Lib.Debugger;
-using Game.Prefabs;
+using ExtraLib.Debugger;
 using Game.SceneFlow;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
-namespace Extra.Lib.Localization;
+namespace ExtraLib.Helpers;
 
 public class ExtraLocalization
 {
@@ -26,12 +23,12 @@ public class ExtraLocalization
     /// <param name="logger">The logger of your mod, used in case something need to be printed.</param>
     /// <param name="assembly">The assemby of your mod, used to get the embedded files</param>
     /// <param name="singleFile">true if you have one localizaton file for all the local id.</param>
-    public static void LoadLocalization(Logger logger, Assembly assembly, bool singleFile = false, string namespaceName = null, string defaultLocalID = "en-US") 
-	{
+    public static void LoadLocalization(Logger logger, Assembly assembly, bool singleFile = false, string namespaceName = null, string defaultLocalID = "en-US")
+    {
         namespaceName ??= assembly.GetName().Name;
         logger.Info("Start loading the localization.");
-		try
-		{
+        try
+        {
             if (singleFile)
             {
                 logger.Info("Loading Global Localization file");
@@ -62,7 +59,8 @@ public class ExtraLocalization
                     {
                         localization = Decoder.Decode(new StreamReader(assembly.GetManifestResourceStream($"{namespaceName}.embedded.Localization.{defaultLocalID}.json")).ReadToEnd()).Make<Dictionary<string, string>>();
                         logger.Warn($"No {localeID} in the files, using {defaultLocalID} instead.");
-                    } else
+                    }
+                    else
                     {
                         logger.Error($"No {localeID} in the files, and no {defaultLocalID}. This maybe due of an assembly name different from the namespace name.");
                         continue;
@@ -71,8 +69,9 @@ public class ExtraLocalization
                     GameManager.instance.localizationManager.AddSource(localeID, new MemorySource(localization));
                 }
             }
-        } catch (Exception ex) { logger.Error(ex); }
-	}
+        }
+        catch (Exception ex) { logger.Error(ex); }
+    }
 
     public static void LoadLocalization(ILog log, Assembly assembly, bool singleFile = false, string namespaceName = null, string defaultLocalID = "en-US")
     {

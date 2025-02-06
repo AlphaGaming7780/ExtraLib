@@ -1,15 +1,15 @@
 using Game.Prefabs;
 using Unity.Entities;
 
-namespace Extra.Lib;
+namespace ExtraLib.ClassExtension;
 
 public static class UIGroupPrefabExtension
 {
 	public static void RemoveElement(this UIGroupPrefab uIGroupPrefab, Entity entity) 
 	{
-		Entity entity2 = ExtraLib.m_PrefabSystem.GetEntity(uIGroupPrefab);
-		var uiGroupBuffer = ExtraLib.m_EntityManager.GetBuffer<UIGroupElement>(entity2);//.Add(new UIGroupElement(entity));
-		var unlockRequirementBuffer = ExtraLib.m_EntityManager.GetBuffer<UnlockRequirement>(entity2);//.Add(new UnlockRequirement(entity, UnlockFlags.RequireAny));
+		Entity entity2 = EL.m_PrefabSystem.GetEntity(uIGroupPrefab);
+		var uiGroupBuffer = EL.m_EntityManager.GetBuffer<UIGroupElement>(entity2);//.Add(new UIGroupElement(entity));
+		var unlockRequirementBuffer = EL.m_EntityManager.GetBuffer<UnlockRequirement>(entity2);//.Add(new UnlockRequirement(entity, UnlockFlags.RequireAny));
 
 
         for (int i = 0; i < uiGroupBuffer.Length; i++) 
@@ -32,8 +32,8 @@ public static class UIGroupPrefabExtension
 	} 
 	public static void AddElement(this UIGroupPrefab uIGroupPrefab, Entity entity)
 	{
-		Entity entity2 = ExtraLib.m_PrefabSystem.GetEntity(uIGroupPrefab);
-		DynamicBuffer<UIGroupElement> uiGroupBuffer = ExtraLib.m_EntityManager.GetBuffer<UIGroupElement>(entity2);
+		Entity entity2 = EL.m_PrefabSystem.GetEntity(uIGroupPrefab);
+		DynamicBuffer<UIGroupElement> uiGroupBuffer = EL.m_EntityManager.GetBuffer<UIGroupElement>(entity2);
 
         bool isNotInTheBuffer = true;
         for (int i = 0; i < uiGroupBuffer.Length; i++)
@@ -47,7 +47,7 @@ public static class UIGroupPrefabExtension
 
         if (isNotInTheBuffer) uiGroupBuffer.Add(new UIGroupElement(entity));
 
-		DynamicBuffer<UnlockRequirement> unlockRequirements = ExtraLib.m_EntityManager.GetBuffer<UnlockRequirement>(entity2);
+		DynamicBuffer<UnlockRequirement> unlockRequirements = EL.m_EntityManager.GetBuffer<UnlockRequirement>(entity2);
 
         isNotInTheBuffer = true;
         for (int i = 0; i < unlockRequirements.Length; i++)

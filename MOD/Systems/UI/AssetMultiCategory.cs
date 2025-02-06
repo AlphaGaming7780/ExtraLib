@@ -1,27 +1,16 @@
 ﻿using Colossal.Entities;
 using Colossal.UI.Binding;
-using Extra.Lib.Patches;
-using Extra.Lib.Prefabs;
-using Game;
-using Game.Objects;
+using ExtraLib.Prefabs;
 using Game.Prefabs;
 using Game.UI;
 using Game.UI.InGame;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Entities.UniversalDelegates;
-using static Extra.Lib.UI.ExtraAssetsMenu;
-using static Game.Rendering.Debug.RenderPrefabRenderer;
-using static Unity.Collections.AllocatorManager;
 
-namespace Extra.Lib.mod.Systems
+namespace ExtraLib.Systems.UI
 {
 
     internal partial class AssetMultiCategory : UISystemBase
