@@ -38,7 +38,7 @@ export function CustomAssetCategoryTabBar(AssetCats: AssetCat[], selectedTab: st
 }
 
 export const ExtraAssetsMenu: ModuleRegistryExtend = (Component: any) => {
-	return (props: PropsAssetCategoryTabBar) => {
+    return (props: PropsAssetCategoryTabBar) => {
 
 		var visible: boolean = useValue(visible$);
 		var selectedTab: string = useValue(SelectedTab$);
@@ -53,7 +53,6 @@ export const ExtraAssetsMenu: ModuleRegistryExtend = (Component: any) => {
 			{visible && CustomAssetCategoryTabBar(assetCats, selectedTab, OnClick)}
             <Component categories={props.categories} selectedCategory={props.selectedCategory} onChange={props.onChange} onClose={props.onClose} /> 
 		</>
-
 
 		return result;
 	};

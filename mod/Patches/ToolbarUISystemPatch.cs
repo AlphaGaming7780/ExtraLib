@@ -2,9 +2,12 @@
 using Extra;
 using Extra.Lib;
 using Extra.Lib.UI;
+using Extra.Lib.mod.Systems;
+using Game.Input;
 using Game.Prefabs;
 using Game.UI.InGame;
 using HarmonyLib;
+using System.Collections.Generic;
 using Unity.Entities;
 
 namespace Extra.Lib.Patches;
@@ -19,12 +22,28 @@ public class ToolbarUISystemPatch
 
             if (assetMenu != Entity.Null && ExtraLib.m_EntityManager.HasComponent<UIAssetMenuData>(assetMenu))
             {
+                AssetMultiCategory.instance.OnSelectAssetMenu(assetMenu);
+
                 ExtraLib.m_PrefabSystem.TryGetPrefab(assetMenu, out PrefabBase prefabBase);
 
                 ExtraAssetsMenu.ShowCatsTab(prefabBase is UIAssetMenuPrefab && prefabBase.name == ExtraAssetsMenu.CatTabName);
+
             }
         }
     }
+
+    [HarmonyPatch(typeof(ToolbarUISystem), "SelectAssetCategory")]
+    class SelectAssetCategory
+    {
+        static void Postfix(Entity assetCategory)
+        {
+            if (assetCategory != Entity.Null && ExtraLib.m_EntityManager.HasComponent<UIAssetCategoryData>(assetCategory))
+            {
+                AssetMultiCategory.instance.OnSelectAssetCategory(assetCategory);
+            }
+        }
+    }
+
 
     public static void UpdateCatUI()
     {

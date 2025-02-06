@@ -12,6 +12,10 @@ using System.Collections;
 using Extra.Lib.UI;
 using Extra.Lib.mod.ClassExtension;
 using Game.SceneFlow;
+using UnityEngine;
+using Extra.Lib.Prefabs;
+using Extra.Lib.mod.Prefabs;
+using Colossal.IO.AssetDatabase;
 
 namespace Extra.Lib.Systems;
 
@@ -91,6 +95,8 @@ public partial class MainSystem : GameSystemBase
             GameManager.instance.state == GameManager.State.Booting
             ) return false;
 
+        //CreateCustomPrefab();
+
         ExtraLib.extraLibMonoScript.StartCoroutine(EditEntities());
 
         ExtraLib.onInitialize?.Invoke();
@@ -134,6 +140,59 @@ public partial class MainSystem : GameSystemBase
             progressState: ProgressState.Complete,
             progress: 100
         );
+    }
+
+    private void CreateCustomPrefab()
+    {
+
+        if (!ExtraLib.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetMenuPrefab), "Landscaping"), out var p1) || p1 is not UIAssetMenuPrefab newCategory)
+        {
+            return;
+        }
+
+        UIAssetMultiCategoryPrefab uIAssetParentCategoryPrefab = CreateDummyUIAssetMultiCategoryPrefab("Test Parent Cat 1", null, newCategory);
+        UIAssetMultiCategoryPrefab uIAssetCategoryPrefab = CreateDummyUIAssetMultiCategoryPrefab("Test Parent Cat 2", uIAssetParentCategoryPrefab);
+        CreateDummyPrefab("test object 1", uIAssetCategoryPrefab);
+        CreateDummyTestPrefab("test object 2", uIAssetCategoryPrefab);
+    }
+
+    private UIAssetMultiCategoryPrefab CreateDummyUIAssetMultiCategoryPrefab(string name, UIAssetMultiCategoryPrefab parentCategory = null, UIAssetMenuPrefab m_Menu = null)
+    {
+        UIAssetMultiCategoryPrefab uIAssetMultiCategoryPrefab = ScriptableObject.CreateInstance<UIAssetMultiCategoryPrefab>();
+        uIAssetMultiCategoryPrefab.name = name;
+        uIAssetMultiCategoryPrefab.parentCategory = parentCategory;
+        uIAssetMultiCategoryPrefab.m_Menu = m_Menu;
+        UIObject uIObject = uIAssetMultiCategoryPrefab.AddComponent<UIObject>();
+        ExtraLib.m_PrefabSystem.AddPrefab(uIAssetMultiCategoryPrefab);
+        return uIAssetMultiCategoryPrefab;
+    }
+
+    private UIAssetCategoryPrefab CreateDummyAssetCategory(string name, UIAssetMenuPrefab uIAssetMenuPrefab)
+    {
+        UIAssetCategoryPrefab uIAssetCategoryPrefab = ScriptableObject.CreateInstance<UIAssetCategoryPrefab>();
+        uIAssetCategoryPrefab.name = name;
+        uIAssetCategoryPrefab.m_Menu = uIAssetMenuPrefab;
+        UIObject uIObject = uIAssetCategoryPrefab.AddComponent<UIObject>();
+        ExtraLib.m_PrefabSystem.AddPrefab(uIAssetCategoryPrefab);
+        return uIAssetCategoryPrefab;
+    }
+
+    private void CreateDummyPrefab(string name, UIGroupPrefab uIGroupPrefab)
+    {
+        StaticObjectPrefab prefabBase = ScriptableObject.CreateInstance<StaticObjectPrefab>();
+        prefabBase.name = name;
+        UIObject uIObject = prefabBase.AddComponent<UIObject>();
+        uIObject.m_Group = uIGroupPrefab;
+        ExtraLib.m_PrefabSystem.AddPrefab(prefabBase);
+    }
+
+    private void CreateDummyTestPrefab(string name, UIGroupPrefab uIGroupPrefab)
+    {
+        TestPrefabCustomPrefab prefabBase = ScriptableObject.CreateInstance<TestPrefabCustomPrefab>();
+        prefabBase.name = name;
+        UIObject uIObject = prefabBase.AddComponent<UIObject>();
+        uIObject.m_Group = uIGroupPrefab;
+        ExtraLib.m_PrefabSystem.AddPrefab(prefabBase);
     }
 
 }

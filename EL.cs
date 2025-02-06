@@ -11,6 +11,7 @@ using Game.SceneFlow;
 using System.IO;
 using Extra.Lib.Localization;
 using System.Reflection;
+using Extra.Lib.mod.Systems;
 
 namespace Extra
 {
@@ -55,6 +56,7 @@ namespace Extra
 			ExtraLib.extraLibMonoScript = ExtraLib.ExtraLibMonoObject.AddComponent<ExtraLibMonoScript>();
 
 			updateSystem.UpdateAt<ExtraLibUI>(SystemUpdatePhase.UIUpdate);
+			updateSystem.UpdateAt<AssetMultiCategory>(SystemUpdatePhase.UIUpdate);
 			updateSystem.UpdateAt<ExtraAssetsMenu>(SystemUpdatePhase.UIUpdate);
             updateSystem.UpdateAt<MainSystem>(SystemUpdatePhase.LateUpdate);
 
@@ -66,6 +68,7 @@ namespace Extra
 			{
 				Logger.Info($"Patched method: {patchedMethod.Module.Name}:{patchedMethod.Name}");
 			}
+
         }
 
 		public void OnDispose()
