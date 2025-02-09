@@ -39,11 +39,6 @@ public static class TextureHelper
     public static void GetTextureFromNonReadable(ref Texture2D texture2D)
     {
 
-        //if (texture2D)
-        //{
-        //    return;
-        //}
-
         RenderTexture scaledRT = RenderTexture.GetTemporary(texture2D.width, texture2D.height);
         Graphics.Blit(texture2D, scaledRT);
 
@@ -60,6 +55,25 @@ public static class TextureHelper
 
         UnityEngine.Object.Destroy(texture2D);
         texture2D = outputTexture;
+    }
+    public static Texture2D GetTexture2DFromTexture(Texture texture, TextureFormat textureFormat = TextureFormat.RGBA32)
+    {
+
+        RenderTexture scaledRT = RenderTexture.GetTemporary(texture.width, texture.height);
+        Graphics.Blit(texture, scaledRT);
+
+        Texture2D outputTexture = new(texture.width, texture.height, textureFormat, true);
+
+        RenderTexture.active = scaledRT;
+        outputTexture.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
+
+        outputTexture.Apply();
+
+        // Clean up
+        RenderTexture.active = null;
+        RenderTexture.ReleaseTemporary(scaledRT);
+
+        return outputTexture;
     }
 
     public static void Format(ref Texture2D texture2D, TextureFormat newTextureFormat)

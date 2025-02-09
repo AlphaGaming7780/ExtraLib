@@ -1,4 +1,6 @@
-﻿using Unity.Entities;
+﻿
+#if false
+using Unity.Entities;
 
 namespace ExtraLib.Prefabs
 {
@@ -12,3 +14,4 @@ namespace ExtraLib.Prefabs
         public Entity parentCategory;
     }
 }
+#endif

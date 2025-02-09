@@ -123,26 +123,12 @@ namespace ExtraLib.Systems.UI
 
             while (true)
             {
-                if (EntityManager.TryGetComponent<UIAssetMultiCategoryData>(entity, out UIAssetMultiCategoryData component))
-                {
-                    Entity parentEntity = component.parentCategory;
 
-                    _SelectedAssetMultiCategories.Insert(0, entity);
+                if (!TryGetParentCategory(entity, out Entity parentEntity)) break;
 
-                    if (parentEntity != Entity.Null)
-                    {
-                        
-                        entity = parentEntity;
-                        continue;
-                    }
+                _SelectedAssetMultiCategories.Insert(0, entity);
 
-                    break;
-
-                }
-                else
-                {
-                    break;
-                }
+                entity = parentEntity;
 
             }
 
@@ -154,7 +140,7 @@ namespace ExtraLib.Systems.UI
         {
             if(m_LastSelectedCategories.TryGetValue(assetMenu, out Entity lastCat))
             {
-                if (!EntityManager.HasComponent<UIAssetMultiCategoryData>(lastCat)) return;
+                if (!EntityManager.HasComponent<UIAssetParentCategoryData>(lastCat)) return;
             }
             Entity deepestAssetCategory = GetDeepestAssetCategory(assetMenu);
             _alreadyUpdated = true;
@@ -173,16 +159,14 @@ namespace ExtraLib.Systems.UI
                 return;
             }
 
-            if (!EntityManager.HasComponent<UIAssetMultiCategoryData>(assetCategory))
+            if (!TryGetParentCategory(assetCategory, out Entity parentCategory))
             {
                 UpdateSelectedAssetCategories(assetCategory);
                 return;
             }
 
-            UIAssetMultiCategoryData componentData = EntityManager.GetComponentData<UIAssetMultiCategoryData>(assetCategory);
-
-            if (_LastSelectedCategories.ContainsKey(componentData.parentCategory)) _LastSelectedCategories[componentData.parentCategory] = assetCategory;
-            else _LastSelectedCategories.Add(componentData.parentCategory, assetCategory);
+            if (_LastSelectedCategories.ContainsKey(parentCategory)) _LastSelectedCategories[parentCategory] = assetCategory;
+            else _LastSelectedCategories.Add(parentCategory, assetCategory);
 
             Entity deepestAssetCategory = GetDeepestAssetCategory(assetCategory);
 
@@ -207,7 +191,14 @@ namespace ExtraLib.Systems.UI
                 }
 
                 if (firstItem == null) break;
-                if (!EntityManager.HasComponent<UIAssetMultiCategoryData>(firstItem)) break;
+
+                if (EntityManager.HasComponent<UIAssetChildCategoryData>(firstItem))
+                {
+                    assetParentCategoryOrMenu = firstItem;
+                    break;
+                }
+
+                if (!EntityManager.HasComponent<UIAssetParentCategoryData>(firstItem)) break;
 
                 assetParentCategoryOrMenu = firstItem;
             }
@@ -220,6 +211,24 @@ namespace ExtraLib.Systems.UI
 
             return assetParentCategoryOrMenu;
 
+        }
+
+        private bool TryGetParentCategory(Entity assetCategory, out Entity parentCategory)
+        {
+            parentCategory = Entity.Null;
+            if (EntityManager.TryGetComponent<UIAssetParentCategoryData>(assetCategory, out UIAssetParentCategoryData component))
+            {
+                parentCategory = component.parentCategoryOrMenu;
+            }
+            else if (EntityManager.TryGetComponent<UIAssetChildCategoryData>(assetCategory, out UIAssetChildCategoryData component1))
+            {
+                parentCategory = component1.parentCategory;
+            }
+            else
+            {
+                return false;
+            }
+            return true;
         }
 
         private Entity GetFirstItem(Entity groupEntity, List<Entity> themes, List<Entity> packs)

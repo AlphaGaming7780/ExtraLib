@@ -140,18 +140,17 @@ public partial class MainSystem : GameSystemBase
             return;
         }
 
-        UIAssetMultiCategoryPrefab uIAssetParentCategoryPrefab = CreateDummyUIAssetMultiCategoryPrefab("Test Parent Cat 1", null, newCategory);
-        UIAssetMultiCategoryPrefab uIAssetCategoryPrefab = CreateDummyUIAssetMultiCategoryPrefab("Test Parent Cat 2", uIAssetParentCategoryPrefab);
+        UIAssetParentCategoryPrefab uIAssetParentCategoryPrefab = CreateDummyUIAssetParentCategoryPrefab("Test Parent Cat 1", newCategory);
+        UIAssetParentCategoryPrefab uIAssetCategoryPrefab = CreateDummyUIAssetParentCategoryPrefab("Test Parent Cat 2", uIAssetParentCategoryPrefab);
         CreateDummyPrefab("test object 1", uIAssetCategoryPrefab);
         CreateDummyPrefab("test object 2", uIAssetCategoryPrefab);
     }
 
-    private UIAssetMultiCategoryPrefab CreateDummyUIAssetMultiCategoryPrefab(string name, UIAssetMultiCategoryPrefab parentCategory = null, UIAssetMenuPrefab m_Menu = null)
+    private UIAssetParentCategoryPrefab CreateDummyUIAssetParentCategoryPrefab(string name, UIAssetMenuPrefab parentCategoryOrMenu = null)
     {
-        UIAssetMultiCategoryPrefab uIAssetMultiCategoryPrefab = ScriptableObject.CreateInstance<UIAssetMultiCategoryPrefab>();
+        UIAssetParentCategoryPrefab uIAssetMultiCategoryPrefab = ScriptableObject.CreateInstance<UIAssetParentCategoryPrefab>();
         uIAssetMultiCategoryPrefab.name = name;
-        uIAssetMultiCategoryPrefab.parentCategory = parentCategory;
-        uIAssetMultiCategoryPrefab.m_Menu = m_Menu;
+        uIAssetMultiCategoryPrefab.parentCategoryOrMenu = parentCategoryOrMenu;
         UIObject uIObject = uIAssetMultiCategoryPrefab.AddComponent<UIObject>();
         EL.m_PrefabSystem.AddPrefab(uIAssetMultiCategoryPrefab);
         return uIAssetMultiCategoryPrefab;
