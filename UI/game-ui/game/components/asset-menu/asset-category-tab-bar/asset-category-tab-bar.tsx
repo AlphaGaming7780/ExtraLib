@@ -1,6 +1,6 @@
 import { AssetCategory, Entity, tutorial } from "cs2/bindings"
 import { getModule } from "cs2/modding"
-import { FOCUS_DISABLED, RefReactElement, Tooltip } from "cs2/ui"
+import { FOCUS_DISABLED, Tooltip } from "cs2/ui"
 import { AssetDetailPanelContext } from "../asset-detail-panel/asset-detail-panel-context"
 import { Loc } from "../../../../common/localization/loc.generated"
 import { ReactNode, useContext } from "react"
