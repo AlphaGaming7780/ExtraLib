@@ -7,7 +7,7 @@ export type PropsIconButton = {
     tinted?: string,
     theme?: any,
     className?: string,
-    children?: JSX.Element,
+    children?: any,
     [key: string]: any;
 }
 
