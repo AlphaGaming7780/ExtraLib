@@ -66,8 +66,12 @@ namespace ExtraLib
             extraLibMonoScript = EL.ExtraLibMonoObject.AddComponent<ExtraLibMonoScript>();
 
 			updateSystem.UpdateAt<AssetMultiCategory>(SystemUpdatePhase.UIUpdate);
+            updateSystem.UpdateAt<ExtraPanelsUISystem>(SystemUpdatePhase.UIUpdate);
 			updateSystem.UpdateAt<ExtraAssetsMenu>(SystemUpdatePhase.UIUpdate);
             updateSystem.UpdateAt<MainSystem>(SystemUpdatePhase.LateUpdate);
+
+            ExtraPanelsUISystem extraPanelsUISystem = updateSystem.World.GetOrCreateSystemManaged<ExtraPanelsUISystem>();
+            extraPanelsUISystem.AddExtraPanel(updateSystem.World.GetOrCreateSystemManaged<TestExtraPanel>());
 
             harmony = new($"{nameof(ExtraLib)}.{nameof(EL)}");
             harmony.PatchAll(typeof(EL).Assembly);

@@ -1,15 +1,8 @@
-import { bindValue, trigger, useValue } from "cs2/api";
+import { bindValue, useValue } from "cs2/api";
 import { ModuleRegistryExtend } from "cs2/modding";
 import { CategoryItem, PropsAssetCategoryTabBar } from "../../game-ui/game/components/asset-menu/asset-category-tab-bar/asset-category-tab-bar";
 import { AssetCategoryTabBarSCSS } from "../../game-ui/game/components/asset-menu/asset-category-tab-bar/asset-category-tab-bar.module.scss";
-import { CategoryItemSCSS } from "../../game-ui/game/components/asset-menu/asset-category-tab-bar/category-item.module.scss";
-import { MouseEvent } from "react";
-import { useLocalization } from "cs2/l10n";
-import { AssetDetailPanelSCSS } from "../../game-ui/game/components/asset-menu/asset-detail-panel/asset-detail-panel.module.scss";
-import { AssetMenuSCSS } from "../../game-ui/game/components/asset-menu/asset-menu.module.scss";
-import { FormattedParagraphsSCSS } from "../../game-ui/common/text/formatted-paragraphs.module.scss";
-import { FormattedTextSCSS } from "../../game-ui/common/text/formatted-text.module.scss";
-import { AssetCategory, Entity, UISound, toolbar } from "cs2/bindings";
+import { AssetCategory, Entity, toolbar } from "cs2/bindings";
 import { entityEquals } from "cs2/utils";
 
 export const SelectedAssetMultiCategories$ = bindValue<Entity[]>("el", 'SelectedAssetMultiCategories');

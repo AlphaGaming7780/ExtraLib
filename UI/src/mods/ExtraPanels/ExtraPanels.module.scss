@@ -1,0 +1,31 @@
+
+.ExtraPanelsSelectorContainer {
+    display: flex;
+    flex-direction: row;
+
+    .ExtraPanelsSelectorButton {
+        width: 40rem;
+        height: 40rem;
+
+        + .selected {
+            width: 50%;
+            transform: scale(1.25);
+        }
+
+        + .test {
+            width: 50%;
+        }
+    }
+
+    .ExtraPanelsSelectorPanelsContainer {
+        height: 100%;
+        width: auto;
+        transform: scaleX(0);
+        background-color: dimgrey;
+
+        + .selected {
+            width: 100%;
+            transform: scaleX(1);
+        }
+    }
+}
