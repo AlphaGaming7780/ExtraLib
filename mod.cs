@@ -17,6 +17,7 @@ using ExtraLib.Systems.UI;
 using ExtraLib.Helpers;
 using ExtraLib.Mono;
 using Logger = ExtraLib.Debugger.Logger;
+using ExtraLib.Systems.UI.ExtraPanels;
 
 
 namespace ExtraLib

@@ -35,8 +35,6 @@ export const AssetMultiCategory: ModuleRegistryExtend = (Component: any) => {
 			})}
 		</>
 
-
-
 		return result;
 	};
 }

@@ -6,26 +6,57 @@
     .ExtraPanelsSelectorButton {
         width: 40rem;
         height: 40rem;
+        transition-property: width, height;
+        transition-delay: 0.25s;
+        transition-duration: 0.1s;
+        transition-timing-function: ease-in-out;
 
-        + .selected {
-            width: 50%;
-            transform: scale(1.25);
-        }
-
-        + .test {
-            width: 50%;
+        &.selected {
+            width: 50rem;
+            height: 50rem;
+            transition-delay: 0s;
         }
     }
 
     .ExtraPanelsSelectorPanelsContainer {
-        height: 100%;
-        width: auto;
+        height: 46rem;
+        width: 0%;
         transform: scaleX(0);
-        background-color: dimgrey;
+        transform-origin: left center;
+        background-color: var(--panelColorNormal);
+        backdrop-filter: var(--panelBlur);
+        margin-top: 2rem;
+        padding-right: 5rem;
+        border-top-right-radius: 10rem 10rem;
+        border-bottom-right-radius: 10rem 10rem;
+        display: flex;
+        align-items: center;
+        transition-property: width, transform;
+        transition-delay: 0s;
+        transition-duration: 0.25s;
+        transition-timing-function: ease-in-out;
 
-        + .selected {
-            width: 100%;
+        &.selected {
+            width: auto;
             transform: scaleX(1);
+            transition-delay: 0.1s;
+        }
+
+        .ExtraPanelButton {
+            margin-left: 5rem;
+            height: 40rem;
+            width: 40rem;
+
+            transition-property: transform;
+            transition-delay: 0s;
+            transition-duration: 0.1s;
+            transition-timing-function: ease-in-out;
+
+            &.selected {
+                //width: 43rem;
+                //height: 43rem;
+                transform: scale(1.05); //1.1 is good too
+            }
         }
     }
 }

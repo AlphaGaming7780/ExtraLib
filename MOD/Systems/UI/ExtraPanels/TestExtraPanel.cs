@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExtraLib.Systems.UI
+namespace ExtraLib.Systems.UI.ExtraPanels
 {
     internal partial class TestExtraPanel : ExtraPanelBase
     {

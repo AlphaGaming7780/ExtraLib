@@ -48,7 +48,6 @@ namespace ExtraLib.Systems.UI
 
             AddBinding(_AssetMultiCategoriesBinding = new RawValueBinding("el", "AssetMultiCategories", new Action<IJsonWriter>(this.WriteAssetMultiCategories)));
             AddBinding(_SelectedAssetMultiCategoriesBinding = new GetterValueBinding<List<Entity>>("el", "SelectedAssetMultiCategories", () => _SelectedAssetMultiCategories, new ListWriter<Entity>()));
-
         }
 
         protected override void OnUpdate()
