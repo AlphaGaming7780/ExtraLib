@@ -72,7 +72,7 @@ namespace ExtraLib
             updateSystem.UpdateAt<MainSystem>(SystemUpdatePhase.LateUpdate);
 
             ExtraPanelsUISystem extraPanelsUISystem = updateSystem.World.GetOrCreateSystemManaged<ExtraPanelsUISystem>();
-            extraPanelsUISystem.AddExtraPanel(updateSystem.World.GetOrCreateSystemManaged<TestExtraPanel>());
+            extraPanelsUISystem.AddExtraPanel<TestExtraPanel>();
 
             harmony = new($"{nameof(ExtraLib)}.{nameof(EL)}");
             harmony.PatchAll(typeof(EL).Assembly);

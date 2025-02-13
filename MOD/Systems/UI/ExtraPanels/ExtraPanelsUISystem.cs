@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.Mathematics;
 
 namespace ExtraLib.Systems.UI.ExtraPanels
 {
@@ -29,6 +30,11 @@ namespace ExtraLib.Systems.UI.ExtraPanels
         private List<ExtraPanelBase> m_ValidPanels;
         private bool m_DirtyPanelBinding = false;
         private RawValueBinding m_PanelsBinding;
+
+        public void AddExtraPanel<T>() where T : ExtraPanelBase
+        {
+            AddExtraPanel(World.GetOrCreateSystemManaged<T>());
+        }
 
         public void AddExtraPanel(ExtraPanelBase panel)
         {
@@ -60,6 +66,8 @@ namespace ExtraLib.Systems.UI.ExtraPanels
             AddBinding(m_PanelsBinding = new RawValueBinding("el", "ExtraPanels", WritePanels ) );
             AddBinding(new TriggerBinding<string>("el", "OpenExtraPanel", OpenExtraPanel));
             AddBinding(new TriggerBinding<string>("el", "CloseExtraPanel", CloseExtraPanel));
+
+            AddBinding(new TriggerBinding<string, float2>("el", "LocationChanged", UpdatePanelLocation));
         }
 
         protected override void OnGameLoadingComplete(Purpose purpose, GameMode mode)
@@ -132,22 +140,63 @@ namespace ExtraLib.Systems.UI.ExtraPanels
 
         private void WritePanels(IJsonWriter writer)
         {
-            writer.ArrayBegin(m_Panels.Count);
-            for (int i = 0; i < m_Panels.Count; i++)
+            // To Do check if this setup using the m_ValidPanels isn't going to create useValue error on the UI side because nbr of hook sin't the same.
+            // Edit, normally it shouldn't because their UI are called before rendering.
+            writer.ArrayBegin(m_ValidPanels.Count);
+            for (int i = 0; i < m_ValidPanels.Count; i++)
             {
-                writer.Write(m_Panels[i]);
+                writer.Write(m_ValidPanels[i]);
             }
             writer.ArrayEnd();
         }
 
+        public bool TryToFindPanelByID(string id, out ExtraPanelBase extraPanelBase)
+        {
+            extraPanelBase = FindPanelByID(id);
+            return extraPanelBase != default;
+        }
+
+        public ExtraPanelBase FindPanelByID(string id)
+        {
+            return m_ValidPanels.Find((ExtraPanelBase) => { return ExtraPanelBase.ID == id; });
+        }
+
         private void OpenExtraPanel(string id)
         {
-            m_ValidPanels.Find( (ExtraPanelBase) => { return ExtraPanelBase.ID == id; }).SetVisible(true);
+
+            if(!TryToFindPanelByID(id, out ExtraPanelBase extraPanelBase))
+            {
+                EL.Logger.Warn($"Try to open an Extra Panel with id : {id}, but this id doesn't exist in the valide panels.");
+                return;
+            }
+
+            extraPanelBase.SetVisible(true);
+            
         }
 
         private void CloseExtraPanel(string id)
         {
-            m_ValidPanels.Find((ExtraPanelBase) => { return ExtraPanelBase.ID == id; }).SetVisible(false);
+
+            if (!TryToFindPanelByID(id, out ExtraPanelBase extraPanelBase))
+            {
+                EL.Logger.Warn($"Try to clsoe an Extra Panel with id : {id}, but this id doesn't exist in the valide panels.");
+                return;
+            }
+
+            extraPanelBase.SetVisible(false);
+        }
+
+        private void UpdatePanelLocation(string id, float2 newLocation)
+        {
+
+            if (!TryToFindPanelByID(id, out ExtraPanelBase extraPanelBase))
+            {
+                EL.Logger.Warn($"Try to update the location of an Extra Panel with id : {id}, but this id doesn't exist in the valide panels.");
+                return;
+            }
+
+            extraPanelBase.SetPanelLocation(newLocation);
+
         }
 
     }

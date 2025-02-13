@@ -14,7 +14,7 @@ namespace ExtraLib.Systems.UI.ExtraPanels
 {
     internal abstract partial class ExtraPanelBase : UISystemBase, IJsonWritable
     {
-        public string ID => base.GetType().FullName;
+        public string ID => GetType().FullName;
         public override GameMode gameMode => GameMode.Game;
         public virtual string Icon => "Media/Placeholder.svg";
 
@@ -27,13 +27,14 @@ namespace ExtraLib.Systems.UI.ExtraPanels
 
         protected bool m_Dirty;
 
-        public int2 PanelLocation { get; private set; }
+        public float2 PanelLocation { get; private set; }
+        public float2 PanelSize { get; private set; }
 
         protected override void OnCreate()
         {
             base.OnCreate();
 
-            PanelLocation = int2.zero;
+            PanelLocation = new float2(0.01f, 0.07f);
             m_ExtraPanelsUISystem = World.GetOrCreateSystemManaged<ExtraPanelsUISystem>();
         }
 
@@ -60,15 +61,19 @@ namespace ExtraLib.Systems.UI.ExtraPanels
 
         public void Write(IJsonWriter writer)
         {
-            writer.TypeBegin("ExtraPanel");
-            writer.PropertyName("id");
-            writer.Write(ID);
+            writer.TypeBegin(ID);
+            //writer.PropertyName("id");
+            //writer.Write(ID);
             writer.PropertyName("icon");
             writer.Write( Icon );
             writer.PropertyName("visible");
             writer.Write(Visible());
             writer.PropertyName("showInSelector");
             writer.Write(ShowInSelector());
+            writer.PropertyName("panelLocation");
+            writer.Write(PanelLocation);
+            writer.PropertyName("panelSize");
+            writer.Write(PanelSize);
             writer.TypeEnd();
             return;
         }
@@ -100,11 +105,10 @@ namespace ExtraLib.Systems.UI.ExtraPanels
             //return m_ShowInSelector && ((GameManager.instance.gameMode & gameMode) > 0);
         }
 
-        public void SetPanelLocation(int2 panelLocation)
+        public void SetPanelLocation(float2 panelLocation)
         {
             PanelLocation = panelLocation;
             m_ExtraPanelsUISystem.RequestBindingUpdate();
         }
-
     }
 }

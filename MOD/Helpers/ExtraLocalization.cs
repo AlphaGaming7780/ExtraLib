@@ -71,6 +71,7 @@ public class ExtraLocalization
             }
         }
         catch (Exception ex) { logger.Error(ex); }
+
     }
 
     public static void LoadLocalization(ILog log, Assembly assembly, bool singleFile = false, string namespaceName = null, string defaultLocalID = "en-US")
