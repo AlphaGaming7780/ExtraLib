@@ -2,7 +2,7 @@ import { FloatingButton, Panel, Tooltip } from "cs2/ui";
 import ExtraPanelsSCSS from "./ExtraPanelsButton.module.scss"
 import classNames from "classnames";
 import { bindValue, trigger, useValue } from "cs2/api";
-import { ExtraPanelType } from "../ExtraPanelType";
+import { CloseExtraPanel, ExtraPanelType, OpenExtraPanel } from "../ExtraPanelType";
 import { ExtraPanel } from "../ExtraPanel/ExtraPanel";
 
 
@@ -11,9 +11,7 @@ const ExtraPanelsMenuOpened$ = bindValue<boolean>("el", 'ExtraPanelsMenuOpened')
 const ShouldOpenExtraPanels$ = bindValue<boolean>("el", "ShouldOpenExtraPanels");
 const ExtraPanelsList$ = bindValue<ExtraPanelType[]>("el", 'ExtraPanels');
 
-export let doOnce = true
-
-export const ExtraPanelsButton = () => {
+export const ExtraPanelsButton = (isEditor : boolean = false) : JSX.Element => {
 
     let showButton: boolean = useValue(ShowExtraPanelsButton$);
     let opened: boolean = useValue(ExtraPanelsMenuOpened$);
@@ -58,8 +56,8 @@ export const ExtraPanelsButton = () => {
     }
 
 
-    return showButton ? <div className={classNames(ExtraPanelsSCSS.ExtraPanelsSelectorContainer, IsOpened ? ExtraPanelsSCSS.selected : "")} >
-        <Tooltip tooltip={ "ExtraPanels.Button" } >
+    return showButton ? <div className={classNames(ExtraPanelsSCSS.ExtraPanelsSelectorContainer, IsOpened ? ExtraPanelsSCSS.selected : "")} style={isEditor ? { pointerEvents: "auto" } : {} } >
+        <Tooltip tooltip={ "ExtraPanelsButton" } >
             <FloatingButton
                 className={classNames(ExtraPanelsSCSS.ExtraPanelsSelectorButton, IsOpened ? ExtraPanelsSCSS.selected : "")}
                 selected={IsOpened}
@@ -80,9 +78,9 @@ export const ExtraPanelsButton = () => {
                             src={extraPanel.icon}
                             onClick={() => {
                                 if (extraPanel.visible) {
-                                    trigger("el", "CloseExtraPanel", extraPanel.__Type)
+                                    CloseExtraPanel(extraPanel)
                                 } else {
-                                    trigger("el", "OpenExtraPanel", extraPanel.__Type)
+                                    OpenExtraPanel(extraPanel)
                                 }
                             }}
                         ></ FloatingButton>

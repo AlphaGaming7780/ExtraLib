@@ -21,7 +21,9 @@ export const ExtraPanelsRoot = () => {
     return <div>
         {
             ExtraPanelsList && ExtraPanelsList.length > 0 && ExtraPanelsList.map((extraPanel: ExtraPanelType, index: number) => {
+                console.log(extraPanel.panelLocation)
                 if (!extraPanel.visible) return <></>
+                
                 return <ExtraPanel extraPanel={extraPanel} >
                     {extraPanelsComponents[extraPanel.__Type] != undefined ?
                         extraPanelsComponents[extraPanel.__Type] :

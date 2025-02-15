@@ -1,0 +1,19 @@
+
+.ExtraPanelHeader {
+    display: flex;
+    flex-direction: row;
+
+
+    .PanelIcon {
+
+    }
+
+    .PanelName {
+        flex-grow: 1
+    }
+
+    .PanelCloseButton {
+
+    }
+
+}

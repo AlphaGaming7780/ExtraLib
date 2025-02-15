@@ -10,8 +10,6 @@ export const HelloWorldComponent = () => {
 
 export const extraPanelsComponentsExtended = (ComponentList: { [x: string]: any; }): any => {
 
-    console.log(ComponentList);
-
     return ComponentList["ExtraLib.Systems.UI.ExtraPanels.TestExtraPanel"] = <div>Let's GO</div>;
 
 }

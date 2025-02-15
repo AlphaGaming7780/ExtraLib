@@ -18,7 +18,7 @@ namespace ExtraLib.Systems.UI.ExtraPanels
     internal partial class ExtraPanelsUISystem : UISystemBase
     {
         // Compatible gameMode;
-        public override GameMode gameMode => GameMode.Game;
+        public override GameMode gameMode => GameMode.Game | GameMode.Editor;
 
         private GetterValueBinding<bool> m_ShowExtraPanelsButtonBinding;
 
@@ -66,6 +66,9 @@ namespace ExtraLib.Systems.UI.ExtraPanels
             AddBinding(m_PanelsBinding = new RawValueBinding("el", "ExtraPanels", WritePanels ) );
             AddBinding(new TriggerBinding<string>("el", "OpenExtraPanel", OpenExtraPanel));
             AddBinding(new TriggerBinding<string>("el", "CloseExtraPanel", CloseExtraPanel));
+
+            AddBinding(new TriggerBinding<string>("el", "CollapseExtraPanel", CollapseExtraPanel));
+            AddBinding(new TriggerBinding<string>("el", "ExpandExtraPanel", ExpandExtraPanel));
 
             AddBinding(new TriggerBinding<string, float2>("el", "LocationChanged", UpdatePanelLocation));
         }
@@ -186,6 +189,28 @@ namespace ExtraLib.Systems.UI.ExtraPanels
             extraPanelBase.SetVisible(false);
         }
 
+        private void ExpandExtraPanel(string id)
+        {
+            if (!TryToFindPanelByID(id, out ExtraPanelBase extraPanelBase))
+            {
+                EL.Logger.Warn($"Try to clsoe an Extra Panel with id : {id}, but this id doesn't exist in the valide panels.");
+                return;
+            }
+
+            extraPanelBase.SetExpanded(true);
+        }
+
+        private void CollapseExtraPanel(string id)
+        {
+            if (!TryToFindPanelByID(id, out ExtraPanelBase extraPanelBase))
+            {
+                EL.Logger.Warn($"Try to clsoe an Extra Panel with id : {id}, but this id doesn't exist in the valide panels.");
+                return;
+            }
+
+            extraPanelBase.SetExpanded(false);
+        }
+
         private void UpdatePanelLocation(string id, float2 newLocation)
         {
 
@@ -196,6 +221,8 @@ namespace ExtraLib.Systems.UI.ExtraPanels
             }
 
             extraPanelBase.SetPanelLocation(newLocation);
+
+            EL.Logger.Info(newLocation);
 
         }
 

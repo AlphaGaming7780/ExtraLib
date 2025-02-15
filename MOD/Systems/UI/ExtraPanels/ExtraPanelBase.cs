@@ -29,6 +29,7 @@ namespace ExtraLib.Systems.UI.ExtraPanels
 
         public float2 PanelLocation { get; private set; }
         public float2 PanelSize { get; private set; }
+        public bool Expanded { get; private set; } = true;
 
         protected override void OnCreate()
         {
@@ -68,6 +69,8 @@ namespace ExtraLib.Systems.UI.ExtraPanels
             writer.Write( Icon );
             writer.PropertyName("visible");
             writer.Write(Visible());
+            writer.PropertyName("expanded");
+            writer.Write(Expanded);
             writer.PropertyName("showInSelector");
             writer.Write(ShowInSelector());
             writer.PropertyName("panelLocation");
@@ -98,9 +101,16 @@ namespace ExtraLib.Systems.UI.ExtraPanels
             //return m_Visible && ((GameManager.instance.gameMode & gameMode) > 0);
         }
 
+        public void SetExpanded(bool expanded)
+        {
+            Expanded = expanded;
+            m_ExtraPanelsUISystem.RequestBindingUpdate();
+        }
+
         public bool ShowInSelector()
         {
             return m_ShowInSelector;
+
             // Not needed anymore, since I'm filtering the panel inside the main system.
             //return m_ShowInSelector && ((GameManager.instance.gameMode & gameMode) > 0);
         }

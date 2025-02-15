@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Game;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace ExtraLib.Systems.UI.ExtraPanels
 {
     internal partial class TestExtraPanel : ExtraPanelBase
     {
+        public override GameMode gameMode => GameMode.Game | GameMode.Editor;
         protected override void OnCreate()
         {
             base.OnCreate();

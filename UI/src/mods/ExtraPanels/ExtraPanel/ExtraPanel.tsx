@@ -1,53 +1,49 @@
 import { Panel, Number2, DraggablePanelProps } from "cs2/ui"
-import { ExtraPanelType } from "../ExtraPanelType"
+import { CloseExtraPanel, ExtraPanelType, SetPanelPosition } from "../ExtraPanelType"
 import { trigger } from "cs2/api"
 import { ExtraPanelHeader } from "./Header/ExtraPanelHeader"
-import { FC, MouseEventHandler, useCallback, useEffect, useState } from "react"
+import React, { FC, MouseEventHandler, useCallback, useEffect, useRef, useState } from "react"
 import { useMouseDragEvents, DragEventData } from "../../../../game-ui/common/hooks/use-mouse-drag-events"
-export function SetPanelPosition(extraPanel : ExtraPanelType, newPos : Number2) {
-    trigger("el", "LocationChanged", extraPanel.__Type, newPos)
-}
+import { PanelTitleBar } from "../../../../game-ui/common/panel/panel-title-bar"
+import { CollapsiblePanel } from "../../../../game-ui/common/panel/collapsible-panel"
+import { DragHandle } from "../../../../game-ui/common/input/drag-handle"
+import classNames from "classnames"
+import { useElementRect } from "../../../../game-ui/common/hooks/resize-events"
 
-export interface ExtraPanelProps {
+export interface propsExtraPanel {
     extraPanel: ExtraPanelType,
     children: any
 }
 
-function CalculateNewPosition(element : HTMLElement): Number2 {
-    var x = element.offsetLeft / (window.innerWidth - element.offsetWidth)
-    var y = element.offsetTop / (window.innerHeight - element.offsetHeight)
-    return { x,y }
-}
+export const ExtraPanel = ({ extraPanel, children }: propsExtraPanel) => {
 
-export const ExtraPanel = ({ extraPanel, children }: ExtraPanelProps) => {
+    const [position, setPosition] = useState(extraPanel.panelLocation); 
 
-    const OnResize = (a : any) => { console.log(a) }
+    const handleDragMouseUp = () => { SetPanelPosition(extraPanel, position) }
 
-    const handleDragEnd = (a: DragEventData) => { SetPanelPosition(extraPanel, CalculateNewPosition(a.currentTarget) ) }
-    const { isDragging, handleMouseDown } = useMouseDragEvents({ handleDragEnd: handleDragEnd } );
-
-    //const [value, setValue] = useState(false);
-    // will change value to "true" after 5 seconds
-    //useEffect(() => { setTimeout(() => setValue(true), 5000) }, []);
+    const onDrag = (e: number, t: number, n: number, s: number) => {
+        e = Math.min(Math.max(e, 0), window.innerWidth);
+        t = Math.min(Math.max(t, 0), window.innerHeight);
+        setPosition({
+            x: e - n,
+            y: t - s,
+        })
+    }
 
     return <Panel
-        initialPosition={extraPanel.panelLocation}
-        draggable={true}
-        onMouseDown={handleMouseDown}
-        header={"HEADER"}
+        header={DragHandle({ onDrag: onDrag, children: ExtraPanelHeader({ extraPanel, onMouseUp:handleDragMouseUp }) })}
         footer={"FOOTER"}
-        onEnded={OnResize }
+        className={classNames("draggable-panel") }
+        showCloseHint={true }
         style={
             {
-                //left: extraPanel.panelLocation.x,
-                //top: extraPanel.panelLocation.y,
                 width: "auto",
                 height: "auto",
+                left: `${position.x}px`,
+                top: `${position.y}px`,
                 visibility: extraPanel.visible ? "visible" : "hidden",
-                //transformOrigin: "0% 0% 0px"
             }}
     >
-        {children}
-        {/*{value && <div> something big here </div>}*/}
+        { extraPanel.expanded && children }
     </Panel>
 }
