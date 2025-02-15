@@ -1,4 +1,3 @@
-import { ModuleRegistryExtend } from "cs2/modding";
 
 export const HelloWorldComponent = () => {
     // This is a void component that does not output anynthing.
@@ -9,7 +8,7 @@ export const HelloWorldComponent = () => {
     return null;
 }
 
-export const extraPanelsComponentsExtended = (ComponentList: {[x: string]: any;}) : any => {
+export const extraPanelsComponentsExtended = (ComponentList: { [x: string]: any; }): any => {
 
     console.log(ComponentList);
 

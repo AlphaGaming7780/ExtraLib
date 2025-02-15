@@ -20,7 +20,7 @@ export const ExtraPanelsButton = () => {
     let IsOpened = opened || ShouldOpenExtraPanels
     function openExtraPanels(newValue: boolean) { if (!ShouldOpenExtraPanels) trigger("el", "ExtraPanelsMenuOpened", newValue) }
 
-    return showButton ? <div className={classNames(ExtraPanelsSCSS.ExtraPanelsSelectorContainer)} >
+    return showButton ? <div className={classNames(ExtraPanelsSCSS.ExtraPanelsSelectorContainer, IsOpened ? ExtraPanelsSCSS.selected : "")} >
         <Tooltip tooltip={ "ExtraPanels.Button" } >
             <FloatingButton
                 className={classNames(ExtraPanelsSCSS.ExtraPanelsSelectorButton, IsOpened ? ExtraPanelsSCSS.selected : "")}
