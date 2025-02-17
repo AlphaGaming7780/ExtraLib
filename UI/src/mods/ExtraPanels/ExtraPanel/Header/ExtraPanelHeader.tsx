@@ -1,5 +1,5 @@
 import { HTMLAttributes, MouseEventHandler, ReactNode } from "react";
-import { CloseExtraPanel, CollapseExtraPanel, ExpandExtraPanel, ExtraPanelType } from "../../ExtraPanelType";
+import { CloseExtraPanel, CollapseExtraPanel, ExpandExtraPanel, ExtraPanelType, SetFullScreenExtraPanel } from "../../ExtraPanelType";
 import classNames from "classnames";
 import ExtraPanelHeaderSCSS from "./ExtraPanelHeader.module.scss"
 import { useLocalization } from "cs2/l10n";
@@ -21,20 +21,24 @@ export const ExtraPanelHeader = ({ extraPanel, onMouseUp }: propsExtraPanelHeade
         
         <img src={extraPanel.icon} className={classNames( PanelSCSS.icon)} />
 
-        <div className={ classNames(PanelSCSS.iconSpace) } />
+        <div className={classNames(PanelSCSS.iconSpace)} />
+
+        {
+            extraPanel.canFullScreen && <div className={classNames(PanelSCSS.iconSpace)} />
+        }  
 
         <div className={classNames( PanelSCSS.title) }>
             {translate(`ExtraPanelHeaderName[${extraPanel.__Type}]`, `ExtraPanelHeaderName[${extraPanel.__Type}]`) }
         </div>
 
         <IconButton
-            src={ extraPanel.expanded ? PanelSCSS.toggleIconExpanded : PanelSCSS.toggleIcon}
+            src={ extraPanel.isExpanded ? PanelSCSS.toggleIconExpanded : PanelSCSS.toggleIcon}
             className={classNames( PanelSCSS.closeButton)}
             tinted={true}
             focusKey={FOCUS_DISABLED$}
             theme={RoundHighlightButtonSCSS}
             onSelect={(e: any) => {
-                extraPanel.expanded ?
+                extraPanel.isExpanded ?
                     CollapseExtraPanel(extraPanel) :
                     ExpandExtraPanel(extraPanel)
             }}
@@ -43,6 +47,24 @@ export const ExtraPanelHeader = ({ extraPanel, onMouseUp }: propsExtraPanelHeade
                 e.stopPropagation();
             }}
         />
+
+        {
+            extraPanel.canFullScreen &&
+            <IconButton
+                src={extraPanel.isFullScreen ? "/Media/Glyphs/ThickStrokeArrowUp.svg" : PanelSCSS.toggleIcon}
+                className={classNames(PanelSCSS.closeButton)}
+                tinted={true}
+                focusKey={FOCUS_DISABLED$}
+                theme={RoundHighlightButtonSCSS}
+                onSelect={(e: any) => {
+                    SetFullScreenExtraPanel(extraPanel, !extraPanel.isFullScreen)
+                }}
+                onMouseDown={(e: MouseEvent) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }}
+            />
+        }
 
         <IconButton
             src={PanelSCSS.closeIcon}

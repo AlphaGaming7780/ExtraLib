@@ -1,5 +1,7 @@
 ﻿using Colossal.UI.Binding;
 using Game;
+using Game.Areas;
+using Game.City;
 using Game.Objects;
 using Game.SceneFlow;
 using Game.UI;
@@ -22,6 +24,7 @@ namespace ExtraLib.Systems.UI.ExtraPanels
         protected ExtraPanelsUISystem m_ExtraPanelsUISystem;
 
         protected virtual bool m_ShowInSelector => true;
+        protected virtual bool m_CanFullScreen => false;
 
         private bool m_Visible = false;
 
@@ -29,7 +32,8 @@ namespace ExtraLib.Systems.UI.ExtraPanels
 
         public float2 PanelLocation { get; private set; }
         public float2 PanelSize { get; private set; }
-        public bool Expanded { get; private set; } = true;
+        public bool IsExpanded { get; private set; } = true;
+        public bool IsFullScreen { get; private set; } = false;
 
         protected override void OnCreate()
         {
@@ -63,16 +67,18 @@ namespace ExtraLib.Systems.UI.ExtraPanels
         public void Write(IJsonWriter writer)
         {
             writer.TypeBegin(ID);
-            //writer.PropertyName("id");
-            //writer.Write(ID);
             writer.PropertyName("icon");
             writer.Write( Icon );
             writer.PropertyName("visible");
-            writer.Write(Visible());
-            writer.PropertyName("expanded");
-            writer.Write(Expanded);
+            writer.Write(m_Visible);
+            writer.PropertyName("isExpanded");
+            writer.Write(IsExpanded);
+            writer.PropertyName("canFullScreen");
+            writer.Write(m_CanFullScreen);
+            writer.PropertyName("isFullScreen");
+            writer.Write(IsFullScreen);
             writer.PropertyName("showInSelector");
-            writer.Write(ShowInSelector());
+            writer.Write(m_ShowInSelector);
             writer.PropertyName("panelLocation");
             writer.Write(PanelLocation);
             writer.PropertyName("panelSize");
@@ -89,13 +95,13 @@ namespace ExtraLib.Systems.UI.ExtraPanels
         public void SetVisible( bool visible )
         {
             m_Visible = visible;
-            RequestUpdate();
+            if (visible) RequestUpdate();
             m_ExtraPanelsUISystem.RequestBindingUpdate();
         }
 
         public bool Visible()
         {
-            return m_Visible;
+            return m_Visible && IsExpanded;
 
             // Not needed anymore, since I'm filtering the panel inside the main system.
             //return m_Visible && ((GameManager.instance.gameMode & gameMode) > 0);
@@ -103,7 +109,14 @@ namespace ExtraLib.Systems.UI.ExtraPanels
 
         public void SetExpanded(bool expanded)
         {
-            Expanded = expanded;
+            IsExpanded = expanded;
+            if (expanded) RequestUpdate();
+            m_ExtraPanelsUISystem.RequestBindingUpdate();
+        }
+        public void SetFullScreen(bool fullScreen)
+        {
+            if (!m_CanFullScreen) return;
+            IsFullScreen = fullScreen;
             m_ExtraPanelsUISystem.RequestBindingUpdate();
         }
 

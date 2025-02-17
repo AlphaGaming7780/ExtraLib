@@ -6,7 +6,9 @@ export interface ExtraPanelType extends Typed < "" > {
     //id: string;
     icon: string;
     visible: boolean;
-    expanded: boolean;
+    isExpanded: boolean;
+    canFullScreen: boolean;
+    isFullScreen: boolean;
     showInSelector: boolean;
     panelLocation: Number2;
     panelSize: Number2;
@@ -19,3 +21,5 @@ export const CloseExtraPanel = (extraPanel: ExtraPanelType) => { trigger("el", "
 
 export const CollapseExtraPanel = (extraPanel: ExtraPanelType) => { trigger("el", "CollapseExtraPanel", extraPanel.__Type) }
 export const ExpandExtraPanel = (extraPanel: ExtraPanelType) => { trigger("el", "ExpandExtraPanel", extraPanel.__Type) }
+
+export const SetFullScreenExtraPanel = (extraPanel: ExtraPanelType, fullScreen: boolean) => { trigger("el", "SetFullScreenExtraPanel", extraPanel.__Type, fullScreen) }

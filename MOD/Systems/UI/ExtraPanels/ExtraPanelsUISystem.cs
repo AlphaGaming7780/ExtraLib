@@ -18,7 +18,7 @@ namespace ExtraLib.Systems.UI.ExtraPanels
     internal partial class ExtraPanelsUISystem : UISystemBase
     {
         // Compatible gameMode;
-        public override GameMode gameMode => GameMode.Game | GameMode.Editor;
+        public override GameMode gameMode => GameMode.Game | GameMode.Editor | GameMode.MainMenu;
 
         private GetterValueBinding<bool> m_ShowExtraPanelsButtonBinding;
 
@@ -69,6 +69,8 @@ namespace ExtraLib.Systems.UI.ExtraPanels
 
             AddBinding(new TriggerBinding<string>("el", "CollapseExtraPanel", CollapseExtraPanel));
             AddBinding(new TriggerBinding<string>("el", "ExpandExtraPanel", ExpandExtraPanel));
+
+            AddBinding(new TriggerBinding<string, bool>("el", "SetFullScreenExtraPanel", SetFullScreenExtraPanel));
 
             AddBinding(new TriggerBinding<string, float2>("el", "LocationChanged", UpdatePanelLocation));
         }
@@ -210,6 +212,18 @@ namespace ExtraLib.Systems.UI.ExtraPanels
 
             extraPanelBase.SetExpanded(false);
         }
+
+        private void SetFullScreenExtraPanel(string id, bool fullScreen)
+        {
+            if (!TryToFindPanelByID(id, out ExtraPanelBase extraPanelBase))
+            {
+                EL.Logger.Warn($"Try to set Full Screen an Extra Panel with id : {id}, but this id doesn't exist in the valide panels.");
+                return;
+            }
+
+            extraPanelBase.SetFullScreen(fullScreen);
+        }
+
 
         private void UpdatePanelLocation(string id, float2 newLocation)
         {

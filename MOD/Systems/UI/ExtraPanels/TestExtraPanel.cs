@@ -10,6 +10,9 @@ namespace ExtraLib.Systems.UI.ExtraPanels
     internal partial class TestExtraPanel : ExtraPanelBase
     {
         public override GameMode gameMode => GameMode.Game | GameMode.Editor;
+
+        protected override bool m_CanFullScreen => true;
+
         protected override void OnCreate()
         {
             base.OnCreate();

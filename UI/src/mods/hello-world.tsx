@@ -10,6 +10,7 @@ export const HelloWorldComponent = () => {
 
 export const extraPanelsComponentsExtended = (ComponentList: { [x: string]: any; }): any => {
 
-    return ComponentList["ExtraLib.Systems.UI.ExtraPanels.TestExtraPanel"] = <div>Let's GO</div>;
+    return ComponentList["ExtraLib.Systems.UI.ExtraPanels.TestExtraPanel"] =
+        <div style={{ height: "100%", width: "100%" }} >Let's GO</div>;
 
 }
