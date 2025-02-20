@@ -3,16 +3,15 @@ import { ExtraPanelType } from "../ExtraPanelType";
 import { Panel } from "cs2/ui";
 import { ExtraPanel } from "../ExtraPanel/ExtraPanel";
 import { TypeFromMap } from "cs2/bindings";
+import { TypedRenderer } from "../../../../game-ui/common/typed-renderer/typed-renderer";
 
 
 const ExtraPanelsList$ = bindValue<ExtraPanelType[]>("el", 'ExtraPanels');
 
 export var extraPanelsComponents: {
-    [x: string]: any;
+    [x: string]: (extraPanel : ExtraPanelType) => any;
 } = {};
 
-
-//export type ExtraPanelsContent = TypeFromMap<test>;
 
 export const ExtraPanelsRoot = () => {
 
@@ -21,16 +20,12 @@ export const ExtraPanelsRoot = () => {
     return <div>
         {
             ExtraPanelsList && ExtraPanelsList.length > 0 && ExtraPanelsList.map((extraPanel: ExtraPanelType, index: number) => {
-                console.log(extraPanel.panelLocation)
-                if (!extraPanel.visible) return <></>
-                
+
+                if (!extraPanel.visible) return <></>                
                 return <ExtraPanel extraPanel={extraPanel} >
-                    {extraPanelsComponents[extraPanel.__Type] != undefined ?
-                        extraPanelsComponents[extraPanel.__Type] :
-                        <div style={{ backgroundColor:"red", color:"yellow"}} >
-                            Type : {extraPanel.__Type}
-                        </div>
-                    }
+
+                    < TypedRenderer components={extraPanelsComponents} data={extraPanel} props={ extraPanel } />
+
                 </ExtraPanel>
             })
         }

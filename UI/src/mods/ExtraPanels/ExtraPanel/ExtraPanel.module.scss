@@ -17,4 +17,21 @@
     &.Collapsed {
         height: auto
     }
+
+    .Content {
+        transform-origin: top center;
+        transform: scaleY(1);
+
+        height: auto;
+
+        transition-property: transform;
+        transition-duration: 0.25s;
+        transition-timing-function: ease-in-out;
+
+        &.Collapsed {
+            transform: scaleY(0);
+        }
+
+    }
+
 }

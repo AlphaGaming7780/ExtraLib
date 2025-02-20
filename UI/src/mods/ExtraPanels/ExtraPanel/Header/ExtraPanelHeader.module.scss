@@ -1,15 +1,15 @@
 
 .ExtraPanelHeader {
-    display: flex;
-    flex-direction: row;
 
+    width:100%;
+    cursor:grab;
 
     .PanelIcon {
 
     }
 
     .PanelName {
-        flex-grow: 1
+        
     }
 
     .PanelCloseButton {

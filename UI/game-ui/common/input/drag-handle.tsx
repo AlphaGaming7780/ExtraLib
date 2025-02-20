@@ -4,7 +4,7 @@ import { getModule } from "cs2/modding"
 const path$ = "game-ui/common/input/drag-handle.tsx"
 
 export type PropsDragHandle = {
-    onDrag: (e: number, t: number, n: number, s: number) => void,
+    onDrag: (mouseX: number, mouseY: number, panelWidth: number, panelHeight: number) => void,
     children: any,
 }
 

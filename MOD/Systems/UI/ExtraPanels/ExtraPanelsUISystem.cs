@@ -2,9 +2,7 @@
 using Colossal.UI.Binding;
 using Game;
 using Game.SceneFlow;
-using Game.Settings;
 using Game.UI;
-using Game.UI.InGame;
 using System;
 using System.Collections.Generic;
 using System.Linq;

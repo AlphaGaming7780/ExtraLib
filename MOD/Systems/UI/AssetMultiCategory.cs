@@ -137,7 +137,7 @@ namespace ExtraLib.Systems.UI
 
         internal void OnSelectAssetMenu(Entity assetMenu)
         {
-            if(m_LastSelectedCategories.TryGetValue(assetMenu, out Entity lastCat))
+            if (m_LastSelectedCategories.TryGetValue(assetMenu, out Entity lastCat))
             {
                 if (!EntityManager.HasComponent<UIAssetParentCategoryData>(lastCat)) return;
             }
@@ -149,20 +149,29 @@ namespace ExtraLib.Systems.UI
         internal void OnSelectAssetCategory(Entity assetCategory)
         {
 
+            string prefabName = _PrefabSystem.GetPrefabName(assetCategory);
+
+            EL.Logger.Info($"Selecting {prefabName}");
+
             if (_SelectedAssetCategory == assetCategory) return;
 
             if (_alreadyUpdated)
             {
                 _alreadyUpdated = false;
                 UpdateSelectedAssetCategories(assetCategory);
+                EL.Logger.Info("Already updated");
                 return;
             }
 
             if (!TryGetParentCategory(assetCategory, out Entity parentCategory))
             {
+                EL.Logger.Info("Failed to get the parrent category");
                 UpdateSelectedAssetCategories(assetCategory);
                 return;
             }
+
+            string parentCatName = _PrefabSystem.GetPrefabName(parentCategory);
+            EL.Logger.Info($"parentCatName {parentCategory}");
 
             if (_LastSelectedCategories.ContainsKey(parentCategory)) _LastSelectedCategories[parentCategory] = assetCategory;
             else _LastSelectedCategories.Add(parentCategory, assetCategory);
@@ -188,6 +197,8 @@ namespace ExtraLib.Systems.UI
                     firstItem = GetFirstItem(assetParentCategoryOrMenu, selectedThemes, selectedAssetPacks);
                     _LastSelectedCategories.Add(assetParentCategoryOrMenu, firstItem);
                 }
+
+                EL.Logger.Info($"{_PrefabSystem.GetPrefabName(assetParentCategoryOrMenu)} -> {_PrefabSystem.GetPrefabName(firstItem)}");
 
                 if (firstItem == null) break;
 

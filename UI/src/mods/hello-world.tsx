@@ -1,3 +1,7 @@
+import { ExtraPanelType } from "./ExtraPanels/ExtraPanelType";
+import { bindValue, useValue } from "cs2/api";
+import { NodeGraphEditor } from "./NodeGraph/NodeGraphEditor";
+
 
 export const HelloWorldComponent = () => {
     // This is a void component that does not output anynthing.
@@ -5,12 +9,23 @@ export const HelloWorldComponent = () => {
     // React JSX elements!
     console.log("ExtraLib have been loaded.");
 
-    return null;
+    return null
+
 }
+
+const ExtraPanelsList$ = bindValue<ExtraPanelType[]>("el", 'ExtraPanels');
 
 export const extraPanelsComponentsExtended = (ComponentList: { [x: string]: any; }): any => {
 
-    return ComponentList["ExtraLib.Systems.UI.ExtraPanels.TestExtraPanel"] =
-        <div style={{ height: "100%", width: "100%" }} >Let's GO</div>;
+    return ComponentList["ExtraLib.Systems.UI.ExtraPanels.TestExtraPanel"] = (extraPanel: ExtraPanelType) => {
 
+        let ExtraPanelsList: ExtraPanelType[] = useValue(ExtraPanelsList$)
+        ExtraPanelsList.forEach((v) => console.log(v.__Type) )
+
+        return <div style={{width: extraPanel.isFullScreen ? "100%" : "1000rem" } }>
+            <NodeGraphEditor />
+        </div>
+        
+    }
 }
+    

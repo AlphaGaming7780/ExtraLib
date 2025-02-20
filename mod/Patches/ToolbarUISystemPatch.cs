@@ -4,6 +4,7 @@ using Game.UI.InGame;
 using HarmonyLib;
 using Unity.Entities;
 using ExtraLib.Systems.UI;
+using System.Collections.Generic;
 
 namespace ExtraLib.Patches;
 
@@ -19,9 +20,9 @@ public class ToolbarUISystemPatch
             {
                 AssetMultiCategory.instance.OnSelectAssetMenu(assetMenu);
 
-                EL.m_PrefabSystem.TryGetPrefab(assetMenu, out PrefabBase prefabBase);
+                //EL.m_PrefabSystem.TryGetPrefab(assetMenu, out PrefabBase prefabBase);
 
-                ExtraAssetsMenu.ShowCatsTab(prefabBase is UIAssetMenuPrefab && prefabBase.name == ExtraAssetsMenu.CatTabName);
+                //ExtraAssetsMenu.ShowCatsTab(prefabBase is UIAssetMenuPrefab && prefabBase.name == ExtraAssetsMenu.CatTabName);
 
             }
         }
@@ -39,25 +40,39 @@ public class ToolbarUISystemPatch
         }
     }
 
-
-    public static void UpdateCatUI()
+    [HarmonyPatch(typeof(ToolbarUISystem), "Apply")]
+    class Apply
     {
-        Traverse.Create(EL.m_ToolbarUISystem).Field("m_AssetMenuCategoriesBinding").GetValue<RawMapBinding<Entity>>().UpdateAll();
+        static void Postfix(List<Entity> themes, List<Entity> packs, Entity assetMenuEntity, Entity assetCategoryEntity, Entity assetEntity, bool updateTool = false)
+        {
+
+            string menuPrefabName = EL.m_PrefabSystem.GetPrefabName(assetMenuEntity);
+            string assetCatPrefabName = EL.m_PrefabSystem.GetPrefabName(assetCategoryEntity);
+            string assetEntityName = EL.m_PrefabSystem.GetPrefabName(assetEntity);
+            EL.Logger.Info($" {menuPrefabName} -> {assetCatPrefabName} -> {assetEntityName}");
+
+        }
     }
 
-    public static void UpdateMenuUI()
-    {
-        Traverse.Create(EL.m_ToolbarUISystem).Field("m_AssetMenuCategoriesBinding").GetValue<RawMapBinding<Entity>>().UpdateAll();
-    }
 
-    public static void SelectCatUI(Entity entity)
-    {
-        Traverse.Create(EL.m_ToolbarUISystem).Method("SelectAssetCategory", [typeof(Entity)]).GetValue(entity);
-    }
+    //public static void UpdateCatUI()
+    //{
+    //    Traverse.Create(EL.m_ToolbarUISystem).Field("m_AssetMenuCategoriesBinding").GetValue<RawMapBinding<Entity>>().UpdateAll();
+    //}
 
-    public static void SelectMenuUI(Entity entity)
-    {
-        Traverse.Create(EL.m_ToolbarUISystem).Method("SelectAssetMenu", [typeof(Entity)]).GetValue(entity);
-    }
+    //public static void UpdateMenuUI()
+    //{
+    //    Traverse.Create(EL.m_ToolbarUISystem).Field("m_AssetMenuCategoriesBinding").GetValue<RawMapBinding<Entity>>().UpdateAll();
+    //}
+
+    //public static void SelectCatUI(Entity entity)
+    //{
+    //    Traverse.Create(EL.m_ToolbarUISystem).Method("SelectAssetCategory", [typeof(Entity)]).GetValue(entity);
+    //}
+
+    //public static void SelectMenuUI(Entity entity)
+    //{
+    //    Traverse.Create(EL.m_ToolbarUISystem).Method("SelectAssetMenu", [typeof(Entity)]).GetValue(entity);
+    //}
 
 }

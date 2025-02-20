@@ -1,0 +1,24 @@
+{
+    "$id": 0,
+    "$type": "0|ExtraLib.Prefabs.UIAssetParentCategoryPrefab, ExtraLib",
+    "name": "Surfaces",
+    "active": true,
+    "components": {
+        "$id": 1,
+        "$type": "1|System.Collections.Generic.List`1[[Game.Prefabs.ComponentBase, Game]], mscorlib",
+        "$rlength": 1,
+        "$rcontent": [
+            {
+                "$id": 2,
+                "$type": "2|Game.Prefabs.UIObject, Game",
+                "name": "UIObject",
+                "active": true,
+                "m_Group": null,
+                "m_Priority": 0,
+                "m_Icon": "coui://extralib/Icons/UIAssetParentCategoryPrefab/Surfaces.svg",
+                "m_IsDebugObject": false
+            }
+        ]
+    },
+    "parentCategoryOrMenu": $fstrref:"CID:edf24a7a4aaa17095f9cb9486d9d3314"
+}

@@ -11,13 +11,14 @@ import { FOCUS_DISABLED$ } from "../../../../../game-ui/common/focus/focus-key";
 export interface propsExtraPanelHeader extends HTMLAttributes<HTMLDivElement> {
     extraPanel: ExtraPanelType;
 }
+// , onMouseUp
+// onMouseUp={onMouseUp}
 
-
-export const ExtraPanelHeader = ({ extraPanel, onMouseUp }: propsExtraPanelHeader): ReactNode => {
+export const ExtraPanelHeader = ({ extraPanel }: propsExtraPanelHeader): ReactNode => {
 
     const { translate } = useLocalization();
 
-    return <div className={classNames( PanelSCSS.titleBar)} onMouseUp={onMouseUp}>
+    return <div className={classNames(PanelSCSS.titleBar, ExtraPanelHeaderSCSS.ExtraPanelHeader )}>
         
         <img src={extraPanel.icon} className={classNames( PanelSCSS.icon)} />
 

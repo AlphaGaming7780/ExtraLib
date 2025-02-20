@@ -68,7 +68,7 @@ namespace ExtraLib
 
 			updateSystem.UpdateAt<AssetMultiCategory>(SystemUpdatePhase.UIUpdate);
             updateSystem.UpdateAt<ExtraPanelsUISystem>(SystemUpdatePhase.UIUpdate);
-			updateSystem.UpdateAt<ExtraAssetsMenu>(SystemUpdatePhase.UIUpdate);
+			//updateSystem.UpdateAt<ExtraAssetsMenu>(SystemUpdatePhase.UIUpdate);
             updateSystem.UpdateAt<MainSystem>(SystemUpdatePhase.LateUpdate);
 
             ExtraPanelsUISystem extraPanelsUISystem = updateSystem.World.GetOrCreateSystemManaged<ExtraPanelsUISystem>();
