@@ -137,11 +137,14 @@ namespace ExtraLib.Systems.UI
 
         internal void OnSelectAssetMenu(Entity assetMenu)
         {
-            if (m_LastSelectedCategories.TryGetValue(assetMenu, out Entity lastCat))
+            if (m_LastSelectedCategories.TryGetValue(assetMenu, out Entity lastCat) && !EntityManager.HasComponent<UIAssetParentCategoryData>(lastCat))
             {
-                if (!EntityManager.HasComponent<UIAssetParentCategoryData>(lastCat)) return;
+                UpdateSelectedAssetCategories(lastCat);
+                return;
             }
+
             Entity deepestAssetCategory = GetDeepestAssetCategory(assetMenu);
+
             _alreadyUpdated = true;
             SelectAssetCategory(deepestAssetCategory);
         }
@@ -151,7 +154,7 @@ namespace ExtraLib.Systems.UI
 
             string prefabName = _PrefabSystem.GetPrefabName(assetCategory);
 
-            EL.Logger.Info($"Selecting {prefabName}");
+            //EL.Logger.Info($"Selecting {prefabName}");
 
             if (_SelectedAssetCategory == assetCategory) return;
 
@@ -159,24 +162,26 @@ namespace ExtraLib.Systems.UI
             {
                 _alreadyUpdated = false;
                 UpdateSelectedAssetCategories(assetCategory);
-                EL.Logger.Info("Already updated");
+                //EL.Logger.Info("Already updated");
                 return;
             }
 
             if (!TryGetParentCategory(assetCategory, out Entity parentCategory))
             {
-                EL.Logger.Info("Failed to get the parrent category");
+                //EL.Logger.Info("Failed to get the parrent category");
                 UpdateSelectedAssetCategories(assetCategory);
                 return;
             }
 
             string parentCatName = _PrefabSystem.GetPrefabName(parentCategory);
-            EL.Logger.Info($"parentCatName {parentCategory}");
+            //EL.Logger.Info($"parentCatName {_PrefabSystem.GetPrefabName(parentCategory)}");
 
             if (_LastSelectedCategories.ContainsKey(parentCategory)) _LastSelectedCategories[parentCategory] = assetCategory;
             else _LastSelectedCategories.Add(parentCategory, assetCategory);
 
             Entity deepestAssetCategory = GetDeepestAssetCategory(assetCategory);
+
+            //EL.Logger.Info($"deepestAssetCategory {_PrefabSystem.GetPrefabName(deepestAssetCategory)}");
 
             UpdateSelectedAssetCategories(deepestAssetCategory);
 
@@ -198,9 +203,9 @@ namespace ExtraLib.Systems.UI
                     _LastSelectedCategories.Add(assetParentCategoryOrMenu, firstItem);
                 }
 
-                EL.Logger.Info($"{_PrefabSystem.GetPrefabName(assetParentCategoryOrMenu)} -> {_PrefabSystem.GetPrefabName(firstItem)}");
+                //EL.Logger.Info($"{_PrefabSystem.GetPrefabName(assetParentCategoryOrMenu)} -> {_PrefabSystem.GetPrefabName(firstItem)}");
 
-                if (firstItem == null) break;
+                if (firstItem == Entity.Null) break;
 
                 if (EntityManager.HasComponent<UIAssetChildCategoryData>(firstItem))
                 {
@@ -216,7 +221,7 @@ namespace ExtraLib.Systems.UI
 
             if (assetParentCategoryOrMenu == null)
             {
-                EL.Logger.Warn("parentItem is null");
+                //EL.Logger.Warn("parentItem is null");
             }
 
             return assetParentCategoryOrMenu;

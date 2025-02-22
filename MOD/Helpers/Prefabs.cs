@@ -9,7 +9,21 @@ namespace ExtraLib.Helpers;
 
 public static class PrefabsHelper
 {
-	public static UIAssetChildCategoryPrefab GetUIAssetChildCategoryPrefab(string cat)
+    public static UIAssetCategoryPrefab GetUIAssetCategoryPrefab(string cat)
+    {
+
+        if (!EL.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetCategoryPrefab), cat), out var p1)
+            || p1 is not UIAssetCategoryPrefab Category)
+        {
+            EL.Logger.Error($"Failed to get the UIAssetCategoryPrefab with this name : {cat}");
+            return null;
+        }
+
+        return Category;
+
+    }
+
+    public static UIAssetChildCategoryPrefab GetUIAssetChildCategoryPrefab(string cat)
 	{
 
 		if (!EL.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetChildCategoryPrefab), cat), out var p1)

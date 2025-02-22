@@ -1,4 +1,5 @@
-﻿using Game.Prefabs;
+﻿using Colossal.Entities;
+using Game.Prefabs;
 using System;
 using System.Collections.Generic;
 using Unity.Entities;
@@ -35,29 +36,25 @@ namespace ExtraLib.Prefabs
             {
                 prefabs.Add(this.parentCategoryOrMenu);
             }
-
-            //if(this.m_Menu != null)
-            //{
-            //    prefabs.Add(this.m_Menu);
-            //}
-
         }
 
-        public override void LateInitialize(EntityManager entityManager, Entity entity)
+        public override void Initialize(EntityManager entityManager, Entity entity)
         {
             base.LateInitialize(entityManager, entity);
             if (this.parentCategoryOrMenu != null)
             {
                 PrefabSystem prefabSystem = entityManager.World.GetExistingSystemManaged<PrefabSystem>();
-                Entity parentCategoryEntity = prefabSystem.GetEntity(this.parentCategoryOrMenu);
-                entityManager.SetComponentData<UIAssetParentCategoryData>(entity, new UIAssetParentCategoryData(parentCategoryEntity));
+                Entity parentCategoryOrMenuEntity = prefabSystem.GetEntity(this.parentCategoryOrMenu);
+                entityManager.SetComponentData<UIAssetParentCategoryData>(entity, new UIAssetParentCategoryData(parentCategoryOrMenuEntity));
 
-                if (prefabSystem.TryGetComponentData<UIAssetCategoryData>(parentCategoryOrMenu, out UIAssetCategoryData uIAssetCategoryData))
+                if (entityManager.TryGetComponent<UIAssetCategoryData>(parentCategoryOrMenuEntity, out UIAssetCategoryData uIAssetCategoryData))
                 {
                     entityManager.SetComponentData<UIAssetCategoryData>(entity, new UIAssetCategoryData(uIAssetCategoryData.m_Menu));
+                    //EL.Logger.Info($"prefab : {prefabSystem.GetPrefabName(entity)} -> m_Menu {prefabSystem.GetPrefabName(uIAssetCategoryData.m_Menu)}");
                 } else
                 {
-                    entityManager.SetComponentData<UIAssetCategoryData>(entity, new UIAssetCategoryData(parentCategoryEntity));
+                    entityManager.SetComponentData<UIAssetCategoryData>(entity, new UIAssetCategoryData(parentCategoryOrMenuEntity));
+                    //EL.Logger.Info($"prefab : {prefabSystem.GetPrefabName(entity)} -> m_Menu {prefabSystem.GetPrefabName(parentCategoryOrMenuEntity)}");
                 }
 
                 this.parentCategoryOrMenu.AddElement(entityManager, entity);

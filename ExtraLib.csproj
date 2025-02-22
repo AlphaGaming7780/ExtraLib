@@ -33,11 +33,6 @@
     <Reference Include="$(CustomManagedPath)\PDX.*.dll" Private="False" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Compile Include="UI\src\mods\Utilities\ExcludeFromParentElement.tsx" />
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Lib.Harmony" Version="2.2.2" />
   </ItemGroup>

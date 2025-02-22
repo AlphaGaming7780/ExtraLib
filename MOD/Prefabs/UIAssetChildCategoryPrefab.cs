@@ -1,4 +1,5 @@
-﻿using Game.Prefabs;
+﻿using Colossal.Entities;
+using Game.Prefabs;
 using System;
 using System.Collections.Generic;
 using Unity.Entities;
@@ -43,12 +44,14 @@ namespace ExtraLib.Prefabs
                 Entity parentCategoryEntity = prefabSystem.GetEntity(this.parentCategory);
                 entityManager.SetComponentData<UIAssetChildCategoryData>(entity, new UIAssetChildCategoryData(parentCategoryEntity));
 
-                if (prefabSystem.TryGetComponentData<UIAssetCategoryData>(parentCategory, out UIAssetCategoryData uIAssetCategoryData))
+                if (entityManager.TryGetComponent<UIAssetCategoryData>(parentCategoryEntity, out UIAssetCategoryData uIAssetCategoryData))
                 {
                     entityManager.SetComponentData<UIAssetCategoryData>(entity, new UIAssetCategoryData(uIAssetCategoryData.m_Menu));
+                    //EL.Logger.Info($"prefab : {prefabSystem.GetPrefabName(entity)} -> m_Menu {prefabSystem.GetPrefabName(uIAssetCategoryData.m_Menu)}");
                 } else
                 {
                     entityManager.SetComponentData<UIAssetCategoryData>(entity, new UIAssetCategoryData(parentCategoryEntity));
+                    //EL.Logger.Info($"prefab : {prefabSystem.GetPrefabName(entity)} -> m_Menu {prefabSystem.GetPrefabName(parentCategoryEntity)}");
                 }
 
                 this.parentCategory.AddElement(entityManager, entity);

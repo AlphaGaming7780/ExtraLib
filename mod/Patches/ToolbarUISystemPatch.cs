@@ -40,19 +40,19 @@ public class ToolbarUISystemPatch
         }
     }
 
-    [HarmonyPatch(typeof(ToolbarUISystem), "Apply")]
-    class Apply
-    {
-        static void Postfix(List<Entity> themes, List<Entity> packs, Entity assetMenuEntity, Entity assetCategoryEntity, Entity assetEntity, bool updateTool = false)
-        {
+    //[HarmonyPatch(typeof(ToolbarUISystem), "Apply")]
+    //class Apply
+    //{
+    //    static void Postfix(List<Entity> themes, List<Entity> packs, Entity assetMenuEntity, Entity assetCategoryEntity, Entity assetEntity, bool updateTool = false)
+    //    {
 
-            string menuPrefabName = EL.m_PrefabSystem.GetPrefabName(assetMenuEntity);
-            string assetCatPrefabName = EL.m_PrefabSystem.GetPrefabName(assetCategoryEntity);
-            string assetEntityName = EL.m_PrefabSystem.GetPrefabName(assetEntity);
-            EL.Logger.Info($" {menuPrefabName} -> {assetCatPrefabName} -> {assetEntityName}");
+    //        string menuPrefabName = EL.m_PrefabSystem.GetPrefabName(assetMenuEntity);
+    //        string assetCatPrefabName = EL.m_PrefabSystem.GetPrefabName(assetCategoryEntity);
+    //        string assetEntityName = EL.m_PrefabSystem.GetPrefabName(assetEntity);
+    //        EL.Logger.Info($" {menuPrefabName} -> {assetCatPrefabName} -> {assetEntityName}");
 
-        }
-    }
+    //    }
+    //}
 
 
     //public static void UpdateCatUI()
