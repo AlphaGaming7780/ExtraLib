@@ -1,14 +1,56 @@
 using System;
+using Colossal.IO.AssetDatabase;
+using System.IO;
 using ExtraLib.Prefabs;
 using ExtraLib.Systems.UI;
 using Game.Prefabs;
 using UnityEngine;
 using static Game.Rendering.NotificationIconBufferSystem;
+using static Colossal.AssetPipeline.Diagnostic.Report;
 
 namespace ExtraLib.Helpers;
 
 public static class PrefabsHelper
 {
+
+    public static void LoadPrefabsInDirectory(string directoryPath, bool recursive = true)
+    {
+        if (!Directory.Exists(directoryPath)) return;
+
+        LoadPrefabInDirectory(directoryPath);
+
+        if(recursive) foreach(string dir in Directory.EnumerateDirectories(directoryPath))
+        {
+            LoadPrefabsInDirectory(dir);
+        }
+    }
+
+    public static void LoadPrefabInDirectory(string directoryPath)
+    {
+        if (!Directory.Exists(directoryPath)) return;
+
+        foreach (string s in DefaultAssetFactory.instance.GetSupportedExtensions())
+        {
+            foreach (string file in Directory.GetFiles(directoryPath, $"*{s}"))
+            {
+                AssetDataPath assetDataPath = AssetDataPath.Create(Path.GetDirectoryName(file), Path.GetFileName(file), EscapeStrategy.None);
+                try
+                {
+                    IAssetData assetData = AssetDatabase.user.AddAsset(assetDataPath);
+                    if (assetData is PrefabAsset prefabAsset)
+                    {
+                        PrefabBase prefabBase = prefabAsset.Load<PrefabBase>();
+                        EL.m_PrefabSystem.AddPrefab(prefabBase);
+                    }
+                }
+                catch (Exception e)
+                {
+                    EL.Logger.Warn(e);
+                }
+            }
+        }
+    }
+
     public static UIAssetCategoryPrefab GetUIAssetCategoryPrefab(string cat)
     {
 
@@ -37,12 +79,12 @@ public static class PrefabsHelper
 
 	}
 
-    public static UIAssetChildCategoryPrefab GetOrCreateUIAssetChildCategoryPrefab(string parentCategoryName, string catName, string behindcat = null)
+    public static UIAssetChildCategoryPrefab GetOrCreateUIAssetChildCategoryPrefab(string parentCategoryName, string catName, string iconPath = null, string behindcat = null)
     {
-        return GetOrCreateUIAssetChildCategoryPrefab(GetOrCreateUIAssetParentCategoryPrefab(parentCategoryName), catName, behindcat);
+        return GetOrCreateUIAssetChildCategoryPrefab(GetOrCreateUIAssetParentCategoryPrefab(parentCategoryName), catName, iconPath, behindcat);
     }
 
-    public static UIAssetChildCategoryPrefab GetOrCreateUIAssetChildCategoryPrefab(UIAssetParentCategoryPrefab parentCategory, string catName, string behindcat = null)
+    public static UIAssetChildCategoryPrefab GetOrCreateUIAssetChildCategoryPrefab(UIAssetParentCategoryPrefab parentCategory, string catName, string iconPath = null, string behindcat = null)
 	{
 
 		if (EL.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetChildCategoryPrefab), catName), out var p1)
@@ -68,7 +110,7 @@ public static class PrefabsHelper
 		newCategory.name = catName;
 		newCategory.parentCategory = parentCategory;
 		var newCategoryUI = newCategory.AddComponent<UIObject>();
-        newCategoryUI.m_Icon = Icons.GetIcon(newCategory);
+        newCategoryUI.m_Icon = iconPath ?? Icons.GetIcon(newCategory);
 		if(behindCategory != null) newCategoryUI.m_Priority = behindCategory.GetComponent<UIObject>().m_Priority+1;
 		newCategoryUI.active = true;
 		newCategoryUI.m_IsDebugObject = false;
@@ -78,7 +120,7 @@ public static class PrefabsHelper
 		return newCategory;
 	}
 
-    public static UIAssetParentCategoryPrefab GetOrCreateUIAssetParentCategoryPrefab(string parentCategoryName)
+    public static UIAssetParentCategoryPrefab GetOrCreateUIAssetParentCategoryPrefab(string parentCategoryName, string iconPath = null)
     {
         if (EL.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetParentCategoryPrefab), parentCategoryName), out var p1)
             && p1 is UIAssetParentCategoryPrefab parentCategory)
@@ -90,7 +132,7 @@ public static class PrefabsHelper
         parentCategory.name = parentCategoryName;
         parentCategory.parentCategoryOrMenu = GetOrCreateNewUIAssetMenuPrefab(ExtraAssetsMenu.CatTabName, Icons.GetIcon);
         var parentCategoryUI = parentCategory.AddComponent<UIObject>();
-        parentCategoryUI.m_Icon = Icons.GetIcon(parentCategory);
+        parentCategoryUI.m_Icon = iconPath ?? Icons.GetIcon(parentCategory);
         parentCategoryUI.active = true;
 
         EL.m_PrefabSystem.AddPrefab(parentCategory);

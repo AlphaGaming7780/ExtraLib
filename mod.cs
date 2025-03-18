@@ -45,7 +45,6 @@ namespace ExtraLib
         public static ToolbarUISystem m_ToolbarUISystem;
         public static NotificationUISystem m_NotificationUISystem;
 
-
         public void OnLoad(UpdateSystem updateSystem)
 		{
 			Logger.Info(nameof(OnLoad));
@@ -73,6 +72,8 @@ namespace ExtraLib
 
             ExtraPanelsUISystem extraPanelsUISystem = updateSystem.World.GetOrCreateSystemManaged<ExtraPanelsUISystem>();
             extraPanelsUISystem.AddExtraPanel<TestExtraPanel>();
+
+            //PrefabsHelper.LoadPrefabsInDirectory(Path.Combine(fileInfo.Directory.FullName, "Prefabs"));
 
             harmony = new($"{nameof(ExtraLib)}.{nameof(EL)}");
             harmony.PatchAll(typeof(EL).Assembly);
