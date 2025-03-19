@@ -36,7 +36,7 @@ Special thanks to YenYan and T.D.W for their invaluable tips and assistance with
 	<!--Link to the forum post where the Mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the Mod-->
-	<ModVersion Value="1.3.10" />
+	<ModVersion Value="1.3.11" />
 	<!--Recommended version of the base game to use the Mod-->
 	<GameVersion Value="1.2.*" />
 	<!--Dependency for the Mod, can be set multiple times-->
@@ -44,8 +44,9 @@ Special thanks to YenYan and T.D.W for their invaluable tips and assistance with
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--<ChangeLog Value="TEST" />-->
   <ChangeLog>
-# 1.3.10
-- Update the mod for 1.2.4f1
+# 1.3.11
+## Improvements
+- Multi-threaded the loading of the localization for all mods using ExtraLib localization importer, this should save ~2 sec of loading time on startup per mod.
   </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
   <ExternalLink Type="crowdin" Url="https://crowdin.com/project/extralib" />
