@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace ExtraLib.Helpers;
 
@@ -24,6 +25,17 @@ public class ExtraLocalization
     /// <param name="assembly">The assemby of your mod, used to get the embedded files</param>
     /// <param name="singleFile">true if you have one localizaton file for all the local id.</param>
     public static void LoadLocalization(Logger logger, Assembly assembly, bool singleFile = false, string namespaceName = null, string defaultLocalID = "en-US")
+    {
+        if (logger.debugMod) LoadLocalization_impl(logger, assembly, singleFile, namespaceName, defaultLocalID);
+        else Task.Run(() => LoadLocalization_impl(logger, assembly, singleFile, namespaceName, defaultLocalID));
+    }
+
+    public static void LoadLocalization(ILog log, Assembly assembly, bool singleFile = false, string namespaceName = null, string defaultLocalID = "en-US")
+    {
+        LoadLocalization(new Logger(log), assembly, singleFile, namespaceName, defaultLocalID);
+    }
+
+    private static void LoadLocalization_impl(Logger logger, Assembly assembly, bool singleFile = false, string namespaceName = null, string defaultLocalID = "en-US")
     {
         namespaceName ??= assembly.GetName().Name;
         logger.Info("Start loading the localization.");
@@ -71,12 +83,6 @@ public class ExtraLocalization
             }
         }
         catch (Exception ex) { logger.Error(ex); }
-
-    }
-
-    public static void LoadLocalization(ILog log, Assembly assembly, bool singleFile = false, string namespaceName = null, string defaultLocalID = "en-US")
-    {
-        LoadLocalization(new Logger(log), assembly, singleFile, namespaceName, defaultLocalID);
     }
 
 }
