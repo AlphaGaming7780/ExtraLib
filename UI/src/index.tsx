@@ -8,9 +8,7 @@ import { ExtraPanelsButtonEditor } from "./mods/ExtraPanels/ExtraPanelsButton/Ex
 
 const register: ModRegistrar = (moduleRegistry) => {
 
-    //moduleRegistry.extend("game-ui/game/components/asset-menu/asset-category-tab-bar/asset-category-tab-bar.tsx", 'AssetCategoryTabBar', ExtraAssetsMenu)
     moduleRegistry.extend("game-ui/game/components/asset-menu/asset-category-tab-bar/asset-category-tab-bar.tsx", 'AssetCategoryTabBar', AssetMultiCategory)
-    //moduleRegistry.extend("game-ui/game/components/asset-menu/asset-menu.tsx", "AssetMenu", ExtraDetailingDetails)
     moduleRegistry.append('GameTopLeft', ExtraPanelsButton);
     moduleRegistry.extend('game-ui/editor/components/editor-top-panels.tsx', 'EditorTopPanels', ExtraPanelsButtonEditor);
     moduleRegistry.append('Editor', ExtraPanelsRoot);
@@ -22,7 +20,6 @@ const register: ModRegistrar = (moduleRegistry) => {
     moduleRegistry.add("ExtraLib/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot", { "extraPanelsComponents": extraPanelsComponents })
 
     moduleRegistry.extend("ExtraLib/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot", "extraPanelsComponents", extraPanelsComponentsExtended)
-
 
 }
 

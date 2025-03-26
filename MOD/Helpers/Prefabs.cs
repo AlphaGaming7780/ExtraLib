@@ -12,7 +12,7 @@ namespace ExtraLib.Helpers;
 
 public static class PrefabsHelper
 {
-
+    internal const string CatTabName = "ExtraAssetsMenu";
     public static void LoadPrefabsInDirectory(string directoryPath, bool recursive = true)
     {
         if (!Directory.Exists(directoryPath)) return;
@@ -130,7 +130,7 @@ public static class PrefabsHelper
 
         parentCategory = ScriptableObject.CreateInstance<UIAssetParentCategoryPrefab>();
         parentCategory.name = parentCategoryName;
-        parentCategory.parentCategoryOrMenu = GetOrCreateNewUIAssetMenuPrefab(ExtraAssetsMenu.CatTabName, Icons.GetIcon);
+        parentCategory.parentCategoryOrMenu = GetOrCreateNewUIAssetMenuPrefab(CatTabName, Icons.GetIcon);
         var parentCategoryUI = parentCategory.AddComponent<UIObject>();
         parentCategoryUI.m_Icon = iconPath ?? Icons.GetIcon(parentCategory);
         parentCategoryUI.active = true;
