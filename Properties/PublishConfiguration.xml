@@ -10,14 +10,14 @@
 	<LongDescription>
 Extra Lib is a crucial dependency mod that is indispensable for the operation of any tools within the EXTRA mod suite. It ensures seamless integration and enhanced functionality across the entire mod collection.
 
-Special thanks to YenYan and T.D.W for their invaluable tips and assistance with coding and is help with the UI, as well as to CityRat for their exceptional contributions to thumbnails and all related graphic design work.
+Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and assistance with coding and is help with the UI, as well as to CityRat for their exceptional contributions to thumbnails and all related graphic design work.
 
 # Translation
 ⚠️ This mod uses crowdin so there maybe inconsistencies with translations due to translations from different translators ⚠️
 - ✔️French 100% : aricoseco, Morgan Touverey Quilling (mtouverey)
 - ✔️Chinese Simplified 100% : RilkeXS(无手文) (RilkeXS), 一叶杳舟 (Yao_Zhou)
 - ✔️Chinese Traditional 100% : CBEdwin, allegretic, Hans Law (ZENITHALIZE)
-- ✔️German 100% : Konsi, Jannik Bartmann (raptor09), KaeseKuchen (KaeseMitKuchen)
+- ✔️German 100% : Konsi, Jannik Bartmann (raptor09), KaeseKuchen (KaeseMitKuchen), FearMyFeedEU
 - ⚠️Italian 97% : Stefano (Furios)
 - ❌Japanese 0%
 - ✔️Korean 100% : Hinanchovo
@@ -36,7 +36,7 @@ Special thanks to YenYan and T.D.W for their invaluable tips and assistance with
 	<!--Link to the forum post where the Mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the Mod-->
-	<ModVersion Value="1.3.11" />
+	<ModVersion Value="1.3.12" />
 	<!--Recommended version of the base game to use the Mod-->
 	<GameVersion Value="1.2.*" />
 	<!--Dependency for the Mod, can be set multiple times-->
@@ -44,9 +44,10 @@ Special thanks to YenYan and T.D.W for their invaluable tips and assistance with
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--<ChangeLog Value="TEST" />-->
   <ChangeLog>
-# 1.3.11
-## Improvements
-- Multi-threaded the loading of the localization for all mods using ExtraLib localization importer, this should save ~2 sec of loading time on startup per mod.
+## Fixes
+- Reverted the change made in 1.3.11.
+## Translation
+- ✔️German 100% : FearMyFeedEU
   </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
   <ExternalLink Type="crowdin" Url="https://crowdin.com/project/extralib" />

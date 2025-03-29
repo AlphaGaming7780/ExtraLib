@@ -26,8 +26,10 @@ public class ExtraLocalization
     /// <param name="singleFile">true if you have one localizaton file for all the local id.</param>
     public static void LoadLocalization(Logger logger, Assembly assembly, bool singleFile = false, string namespaceName = null, string defaultLocalID = "en-US")
     {
-        if (logger.debugMod) LoadLocalization_impl(logger, assembly, singleFile, namespaceName, defaultLocalID);
-        else Task.Run(() => LoadLocalization_impl(logger, assembly, singleFile, namespaceName, defaultLocalID));
+        LoadLocalization_impl(logger, assembly, singleFile, namespaceName, defaultLocalID);
+        // Can't use async local loading because the game doesn't like that.
+        //if (logger.debugMod) LoadLocalization_impl(logger, assembly, singleFile, namespaceName, defaultLocalID);
+        //else Task.Run(() => LoadLocalization_impl(logger, assembly, singleFile, namespaceName, defaultLocalID));
     }
 
     public static void LoadLocalization(ILog log, Assembly assembly, bool singleFile = false, string namespaceName = null, string defaultLocalID = "en-US")
