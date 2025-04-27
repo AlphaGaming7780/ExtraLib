@@ -2,8 +2,8 @@
 	"Services.NAME[ExtraAssetsMenu]": "Extra Assets",
 	"Services.DESCRIPTION[ExtraAssetsMenu]": "This menu is a custom menu with multiple categories to store multiple types of assets that mods wants to display in the UI.",
 
-	"Assets.NAME[Surfaces]": "Surfaces",
-	"Assets.DESCRIPTION[Surfaces]": "This category contains all the surfaces, you can use these surfaces to draw textures on the ground.",
+	"Services.NAME[Surfaces]": "Surfaces",
+	"Services.DESCRIPTION[Surfaces]": "This category contains all the surfaces, you can use these surfaces to draw textures on the ground.",
 	"Assets.NAME[Grass Surfaces]": "Grass Surface",
 	"Assets.DESCRIPTION[Grass Surfaces]": "This category contains all the grass surfaces.",
 	"Assets.NAME[Sand Surfaces]": "Sand Surface",
@@ -27,8 +27,8 @@
 	"Assets.NAME[Wood Surfaces]": "Wood Surfaces",
 	"Assets.DESCRIPTION[Wood Surfaces]": "This category contains all the wood surfaces.",
 
-	"Assets.NAME[Decals]": "Decals",
-	"Assets.DESCRIPTION[Decals]": "This category contains all the decals, you can use these decals to add details on the ground.",
+	"Services.NAME[Decals]": "Decals",
+	"Services.DESCRIPTION[Decals]": "This category contains all the decals, you can use these decals to add details on the ground.",
 	"Assets.NAME[Alphabet Decals]": "Alphabet Decals",
 	"Assets.DESCRIPTION[Alphabet Decals]": "This category contains all the alphabet decals.",
 	"Assets.NAME[Beach Decals]": "Beach Decals",
@@ -58,5 +58,17 @@
 	"Assets.NAME[Trash Decals]": "Trash Decals",
 	"Assets.DESCRIPTION[Trash Decals]": "This category contains all the trash decals.",
 	"Assets.NAME[WallDecor Decals]": "Wall Decor Decals",
-	"Assets.DESCRIPTION[WallDecor Decals]": "This category contains all the wall decor decals."
+	"Assets.DESCRIPTION[WallDecor Decals]": "This category contains all the wall decor decals.",
+
+	"Services.NAME[NetLanes]": "NetLanes",
+	"Services.DESCRIPTION[NetLanes]": "This category contains all the NetLanes.",
+	"Assets.NAME[Misc NetLanes]": "Misc NetLanes",
+	"Assets.DESCRIPTION[Misc NetLanes]": "This category contains all the Misc NetLanes.",
+	"Assets.NAME[RoadMarking NetLanes]": "RoadMarking NetLanes",
+	"Assets.DESCRIPTION[RoadMarking NetLanes]": "This category contains all the RoadMarking NetLanes.",
+
+
+
+	"Assets.NAME[Fence NetLanes]": "Fence NetLanes",
+	"Assets.DESCRIPTION[Fence NetLanes]": "This category contains all the Fence NetLanes."
 }
