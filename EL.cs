@@ -70,8 +70,10 @@ namespace ExtraLib
 			//updateSystem.UpdateAt<ExtraAssetsMenu>(SystemUpdatePhase.UIUpdate);
             updateSystem.UpdateAt<MainSystem>(SystemUpdatePhase.LateUpdate);
 
+#if DEBUG
             ExtraPanelsUISystem extraPanelsUISystem = updateSystem.World.GetOrCreateSystemManaged<ExtraPanelsUISystem>();
             extraPanelsUISystem.AddExtraPanel<TestExtraPanel>();
+#endif
 
             //PrefabsHelper.LoadPrefabsInDirectory(Path.Combine(fileInfo.Directory.FullName, "Prefabs"));
 

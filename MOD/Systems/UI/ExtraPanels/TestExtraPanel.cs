@@ -1,4 +1,5 @@
-﻿using Game;
+﻿#if DEBUG
+using Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,3 +26,4 @@ namespace ExtraLib.Systems.UI.ExtraPanels
         }
     }
 }
+#endif

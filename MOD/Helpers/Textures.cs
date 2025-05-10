@@ -1,105 +1,106 @@
 using System.IO;
 using UnityEngine;
 
-namespace ExtraLib.Helpers;
-
-public static class TextureHelper
+namespace ExtraLib.Helpers
 {
-    public static void ResizeTexture(ref Texture2D texture2D, int newSize, string savePath = null)
+    public static class TextureHelper
     {
-
-        //if (texture2D)
-        //{
-        //    return;
-        //}
-
-        RenderTexture scaledRT = RenderTexture.GetTemporary(newSize, newSize);
-        Graphics.Blit(texture2D, scaledRT);
-
-        Texture2D outputTexture = new(newSize, newSize, texture2D.format, true);
-
-        RenderTexture.active = scaledRT;
-        outputTexture.ReadPixels(new Rect(0, 0, newSize, newSize), 0, 0);
-
-        outputTexture.Apply();
-
-        // Clean up
-        RenderTexture.active = null;
-        RenderTexture.ReleaseTemporary(scaledRT);
-
-        UnityEngine.Object.Destroy(texture2D);
-        texture2D = outputTexture;
-
-        if (savePath != null)
+        public static void ResizeTexture(ref Texture2D texture2D, int newSize, string savePath = null)
         {
-            SaveTextureAsPNG(texture2D, savePath);
-        }
-    }
 
-    public static void GetTextureFromNonReadable(ref Texture2D texture2D)
-    {
+            //if (texture2D)
+            //{
+            //    return;
+            //}
 
-        RenderTexture scaledRT = RenderTexture.GetTemporary(texture2D.width, texture2D.height);
-        Graphics.Blit(texture2D, scaledRT);
+            RenderTexture scaledRT = RenderTexture.GetTemporary(newSize, newSize);
+            Graphics.Blit(texture2D, scaledRT);
 
-        Texture2D outputTexture = new(texture2D.width, texture2D.height, TextureFormat.RGBA32, true);
+            Texture2D outputTexture = new(newSize, newSize, texture2D.format, true);
 
-        RenderTexture.active = scaledRT;
-        outputTexture.ReadPixels(new Rect(0, 0, texture2D.width, texture2D.height), 0, 0);
+            RenderTexture.active = scaledRT;
+            outputTexture.ReadPixels(new Rect(0, 0, newSize, newSize), 0, 0);
 
-        outputTexture.Apply();
+            outputTexture.Apply();
 
-        // Clean up
-        RenderTexture.active = null;
-        RenderTexture.ReleaseTemporary(scaledRT);
+            // Clean up
+            RenderTexture.active = null;
+            RenderTexture.ReleaseTemporary(scaledRT);
 
-        UnityEngine.Object.Destroy(texture2D);
-        texture2D = outputTexture;
-    }
-    public static Texture2D GetTexture2DFromTexture(Texture texture, TextureFormat textureFormat = TextureFormat.RGBA32)
-    {
+            UnityEngine.Object.Destroy(texture2D);
+            texture2D = outputTexture;
 
-        RenderTexture scaledRT = RenderTexture.GetTemporary(texture.width, texture.height);
-        Graphics.Blit(texture, scaledRT);
-
-        Texture2D outputTexture = new(texture.width, texture.height, textureFormat, true);
-
-        RenderTexture.active = scaledRT;
-        outputTexture.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
-
-        outputTexture.Apply();
-
-        // Clean up
-        RenderTexture.active = null;
-        RenderTexture.ReleaseTemporary(scaledRT);
-
-        return outputTexture;
-    }
-
-    public static void Format(ref Texture2D texture2D, TextureFormat newTextureFormat)
-    {
-        Texture2D newTexture2D = new(texture2D.width, texture2D.height, newTextureFormat, true);
-
-        for (int i = 0; i < texture2D.mipmapCount; i++)
-        {
-            newTexture2D.SetPixels(texture2D.GetPixels(i), i);
+            if (savePath != null)
+            {
+                SaveTextureAsPNG(texture2D, savePath);
+            }
         }
 
-        newTexture2D.Apply();
+        public static void GetTextureFromNonReadable(ref Texture2D texture2D)
+        {
 
-        UnityEngine.Object.Destroy(texture2D);
-        texture2D = newTexture2D;
-    }
+            RenderTexture scaledRT = RenderTexture.GetTemporary(texture2D.width, texture2D.height);
+            Graphics.Blit(texture2D, scaledRT);
 
-    public static void SaveTextureAsPNG(Texture2D texture2D, string path)
-    {
+            Texture2D outputTexture = new(texture2D.width, texture2D.height, TextureFormat.RGBA32, true);
 
-        //if (texture2D || path is null)
-        //{
-        //    return;
-        //}
+            RenderTexture.active = scaledRT;
+            outputTexture.ReadPixels(new Rect(0, 0, texture2D.width, texture2D.height), 0, 0);
 
-        Directory.CreateDirectory(new FileInfo(path).DirectoryName);
-        File.WriteAllBytes(path, texture2D.EncodeToPNG());
+            outputTexture.Apply();
+
+            // Clean up
+            RenderTexture.active = null;
+            RenderTexture.ReleaseTemporary(scaledRT);
+
+            UnityEngine.Object.Destroy(texture2D);
+            texture2D = outputTexture;
+        }
+        public static Texture2D GetTexture2DFromTexture(Texture texture, TextureFormat textureFormat = TextureFormat.RGBA32)
+        {
+
+            RenderTexture scaledRT = RenderTexture.GetTemporary(texture.width, texture.height);
+            Graphics.Blit(texture, scaledRT);
+
+            Texture2D outputTexture = new(texture.width, texture.height, textureFormat, true);
+
+            RenderTexture.active = scaledRT;
+            outputTexture.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
+
+            outputTexture.Apply();
+
+            // Clean up
+            RenderTexture.active = null;
+            RenderTexture.ReleaseTemporary(scaledRT);
+
+            return outputTexture;
+        }
+
+        public static void Format(ref Texture2D texture2D, TextureFormat newTextureFormat)
+        {
+            Texture2D newTexture2D = new(texture2D.width, texture2D.height, newTextureFormat, true);
+
+            for (int i = 0; i < texture2D.mipmapCount; i++)
+            {
+                newTexture2D.SetPixels(texture2D.GetPixels(i), i);
+            }
+
+            newTexture2D.Apply();
+
+            UnityEngine.Object.Destroy(texture2D);
+            texture2D = newTexture2D;
+        }
+
+        public static void SaveTextureAsPNG(Texture2D texture2D, string path)
+        {
+
+            //if (texture2D || path is null)
+            //{
+            //    return;
+            //}
+
+            Directory.CreateDirectory(new FileInfo(path).DirectoryName);
+            File.WriteAllBytes(path, texture2D.EncodeToPNG());
+        }
     }
 }

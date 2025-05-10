@@ -248,17 +248,17 @@ namespace ExtraLib.Systems.UI
 
         private Entity GetFirstItem(Entity groupEntity, List<Entity> themes, List<Entity> packs)
         {
-            return _ToolbarUISystemTraverse.Method("GetFirstItem", [typeof(Entity), typeof(List<Entity>), typeof(List<Entity>)]).GetValue<Entity>(groupEntity, themes, packs);
+            return _ToolbarUISystemTraverse.Method("GetFirstItem", new Type[] { typeof(Entity), typeof(List<Entity>), typeof(List<Entity>) }).GetValue<Entity>(groupEntity, themes, packs);
         }
 
         private void SelectAssetCategory(Entity entity)
         {
-            _ToolbarUISystemTraverse.Method("SelectAssetCategory", [typeof(Entity)]).GetValue(entity);
+            _ToolbarUISystemTraverse.Method("SelectAssetCategory", new Type[] { typeof(Entity) }).GetValue(entity);
         }
 
         private NativeList<UIObjectInfo> GetSortedCategories(DynamicBuffer<UIGroupElement> elements)
         {
-            return _ToolbarUISystemTraverse.Method("GetSortedCategories", [typeof(DynamicBuffer<UIGroupElement>)]).GetValue<NativeList<UIObjectInfo>>(elements);
+            return _ToolbarUISystemTraverse.Method("GetSortedCategories", new Type[] { typeof(DynamicBuffer<UIGroupElement>) }).GetValue<NativeList<UIObjectInfo>>(elements);
         }
 
     }

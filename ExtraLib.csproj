@@ -4,7 +4,6 @@
 		<OutputType>Library</OutputType>
 		<TargetFramework>net472</TargetFramework>
 		<Configurations>Debug;Release</Configurations> <!---->
-		<langVersion>latest</langVersion>
     <!--<Version>1.3.0</Version>--> <!--Can't change or break mod using ExtraLib-->
 
 		<!--The folder where Game.dll is located. Set it only if the game is not installed in the default location, otherwise keep it empty-->
