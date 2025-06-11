@@ -25,7 +25,6 @@
 	"Assets.DESCRIPTION[Water Surfaces]": "このカテゴリにはすべての水面が含まれています。",
 	"Assets.NAME[Wood Surfaces]": "木のサーフェス",
 	"Assets.DESCRIPTION[Wood Surfaces]": "このカテゴリにはすべての木のサーフェスが含まれています。",
-
 	"Services.NAME[Decals]": "デカール",
 	"Services.DESCRIPTION[Decals]": "このカテゴリにはすべてのデカールが含まれており、これらのデカールを使用して地面に装飾を追加できます。",
 	"Assets.NAME[Alphabet Decals]": "アルファベットのデカール",
@@ -58,7 +57,6 @@
 	"Assets.DESCRIPTION[Trash Decals]": "このカテゴリにはすべてのゴミのデカールが含まれています。",
 	"Assets.NAME[WallDecor Decals]": "壁の装飾のデカール",
 	"Assets.DESCRIPTION[WallDecor Decals]": "このカテゴリにはすべての壁の装飾のデカールが含まれています。",
-
 	"Services.NAME[NetLanes]": "NetLanes",
 	"Services.DESCRIPTION[NetLanes]": "This category contains all the NetLanes.",
 	"Assets.NAME[Misc NetLanes]": "Misc NetLanes",
