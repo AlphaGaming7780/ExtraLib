@@ -14,18 +14,18 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 
 # Translation
 ⚠️ This mod uses crowdin so there maybe inconsistencies with translations due to translations from different translators ⚠️
-- ✔️French 100% : aricoseco, Morgan Touverey Quilling (mtouverey)
-- ✔️Chinese Simplified 100% : RilkeXS(无手文) (RilkeXS), 一叶杳舟 (Yao_Zhou)
-- ✔️Chinese Traditional 100% : CBEdwin, allegretic, Hans Law (ZENITHALIZE)
-- ✔️German 100% : Konsi, Jannik Bartmann (raptor09), KaeseKuchen (KaeseMitKuchen), FearMyFeedEU
-- ⚠️Italian 97% : Stefano (Furios)
-- ✔️Japanese 100% : karigane
-- ✔️Korean 100% : Hinanchovo
-- ✔️Polish 100% : Lisek, karmel68
-- ✔️Portuguese 100% -> [European Portuguese Localization mod](https://mods.paradoxplaza.com/mods/92599/Windows)
-- ⚠️Portuguese, Brazilian 97% : Miguel Pereira Campos (mpcamposz)
-- ✔️Russian 100% :  MrSandcraft, Mihail (kaktyc), Denis Lee (B3lka), Sergey (TraceXR)
-- ✔️Spanish 100% : elGendo87
+- ⚠️French 7% : aricoseco, Morgan Touverey Quilling (mtouverey)
+- ⚠️Chinese Simplified 7% : RilkeXS(无手文) (RilkeXS), 一叶杳舟 (Yao_Zhou)
+- ⚠️Chinese Traditional 7% : CBEdwin, allegretic, Hans Law (ZENITHALIZE)
+- ⚠️German 7% : Konsi, Jannik Bartmann (raptor09), KaeseKuchen (KaeseMitKuchen), FearMyFeedEU
+- ⚠️Italian 7% : Stefano (Furios)
+- ⚠️Japanese 7% : karigane
+- ⚠️Korean 7% : Hinanchovo
+- ⚠️Polish 7% : Lisek, karmel68
+- ⚠️Portuguese 7% -> [European Portuguese Localization mod](https://mods.paradoxplaza.com/mods/92599/Windows)
+- ⚠️Portuguese, Brazilian 7% : Miguel Pereira Campos (mpcamposz)
+- ⚠️Russian 7% :  MrSandcraft, Mihail (kaktyc), Denis Lee (B3lka), Sergey (TraceXR)
+- ⚠️Spanish 7% : elGendo87
 	</LongDescription>
 	<!--Thumbnail-->
 	<Thumbnail Value="Properties/EL.png" />
@@ -55,7 +55,7 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 > *For now, none of my mods use it*
 
 ### Translation
-- ✔️Japanese 100% : karigane
+- ⚠️Japanese 7% : karigane
 	</ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="crowdin" Url="https://crowdin.com/project/extralib" />
