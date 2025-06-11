@@ -13,6 +13,7 @@ namespace ExtraLib.Debugger
         {
             this.logger = log;
             this.debugMod = debugMod;
+            if(debugMod) Unity.Collections.NativeLeakDetection.Mode = Unity.Collections.NativeLeakDetectionMode.EnabledWithStackTrace;
         }
 
         public void Info(object LogMessage)
