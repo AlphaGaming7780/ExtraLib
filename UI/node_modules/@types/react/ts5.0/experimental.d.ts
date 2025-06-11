@@ -42,24 +42,6 @@ declare const UNDEFINED_VOID_ONLY: unique symbol;
 type VoidOrUndefinedOnly = void | { [UNDEFINED_VOID_ONLY]: never };
 
 declare module "." {
-    /**
-     * @internal Use `Awaited<ReactNode>` instead
-     */
-    // Helper type to enable `Awaited<ReactNode>`.
-    // Must be a copy of the non-thenables of `ReactNode`.
-    type AwaitedReactNode =
-        | ReactElement
-        | string
-        | number
-        | Iterable<AwaitedReactNode>
-        | ReactPortal
-        | boolean
-        | null
-        | undefined;
-    interface DO_NOT_USE_OR_YOU_WILL_BE_FIRED_EXPERIMENTAL_REACT_NODES {
-        promises: Promise<AwaitedReactNode>;
-    }
-
     export interface SuspenseProps {
         /**
          * The presence of this prop indicates that the content is computationally expensive to render.
@@ -124,8 +106,13 @@ declare module "." {
      */
     export const unstable_SuspenseList: ExoticComponent<SuspenseListProps>;
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     export function experimental_useEffectEvent<T extends Function>(event: T): T;
+
+    /**
+     * Warning: Only available in development builds.
+     */
+    function captureOwnerStack(): string | null;
 
     type Reference = object;
     type TaintableUniqueValue = string | bigint | ArrayBufferView;

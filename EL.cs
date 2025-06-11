@@ -3,21 +3,29 @@ using Game;
 using Game.Modding;
 using HarmonyLib;
 using System.Linq;
-using Extra.Lib.Systems;
-using Extra.Lib;
-using Extra.Lib.Debugger;
-using Extra.Lib.UI;
 using Game.SceneFlow;
 using System.IO;
-using Extra.Lib.Localization;
 using System.Reflection;
+using Game.Prefabs;
+using Game.UI.InGame;
+using Game.UI.Menu;
+using Unity.Entities;
+using UnityEngine;
 
-namespace Extra
+using ExtraLib.Systems;
+using ExtraLib.Systems.UI;
+using ExtraLib.Helpers;
+using ExtraLib.Mono;
+using Logger = ExtraLib.Debugger.Logger;
+using ExtraLib.Systems.UI.ExtraPanels;
+
+
+namespace ExtraLib
 {
-	public class EL : IMod
+    public class EL : IMod
 	{
 		
-		public static ILog log = LogManager.GetLogger($"{nameof(ExtraLib)}").SetShowsErrorsInUI(false); //.{nameof(ELT)}
+		public static ILog log = LogManager.GetLogger($"{nameof(ExtraLib)}").SetShowsErrorsInUI(false);
 #if DEBUG
 		internal static Logger Logger = new(log, true);
 #else
@@ -26,9 +34,18 @@ namespace Extra
 		// private GameSetting m_Setting;
 
 		private Harmony harmony;
+
 		internal static string ResourcesIcons { get; private set; }
 
-		public void OnLoad(UpdateSystem updateSystem)
+        internal static readonly GameObject ExtraLibMonoObject = new();
+        public static ExtraLibMonoScript extraLibMonoScript;
+
+        public static PrefabSystem m_PrefabSystem;
+        public static EntityManager m_EntityManager;
+        public static ToolbarUISystem m_ToolbarUISystem;
+        public static NotificationUISystem m_NotificationUISystem;
+
+        public void OnLoad(UpdateSystem updateSystem)
 		{
 			Logger.Info(nameof(OnLoad));
 
@@ -46,38 +63,62 @@ namespace Extra
 
 			ExtraLocalization.LoadLocalization(Logger, Assembly.GetExecutingAssembly(), false);
 
-			// m_Setting = new GameSetting(this);
-			// m_Setting.RegisterInOptionsUI();
-			// GameManager.instance.localizationManager.AddSource("en-US", new LocaleEN(m_Setting));
+            extraLibMonoScript = EL.ExtraLibMonoObject.AddComponent<ExtraLibMonoScript>();
 
-			// AssetDatabase.global.LoadSettings(nameof(ExtraDetailingTools), m_Setting, new GameSetting(this));
-
-			ExtraLib.extraLibMonoScript = ExtraLib.ExtraLibMonoObject.AddComponent<ExtraLibMonoScript>();
-
-			updateSystem.UpdateAt<ExtraLibUI>(SystemUpdatePhase.UIUpdate);
-			updateSystem.UpdateAt<ExtraAssetsMenu>(SystemUpdatePhase.UIUpdate);
+			updateSystem.UpdateAt<AssetMultiCategory>(SystemUpdatePhase.UIUpdate);
+            updateSystem.UpdateAt<ExtraPanelsUISystem>(SystemUpdatePhase.UIUpdate);
+			//updateSystem.UpdateAt<ExtraAssetsMenu>(SystemUpdatePhase.UIUpdate);
             updateSystem.UpdateAt<MainSystem>(SystemUpdatePhase.LateUpdate);
 
-            harmony = new($"{nameof(ExtraLib)}.{nameof(ExtraLib)}");
-			harmony.PatchAll(typeof(ExtraLib).Assembly);
+#if DEBUG
+            ExtraPanelsUISystem extraPanelsUISystem = updateSystem.World.GetOrCreateSystemManaged<ExtraPanelsUISystem>();
+            extraPanelsUISystem.AddExtraPanel<TestExtraPanel>();
+#endif
+
+            //PrefabsHelper.LoadPrefabsInDirectory(Path.Combine(fileInfo.Directory.FullName, "Prefabs"));
+
+            harmony = new($"{nameof(ExtraLib)}.{nameof(EL)}");
+            harmony.PatchAll(typeof(EL).Assembly);
 			var patchedMethods = harmony.GetPatchedMethods().ToArray();
 			Logger.Info($"Plugin ExtraLib made patches! Patched methods: " + patchedMethods.Length);
 			foreach (var patchedMethod in patchedMethods)
 			{
 				Logger.Info($"Patched method: {patchedMethod.Module.Name}:{patchedMethod.Name}");
 			}
+
         }
 
 		public void OnDispose()
 		{
 			Logger.Info(nameof(OnDispose));
-			harmony.UnpatchAll($"{nameof(ExtraLib)}.{nameof(ExtraLib)}");
+            harmony.UnpatchAll($"{nameof(ExtraLib)}.{nameof(EL)}");
 			Icons.UnLoadAllIconsFolder();
-			//if (m_Setting != null)
-			//{
-			//    m_Setting.UnregisterInOptionsUI();
-			//    m_Setting = null;
-			//}
 		}
+
+        internal static Stream GetEmbedded(string embeddedPath)
+        {
+            return Assembly.GetExecutingAssembly().GetManifestResourceStream("ExtraLib.embedded." + embeddedPath);
+        }
+
+        public static void AddOnEditEnities(MainSystem.OnEditEnities onEditEnities, EntityQueryDesc entityQueryDesc)
+        {
+            AddOnEditEnities(new(onEditEnities, entityQueryDesc));
+        }
+
+        public static void AddOnEditEnities(MainSystem.EntityRequester entityRequester)
+        {
+            MainSystem.entityRequesters.Add(entityRequester);
+        }
+
+        public static void AddOnMainMenu(MainSystem.OnMainMenu OnMainMenu)
+        {
+            MainSystem.onMainMenu += OnMainMenu;
+        }
+
+        public static void AddOnInitialize(MainSystem.OnInitialize OnInitialize)
+        {
+            MainSystem.onInitialize += OnInitialize;
+        }
+
     }
 }
