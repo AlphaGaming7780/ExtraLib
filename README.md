@@ -17,3 +17,6 @@ Special thanks to YenYan and T.D.W for their invaluable tips and assistance with
 - ❌Portuguese, Brazilian 0%
 - ❌Russian 0%
 - ✔️Spanish 100% : elGendo87
+
+Thanks krzychu124 for that.
+Note to myself : https://dndkit.com/

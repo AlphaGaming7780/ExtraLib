@@ -1,13 +1,12 @@
 {
     "name": "@swc/types",
     "packageManager": "yarn@4.0.2",
-    "version": "0.1.6",
+    "version": "0.1.17",
     "description": "Typings for the swc project.",
     "sideEffects": false,
     "scripts": {
         "build": "tsc",
-        "prepublishOnly": "yarn build",
-        "prepack": "yarn build"
+        "prepublishOnly": "yarn build"
     },
     "repository": {
         "type": "git",
@@ -17,6 +16,10 @@
         "registry": "https://registry.npmjs.org/",
         "access": "public"
     },
+    "files": [
+        "*.js",
+        "*.d.ts"
+    ],
     "keywords": [
         "swc",
         "types"

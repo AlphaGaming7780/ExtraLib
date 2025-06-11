@@ -1,0 +1,24 @@
+{
+    "$id": 0,
+    "$type": "0|ExtraLib.Prefabs.UIAssetChildCategoryPrefab, ExtraLib",
+    "name": "Concrete Surfaces",
+    "active": true,
+    "components": {
+        "$id": 1,
+        "$type": "1|System.Collections.Generic.List`1[[Game.Prefabs.ComponentBase, Game]], mscorlib",
+        "$rlength": 1,
+        "$rcontent": [
+            {
+                "$id": 2,
+                "$type": "2|Game.Prefabs.UIObject, Game",
+                "name": "UIObject",
+                "active": true,
+                "m_Group": null,
+                "m_Priority": 0,
+                "m_Icon": "coui://extralib/Icons/UIAssetChildCategoryPrefab/Concrete Surfaces.svg",
+                "m_IsDebugObject": false
+            }
+        ]
+    },
+    "parentCategory": $fstrref:"CID:6e33c15d07747ce506c2628042cfd34c"
+}
