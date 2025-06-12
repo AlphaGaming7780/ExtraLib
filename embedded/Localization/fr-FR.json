@@ -57,12 +57,12 @@
 	"Assets.DESCRIPTION[Trash Decals]": "Cette catégorie contient toutes les décalcomanies d’ordure par ordre alphabétique.",
 	"Assets.NAME[WallDecor Decals]": "Décalcomanies de décor mural",
 	"Assets.DESCRIPTION[WallDecor Decals]": "Cette catégorie contient toutes les décalcomanies de décor mural par ordre alphabétique.",
-	"Services.NAME[NetLanes]": "NetLanes",
-	"Services.DESCRIPTION[NetLanes]": "This category contains all the NetLanes.",
-	"Assets.NAME[Misc NetLanes]": "Misc NetLanes",
-	"Assets.DESCRIPTION[Misc NetLanes]": "This category contains all the Misc NetLanes.",
-	"Assets.NAME[RoadMarking NetLanes]": "RoadMarking NetLanes",
-	"Assets.DESCRIPTION[RoadMarking NetLanes]": "This category contains all the RoadMarking NetLanes.",
-	"Assets.NAME[Fence NetLanes]": "Fence NetLanes",
-	"Assets.DESCRIPTION[Fence NetLanes]": "This category contains all the Fence NetLanes."
+	"Services.NAME[NetLanes]": "Lignes(NetLanes)",
+	"Services.DESCRIPTION[NetLanes]": "Cette catégorie contient toutes les autres lignes(NetLanes).",
+	"Assets.NAME[Misc NetLanes]": "Diverses lignes(NetLanes)",
+	"Assets.DESCRIPTION[Misc NetLanes]": "Cette catégorie contient toutes les autres lignes(NetLanes).",
+	"Assets.NAME[RoadMarking NetLanes]": "Réseaux de marquage routier",
+	"Assets.DESCRIPTION[RoadMarking NetLanes]": "Cette catégorie contient tous les réseaux de marquage routier.",
+	"Assets.NAME[Fence NetLanes]": "Réseaux de clôtures",
+	"Assets.DESCRIPTION[Fence NetLanes]": "Cette catégorie contient tous les réseaux de clôtures."
 }
