@@ -58,11 +58,11 @@
 	"Assets.NAME[WallDecor Decals]": "Naklejki dekoracyjne na ścianę",
 	"Assets.DESCRIPTION[WallDecor Decals]": "Ta kategoria zawiera wszystkie naklejki dekoracyjne na ścianę.",
 	"Services.NAME[NetLanes]": "NetLanes",
-	"Services.DESCRIPTION[NetLanes]": "This category contains all the NetLanes.",
-	"Assets.NAME[Misc NetLanes]": "Misc NetLanes",
-	"Assets.DESCRIPTION[Misc NetLanes]": "This category contains all the Misc NetLanes.",
-	"Assets.NAME[RoadMarking NetLanes]": "RoadMarking NetLanes",
-	"Assets.DESCRIPTION[RoadMarking NetLanes]": "This category contains all the RoadMarking NetLanes.",
-	"Assets.NAME[Fence NetLanes]": "Fence NetLanes",
-	"Assets.DESCRIPTION[Fence NetLanes]": "This category contains all the Fence NetLanes."
+	"Services.DESCRIPTION[NetLanes]": "Ta kategoria zawiera wszystkie NetLanes.",
+	"Assets.NAME[Misc NetLanes]": "Różne NetLanes",
+	"Assets.DESCRIPTION[Misc NetLanes]": "Ta kategoria zawiera wszystkie różne NetLanes.",
+	"Assets.NAME[RoadMarking NetLanes]": "Oznaczenia drogowe NetLanes",
+	"Assets.DESCRIPTION[RoadMarking NetLanes]": "Ta kategoria zawiera wszystkie oznaczenia drogowe NetLanes.",
+	"Assets.NAME[Fence NetLanes]": "Ogrodzenia NetLanes",
+	"Assets.DESCRIPTION[Fence NetLanes]": "Ta kategoria zawiera wszystkie ogrodzenia NetLanes."
 }
