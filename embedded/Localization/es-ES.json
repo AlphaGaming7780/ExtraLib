@@ -57,12 +57,12 @@
 	"Assets.DESCRIPTION[Trash Decals]": "Esta categoría contiene todas las calcomanías de basura.",
 	"Assets.NAME[WallDecor Decals]": "Calcomanías de decoración de paredes",
 	"Assets.DESCRIPTION[WallDecor Decals]": "Esta categoría contiene todas las calcomanías de decoración de paredes.",
-	"Services.NAME[NetLanes]": "NetLanes",
-	"Services.DESCRIPTION[NetLanes]": "This category contains all the NetLanes.",
-	"Assets.NAME[Misc NetLanes]": "Misc NetLanes",
-	"Assets.DESCRIPTION[Misc NetLanes]": "This category contains all the Misc NetLanes.",
-	"Assets.NAME[RoadMarking NetLanes]": "RoadMarking NetLanes",
-	"Assets.DESCRIPTION[RoadMarking NetLanes]": "This category contains all the RoadMarking NetLanes.",
-	"Assets.NAME[Fence NetLanes]": "Fence NetLanes",
-	"Assets.DESCRIPTION[Fence NetLanes]": "This category contains all the Fence NetLanes."
+	"Services.NAME[NetLanes]": "Redes",
+	"Services.DESCRIPTION[NetLanes]": "Esta categoría contiene todas las redes.",
+	"Assets.NAME[Misc NetLanes]": "Redes varias",
+	"Assets.DESCRIPTION[Misc NetLanes]": "Esta categoría contiene todas las redes misceláneas.",
+	"Assets.NAME[RoadMarking NetLanes]": "Redes de marcas de carretera",
+	"Assets.DESCRIPTION[RoadMarking NetLanes]": "Esta categoría contiene todas las redes de marcas de carreteras.",
+	"Assets.NAME[Fence NetLanes]": "Redes de vallas",
+	"Assets.DESCRIPTION[Fence NetLanes]": "Esta categoría contiene todas las redes de vallas."
 }
