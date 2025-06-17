@@ -58,11 +58,11 @@
 	"Assets.NAME[WallDecor Decals]": "Decalques de decoração de parede",
 	"Assets.DESCRIPTION[WallDecor Decals]": "Esta categoria contém todos os decalques de decoração de parede.",
 	"Services.NAME[NetLanes]": "NetLanes",
-	"Services.DESCRIPTION[NetLanes]": "This category contains all the NetLanes.",
-	"Assets.NAME[Misc NetLanes]": "Misc NetLanes",
-	"Assets.DESCRIPTION[Misc NetLanes]": "This category contains all the Misc NetLanes.",
-	"Assets.NAME[RoadMarking NetLanes]": "RoadMarking NetLanes",
-	"Assets.DESCRIPTION[RoadMarking NetLanes]": "This category contains all the RoadMarking NetLanes.",
-	"Assets.NAME[Fence NetLanes]": "Fence NetLanes",
-	"Assets.DESCRIPTION[Fence NetLanes]": "This category contains all the Fence NetLanes."
+	"Services.DESCRIPTION[NetLanes]": "Esta categoria contém todas as NetLanes.",
+	"Assets.NAME[Misc NetLanes]": "NetLanes Diversas",
+	"Assets.DESCRIPTION[Misc NetLanes]": "Esta categoria contém todas as NetLanes Diversas.",
+	"Assets.NAME[RoadMarking NetLanes]": "NetLanes de Sinalização Rodoviária",
+	"Assets.DESCRIPTION[RoadMarking NetLanes]": "Esta categoria contém todas as NetLanes de Sinalização Rodoviária.",
+	"Assets.NAME[Fence NetLanes]": "NetLanes de Vedação",
+	"Assets.DESCRIPTION[Fence NetLanes]": "Esta categoria contém todas as NetLanes de Vedação."
 }
