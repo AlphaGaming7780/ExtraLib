@@ -1,5 +1,5 @@
 {
-	"Services.NAME[ExtraAssetsMenu]": "Recursos Extra",
+	"Services.NAME[ExtraAssetsMenu]": "Extra Assets",
 	"Services.DESCRIPTION[ExtraAssetsMenu]": "Este menú es un menú personalizado con múltiples categorías para almacenar múltiples tipos de recursos que los mods requieran mostrar en la interfaz de usuario.",
 	"Services.NAME[Surfaces]": "Superficies",
 	"Services.DESCRIPTION[Surfaces]": "Esta categoría contiene todas las superficies, puede utilizar estas superficies para dibujar texturas en el suelo.",

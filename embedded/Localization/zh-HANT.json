@@ -57,12 +57,12 @@
 	"Assets.DESCRIPTION[Trash Decals]": "此類別包含所有的垃圾貼花（Decal）。",
 	"Assets.NAME[WallDecor Decals]": "牆面裝飾貼花",
 	"Assets.DESCRIPTION[WallDecor Decals]": "此類別包含所有的牆面裝飾貼花（Decal）。",
-	"Services.NAME[NetLanes]": "NetLanes",
-	"Services.DESCRIPTION[NetLanes]": "This category contains all the NetLanes.",
-	"Assets.NAME[Misc NetLanes]": "Misc NetLanes",
-	"Assets.DESCRIPTION[Misc NetLanes]": "This category contains all the Misc NetLanes.",
-	"Assets.NAME[RoadMarking NetLanes]": "RoadMarking NetLanes",
-	"Assets.DESCRIPTION[RoadMarking NetLanes]": "This category contains all the RoadMarking NetLanes.",
-	"Assets.NAME[Fence NetLanes]": "Fence NetLanes",
-	"Assets.DESCRIPTION[Fence NetLanes]": "This category contains all the Fence NetLanes."
+	"Services.NAME[NetLanes]": "網絡",
+	"Services.DESCRIPTION[NetLanes]": "該類別包含所有網絡。",
+	"Assets.NAME[Misc NetLanes]": "其他網絡",
+	"Assets.DESCRIPTION[Misc NetLanes]": "該類別包含所有其他網絡。",
+	"Assets.NAME[RoadMarking NetLanes]": "道路標記網絡",
+	"Assets.DESCRIPTION[RoadMarking NetLanes]": "該類別包含所有道路標記網絡。",
+	"Assets.NAME[Fence NetLanes]": "圍欄網絡",
+	"Assets.DESCRIPTION[Fence NetLanes]": "該類別包含所有圍欄網絡。"
 }
