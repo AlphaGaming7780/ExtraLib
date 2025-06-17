@@ -65,6 +65,62 @@ namespace ExtraLib.Helpers
 
         }
 
+        public static UIAssetCategoryPrefab GetOrCreateUIAssetCategoryPrefab(UIAssetMenuPrefab menuPrefab, string catName, Func<PrefabBase, string> getIcons, string behindcat = null)
+        {
+            UIAssetCategoryPrefab uIAssetMenuPrefab = GetOrCreateUIAssetCategoryPrefab(menuPrefab, catName, "", behindcat);
+            uIAssetMenuPrefab.GetComponent<UIObject>().m_Icon = getIcons(uIAssetMenuPrefab);
+            return uIAssetMenuPrefab;
+        }
+
+        public static UIAssetCategoryPrefab GetOrCreateUIAssetCategoryPrefab(string menuName, string catName, Func<PrefabBase, string> getIcons, string behindcat = null)
+        {
+            return GetOrCreateUIAssetCategoryPrefab(GetUIAssetMenuPrefab(menuName), catName, getIcons, behindcat);
+        }
+
+        public static UIAssetCategoryPrefab GetOrCreateUIAssetCategoryPrefab(string menuName, string catName, string iconPath, string behindcat = null)
+        {
+            return GetOrCreateUIAssetCategoryPrefab(GetUIAssetMenuPrefab(menuName), catName, iconPath, behindcat);
+        }
+
+        public static UIAssetCategoryPrefab GetOrCreateUIAssetCategoryPrefab(UIAssetMenuPrefab menuPrefab, string catName, string iconPath, string behindcat = null)
+        {
+
+            if (EL.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetCategoryPrefab), catName), out var p1)
+                && p1 is UIAssetCategoryPrefab newCategory)
+            {
+                return newCategory;
+            }
+
+            UIAssetCategoryPrefab behindCategory = null;
+
+            if (behindcat != null)
+            {
+                if (!EL.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetCategoryPrefab), behindcat), out var p3)
+                    || p3 is not UIAssetCategoryPrefab behindCategory2)
+                {
+                    EL.Logger.Error($"Failed to get the UIAssetCategoryPrefab with this name : {behindcat}");
+                    return null;
+                }
+                else
+                {
+                    behindCategory = behindCategory2;
+                }
+            }
+
+            newCategory = ScriptableObject.CreateInstance<UIAssetCategoryPrefab>();
+            newCategory.name = catName;
+            newCategory.m_Menu = menuPrefab;
+            var newCategoryUI = newCategory.AddComponent<UIObject>();
+            newCategoryUI.m_Icon = iconPath;
+            if (behindCategory != null) newCategoryUI.m_Priority = behindCategory.GetComponent<UIObject>().m_Priority + 1;
+            newCategoryUI.active = true;
+            newCategoryUI.m_IsDebugObject = false;
+
+            EL.m_PrefabSystem.AddPrefab(newCategory);
+
+            return newCategory;
+        }
+
         public static UIAssetChildCategoryPrefab GetUIAssetChildCategoryPrefab(string cat)
         {
 
@@ -141,6 +197,18 @@ namespace ExtraLib.Helpers
             EL.m_PrefabSystem.AddPrefab(parentCategory);
 
             return parentCategory;
+        }
+
+        public static UIAssetMenuPrefab GetUIAssetMenuPrefab(string menuName)
+        {
+            if (!EL.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetMenuPrefab), menuName), out var p1)
+                || p1 is not UIAssetMenuPrefab menuPrefab)
+            {
+                EL.Logger.Error($"Failed to get the UIAssetMenuPrefab with this name : {menuName}");
+                return null;
+            }
+
+            return menuPrefab;
         }
 
         /// <summary>

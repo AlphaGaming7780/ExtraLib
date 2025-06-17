@@ -58,5 +58,13 @@
 	"SubServices.NAME[Trash Decals]": "Trash Decals",
 	"Assets.SUB_SERVICE_DESCRIPTION[Trash Decals]": "This category contains all the trash decals.",
 	"SubServices.NAME[WallDecor Decals]": "Wall Decor Decals",
-	"Assets.SUB_SERVICE_DESCRIPTION[WallDecor Decals]": "This category contains all the wall decor decals."
+	"Assets.SUB_SERVICE_DESCRIPTION[WallDecor Decals]": "This category contains all the wall decor decals.",
+	"Services.NAME[NetLanes]": "NetLanes",
+	"Services.DESCRIPTION[NetLanes]": "This category contains all the NetLanes.",
+	"Assets.NAME[Misc NetLanes]": "Misc NetLanes",
+	"Assets.DESCRIPTION[Misc NetLanes]": "This category contains all the Misc NetLanes.",
+	"Assets.NAME[RoadMarking NetLanes]": "RoadMarking NetLanes",
+	"Assets.DESCRIPTION[RoadMarking NetLanes]": "This category contains all the RoadMarking NetLanes.",
+	"Assets.NAME[Fence NetLanes]": "Fence NetLanes",
+	"Assets.DESCRIPTION[Fence NetLanes]": "This category contains all the Fence NetLanes."
 }
