@@ -57,12 +57,12 @@
 	"Assets.DESCRIPTION[Trash Decals]": "이 카테고리는 모든 쓰레기 데칼을 포함합니다.",
 	"Assets.NAME[WallDecor Decals]": "벽 장식품 데칼",
 	"Assets.DESCRIPTION[WallDecor Decals]": "이 카테고리는 모든 벽 장식품 데칼을 포함합니다.",
-	"Services.NAME[NetLanes]": "NetLanes",
-	"Services.DESCRIPTION[NetLanes]": "This category contains all the NetLanes.",
-	"Assets.NAME[Misc NetLanes]": "Misc NetLanes",
-	"Assets.DESCRIPTION[Misc NetLanes]": "This category contains all the Misc NetLanes.",
-	"Assets.NAME[RoadMarking NetLanes]": "RoadMarking NetLanes",
-	"Assets.DESCRIPTION[RoadMarking NetLanes]": "This category contains all the RoadMarking NetLanes.",
-	"Assets.NAME[Fence NetLanes]": "Fence NetLanes",
-	"Assets.DESCRIPTION[Fence NetLanes]": "This category contains all the Fence NetLanes."
+	"Services.NAME[NetLanes]": "넷라인",
+	"Services.DESCRIPTION[NetLanes]": "이 카테고리는 모든 넷라인을 포함합니다.",
+	"Assets.NAME[Misc NetLanes]": "기타 넷라인",
+	"Assets.DESCRIPTION[Misc NetLanes]": "이 카테고리는 모든 기타 넷라인을 포함합니다.",
+	"Assets.NAME[RoadMarking NetLanes]": "도로표지 넷라인",
+	"Assets.DESCRIPTION[RoadMarking NetLanes]": "이 카테고리는 모든 도로표지 넷라인을 포함합니다.",
+	"Assets.NAME[Fence NetLanes]": "울타리 넷라인",
+	"Assets.DESCRIPTION[Fence NetLanes]": "이 카테고리는 모든 울타리 넷라인을 포함합니다."
 }
