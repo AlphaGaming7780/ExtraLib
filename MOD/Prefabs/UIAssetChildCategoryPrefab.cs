@@ -7,13 +7,14 @@ using Unity.Entities;
 namespace ExtraLib.Prefabs
 {
 
-    [ComponentMenu("Extra/", new Type[]
+    [ComponentMenu("Extra", new Type[]
     {
 
     })]
     public class UIAssetChildCategoryPrefab : UIGroupPrefab
     {
         public UIAssetParentCategoryPrefab parentCategory;
+        public string[] ExtraTags = new string[] { };
 
         public override void GetPrefabComponents(HashSet<ComponentType> components)
         {

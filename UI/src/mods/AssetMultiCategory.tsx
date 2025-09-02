@@ -5,10 +5,15 @@ import { AssetCategoryTabBarSCSS } from "../../game-ui/game/components/asset-men
 import { AssetCategory, Entity, toolbar } from "cs2/bindings";
 import { entityEquals } from "cs2/utils";
 
-export const SelectedAssetMultiCategories$ = bindValue<Entity[]>("el", 'SelectedAssetMultiCategories');
-export const AssetMultiCategories$ = bindValue <AssetCategory[][]>("el", 'AssetMultiCategories');
 
-export function CustomAssetCategoryTabBar(AssetCats: AssetCategory[], selectedTab: Entity, onClick : (value : Entity) => void ) {
+export interface ExtraAssetCategory extends AssetCategory {
+    ExtraTags: string[];
+}
+
+export const SelectedAssetMultiCategories$ = bindValue<Entity[]>("el", 'SelectedAssetMultiCategories');
+export const AssetMultiCategories$ = bindValue<ExtraAssetCategory[][]>("el", 'AssetMultiCategories');
+
+export function CustomAssetCategoryTabBar(AssetCats: ExtraAssetCategory[], selectedTab: Entity, onClick : (value : Entity) => void ) {
 	return <div className={AssetCategoryTabBarSCSS.assetCategoryTabBar}>
 		<div className={AssetCategoryTabBarSCSS.items}>
 			{AssetCats && AssetCats.length > 0 && AssetCats.map((AssetCat, index) => {
@@ -22,7 +27,7 @@ export const AssetMultiCategory: ModuleRegistryExtend = (Component: any) => {
     return (props: PropsAssetCategoryTabBar) => {
 
         var SelectedAssetMultiCategories: Entity[] = useValue(SelectedAssetMultiCategories$);
-        var AssetMultiCategories: AssetCategory[][] = useValue(AssetMultiCategories$);
+		var AssetMultiCategories: ExtraAssetCategory[][] = useValue(AssetMultiCategories$);
 
 		if (SelectedAssetMultiCategories && SelectedAssetMultiCategories.length > 0) {
 			props.selectedCategory = SelectedAssetMultiCategories[0];
@@ -30,7 +35,7 @@ export const AssetMultiCategory: ModuleRegistryExtend = (Component: any) => {
 
 		var result: JSX.Element = <>
 			<Component categories={props.categories} selectedCategory={props.selectedCategory} onChange={props.onChange} onClose={props.onClose} />
-			{AssetMultiCategories && AssetMultiCategories.length > 0 && AssetMultiCategories.map((AssetCategories: AssetCategory[], index: number) => {
+			{AssetMultiCategories && AssetMultiCategories.length > 0 && AssetMultiCategories.map((AssetCategories: ExtraAssetCategory[], index: number) => {
 				return CustomAssetCategoryTabBar(AssetCategories, SelectedAssetMultiCategories[index + 1], toolbar.selectAssetCategory)
 			})}
 		</>

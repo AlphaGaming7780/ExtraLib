@@ -1,5 +1,6 @@
 ﻿using Colossal.Entities;
 using Colossal.UI.Binding;
+using ExtraLib.Components;
 using ExtraLib.Prefabs;
 using Game.Prefabs;
 using Game.UI;
@@ -36,6 +37,8 @@ namespace ExtraLib.Systems.UI
 
         private RawValueBinding _AssetMultiCategoriesBinding;
         private GetterValueBinding<List<Entity>> _SelectedAssetMultiCategoriesBinding;
+
+        private readonly List<string> _SelectedTags = new();
 
         protected override void OnCreate()
         {
@@ -106,12 +109,15 @@ namespace ExtraLib.Systems.UI
             writer.Write(prefab.uiTag);
             writer.PropertyName("highlight");
             writer.Write(base.EntityManager.HasComponent<UIHighlight>(entity));
+            writer.PropertyName("ExtraTags");
+            writer.Write(GetSelectedAssetCaegoryTags());
             writer.TypeEnd();
         }
 
         private void UpdateSelectedAssetCategories(Entity assetCategories)
         {
             _SelectedAssetCategory = assetCategories;
+            _SelectedTags.Clear();
             UpdateSelectedAssetMultiCategories();
         }
 
@@ -244,6 +250,15 @@ namespace ExtraLib.Systems.UI
                 return false;
             }
             return true;
+        }
+
+        private string[] GetSelectedAssetCaegoryTags()
+        {
+            if( _SelectedAssetCategory == Entity.Null) return Array.Empty<string>();
+
+            if(_PrefabSystem.TryGetPrefab<UIAssetChildCategoryPrefab>(_SelectedAssetCategory, out var uiAssetChildCategoryPrefab)) return Array.Empty<string>();
+
+            return uiAssetChildCategoryPrefab.ExtraTags;
         }
 
         private Entity GetFirstItem(Entity groupEntity, List<Entity> themes, List<Entity> packs)

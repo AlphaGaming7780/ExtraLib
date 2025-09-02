@@ -9,7 +9,7 @@ namespace ExtraLib.Helpers
     {
         private static readonly Dictionary<string, List<string>> pathToIconLoaded = new();
         internal static readonly string IconsResourceKey = "extralib";
-        internal static readonly string COUIBaseLocation = $"coui://{IconsResourceKey}";
+        public static readonly string COUIBaseLocation = $"coui://{IconsResourceKey}";
 
         public static readonly string Placeholder = $"{COUIBaseLocation}/Icons/Misc/placeholder.svg";
         public static readonly string GameCrashWarning = $"{COUIBaseLocation}/Icons/Misc/GameCrashWarning.svg";

@@ -1,20 +1,21 @@
 
-using Colossal.Serialization.Entities;
-using Game;
-using Unity.Entities;
-using Unity.Collections;
-using Game.UI.Menu;
-using Game.UI.InGame;
-using Game.Prefabs;
 using Colossal.PSI.Common;
+using Colossal.Serialization.Entities;
+using ExtraLib.ClassExtension;
+using ExtraLib.Helpers;
+using ExtraLib.Prefabs;
+using Game;
+using Game.Prefabs;
+using Game.SceneFlow;
+using Game.UI.Editor;
+using Game.UI.InGame;
+using Game.UI.Menu;
 using System;
 using System.Collections;
-using ExtraLib.ClassExtension;
-using Game.SceneFlow;
-using UnityEngine;
-using ExtraLib.Prefabs;
 using System.Collections.Generic;
-using ExtraLib.Helpers;
+using Unity.Collections;
+using Unity.Entities;
+using UnityEngine;
 
 namespace ExtraLib.Systems
 {
@@ -51,6 +52,7 @@ namespace ExtraLib.Systems
             //m_ToolSystem = base.World.GetOrCreateSystemManaged<ToolSystem>();
             EL.m_ToolbarUISystem = base.World.GetOrCreateSystemManaged<ToolbarUISystem>();
             EL.m_NotificationUISystem = base.World.GetOrCreateSystemManaged<NotificationUISystem>();
+            EL.m_EditorAssetCategorySystem = base.World.GetOrCreateSystemManaged<EditorAssetCategorySystem>();
             EL.m_EntityManager = EntityManager;
 
             GameManager.instance.RegisterUpdater(Initialize);

@@ -1,23 +1,23 @@
 using Colossal.Logging;
-using Game;
-using Game.Modding;
-using HarmonyLib;
-using System.Linq;
-using Game.SceneFlow;
-using System.IO;
-using System.Reflection;
-using Game.Prefabs;
-using Game.UI.InGame;
-using Game.UI.Menu;
-using Unity.Entities;
-using UnityEngine;
-
-using ExtraLib.Systems;
-using ExtraLib.Systems.UI;
 using ExtraLib.Helpers;
 using ExtraLib.Mono;
-using Logger = ExtraLib.Debugger.Logger;
+using ExtraLib.Systems;
+using ExtraLib.Systems.UI;
 using ExtraLib.Systems.UI.ExtraPanels;
+using Game;
+using Game.Modding;
+using Game.Prefabs;
+using Game.SceneFlow;
+using Game.UI.Editor;
+using Game.UI.InGame;
+using Game.UI.Menu;
+using HarmonyLib;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using Unity.Entities;
+using UnityEngine;
+using Logger = ExtraLib.Debugger.Logger;
 
 
 namespace ExtraLib
@@ -35,7 +35,7 @@ namespace ExtraLib
 
 		private Harmony harmony;
 
-		internal static string ResourcesIcons { get; private set; }
+		public static string ResourcesIcons { get; private set; }
 
         internal static readonly GameObject ExtraLibMonoObject = new();
         public static ExtraLibMonoScript extraLibMonoScript;
@@ -44,6 +44,7 @@ namespace ExtraLib
         public static EntityManager m_EntityManager;
         public static ToolbarUISystem m_ToolbarUISystem;
         public static NotificationUISystem m_NotificationUISystem;
+        public static EditorAssetCategorySystem m_EditorAssetCategorySystem;
 
         public void OnLoad(UpdateSystem updateSystem)
 		{
