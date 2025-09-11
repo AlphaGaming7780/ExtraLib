@@ -1,20 +1,24 @@
 
-using Colossal.Serialization.Entities;
-using Game;
-using Unity.Entities;
-using Unity.Collections;
-using Game.UI.Menu;
-using Game.UI.InGame;
-using Game.Prefabs;
+using Colossal.IO.AssetDatabase;
 using Colossal.PSI.Common;
+using Colossal.Serialization.Entities;
+using ExtraLib.ClassExtension;
+using ExtraLib.Helpers;
+using ExtraLib.Prefabs;
+using Game;
+using Game.Prefabs;
+using Game.SceneFlow;
+using Game.Simulation;
+using Game.UI.InGame;
+using Game.UI.Menu;
 using System;
 using System.Collections;
-using ExtraLib.ClassExtension;
-using Game.SceneFlow;
-using UnityEngine;
-using ExtraLib.Prefabs;
 using System.Collections.Generic;
-using ExtraLib.Helpers;
+using System.IO;
+using Unity.Collections;
+using Unity.Entities;
+using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 
 namespace ExtraLib.Systems
 {
@@ -83,6 +87,48 @@ namespace ExtraLib.Systems
                 onMainMenu?.Invoke();
                 //if (GameManager.instance.modManager.isInitialized)
             }
+
+            if(mode == GameMode.Game && ( purpose == Purpose.LoadGame || purpose == Purpose.NewGame) )
+            {
+                try
+                {
+                    TerrainSystem terrainSystem = base.World.GetOrCreateSystemManaged<TerrainSystem>();
+
+                    AssetDataPath HeightMapDataPath = AssetDataPath.Create("ModsData", "HeightMap", EscapeStrategy.None);
+                    AssetDataPath WorldMapDataPath = AssetDataPath.Create("ModsData", "WorldMap", EscapeStrategy.None);
+
+                    var heightMap = TextureHelper.GetTexture2DFromTexture(terrainSystem.heightmap, TextureFormat.RGBA64 ); //GraphicsFormatUtility.GetTextureFormat(terrainSystem.heightmap.graphicsFormat)
+                    var worldMap = TextureHelper.GetTexture2DFromTexture(terrainSystem.worldHeightmap, TextureFormat.RGBA64);
+
+                    var heightMapTextureAsset = AssetDatabase.user.AddAsset<TextureAsset, Texture>(HeightMapDataPath, heightMap);
+                    var worldMapTextureAsset = AssetDatabase.user.AddAsset<TextureAsset, Texture>(WorldMapDataPath, worldMap);
+
+                    heightMapTextureAsset.Save();
+                    worldMapTextureAsset.Save();
+
+                    var heightMapImageAsset = heightMapTextureAsset.SaveAsImageAsset(ImageAsset.FileFormat.PNG, HeightMapDataPath, heightMapTextureAsset.database);
+                    var worldMapImageAsset = worldMapTextureAsset.SaveAsImageAsset(ImageAsset.FileFormat.PNG, WorldMapDataPath, worldMapTextureAsset.database);
+
+                    heightMapTextureAsset.Unload();
+                    heightMapImageAsset.Unload();
+
+                    worldMapTextureAsset.Unload();
+                    worldMapImageAsset.Unload();
+
+                    AssetDatabase.user.DeleteAsset(heightMapTextureAsset);
+                    AssetDatabase.user.DeleteAsset(worldMapTextureAsset);
+
+                    //AssetDatabase.user.DeleteAsset(imageAsset);
+
+                    UnityEngine.Object.Destroy(heightMap);
+                    UnityEngine.Object.Destroy(worldMap);
+                }
+                catch (Exception ex)
+                {
+                    EL.Logger.Warn(ex);
+                }
+            }
+
         }
 
         public bool Initialize()
