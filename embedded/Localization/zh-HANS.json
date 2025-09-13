@@ -57,6 +57,8 @@
 	"Assets.DESCRIPTION[Trash Decals]": "此类别包含所有垃圾贴花资产。",
 	"Assets.NAME[WallDecor Decals]": "墙体装饰贴花",
 	"Assets.DESCRIPTION[WallDecor Decals]": "此类别包含所有墙体装饰贴花资产。",
+	"Assets.NAME[Flag Decals]": "Flag Decals",
+	"Assets.DESCRIPTION[Flag Decals]": "This category contains all the flag decals.",
 	"Services.NAME[NetLanes]": "网线",
 	"Services.DESCRIPTION[NetLanes]": "此类别包含所有网线资产。",
 	"Assets.NAME[Misc NetLanes]": "其他网线",
