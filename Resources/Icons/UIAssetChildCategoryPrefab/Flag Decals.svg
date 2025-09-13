@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<svg height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="0 0 512 512" xml:space="preserve">
+<g>
+	<g>
+		<polyline style="fill:#FF4F19;" points="244,0 476,0 412,144 476,288 276,288 		"/>
+	</g>
+	<g>
+		<path style="fill:#7E5C62;" d="M52,512L52,512c-8.837,0-16-7.163-16-16V24c0-8.837,7.163-16,16-16h0c8.837,0,16,7.163,16,16v472
+			C68,504.836,60.837,512,52,512z"/>
+	</g>
+	<g>
+		<path style="fill:#E9001E;" d="M276,32H68v288h192c8.837,0,16-7.163,16-16V32z"/>
+	</g>
+	<g>
+		<polygon style="fill:#7E5C62;" points="244,32 276,32 244,0 		"/>
+	</g>
+</g>
+</svg>
