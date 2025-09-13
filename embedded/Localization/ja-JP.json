@@ -57,12 +57,14 @@
 	"Assets.DESCRIPTION[Trash Decals]": "このカテゴリにはすべてのゴミのデカールが含まれています。",
 	"Assets.NAME[WallDecor Decals]": "壁の装飾のデカール",
 	"Assets.DESCRIPTION[WallDecor Decals]": "このカテゴリにはすべての壁の装飾のデカールが含まれています。",
-	"Services.NAME[NetLanes]": "NetLanes",
-	"Services.DESCRIPTION[NetLanes]": "This category contains all the NetLanes.",
-	"Assets.NAME[Misc NetLanes]": "Misc NetLanes",
-	"Assets.DESCRIPTION[Misc NetLanes]": "This category contains all the Misc NetLanes.",
-	"Assets.NAME[RoadMarking NetLanes]": "RoadMarking NetLanes",
-	"Assets.DESCRIPTION[RoadMarking NetLanes]": "This category contains all the RoadMarking NetLanes.",
-	"Assets.NAME[Fence NetLanes]": "Fence NetLanes",
-	"Assets.DESCRIPTION[Fence NetLanes]": "This category contains all the Fence NetLanes."
+	"Assets.NAME[Flag Decals]": "Flag Decals",
+	"Assets.DESCRIPTION[Flag Decals]": "This category contains all the flag decals.",
+	"Services.NAME[NetLanes]": "レーン",
+	"Services.DESCRIPTION[NetLanes]": "このカテゴリにはすべてのレーンが含まれています。",
+	"Assets.NAME[Misc NetLanes]": "その他のレーン",
+	"Assets.DESCRIPTION[Misc NetLanes]": "このカテゴリにはすべてのその他のレーンが含まれています。",
+	"Assets.NAME[RoadMarking NetLanes]": "路面標示のレーン",
+	"Assets.DESCRIPTION[RoadMarking NetLanes]": "このカテゴリにはすべての路面標示のレーンが含まれています。",
+	"Assets.NAME[Fence NetLanes]": "フェンスのレーン",
+	"Assets.DESCRIPTION[Fence NetLanes]": "このカテゴリにはすべてのフェンスのレーンが含まれています。"
 }

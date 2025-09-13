@@ -57,12 +57,14 @@
 	"Assets.DESCRIPTION[Trash Decals]": "此类别包含所有垃圾贴花资产。",
 	"Assets.NAME[WallDecor Decals]": "墙体装饰贴花",
 	"Assets.DESCRIPTION[WallDecor Decals]": "此类别包含所有墙体装饰贴花资产。",
-	"Services.NAME[NetLanes]": "网络",
-	"Services.DESCRIPTION[NetLanes]": "此类别包含所有网络资产。",
-	"Assets.NAME[Misc NetLanes]": "其他网络",
-	"Assets.DESCRIPTION[Misc NetLanes]": "此类别包含其他网络资产。",
-	"Assets.NAME[RoadMarking NetLanes]": "道路标线网络",
-	"Assets.DESCRIPTION[RoadMarking NetLanes]": "此类别包含道路标线网络资产。",
-	"Assets.NAME[Fence NetLanes]": "围栏网络",
-	"Assets.DESCRIPTION[Fence NetLanes]": "此类别包含所有围栏网络。"
+	"Assets.NAME[Flag Decals]": "Flag Decals",
+	"Assets.DESCRIPTION[Flag Decals]": "This category contains all the flag decals.",
+	"Services.NAME[NetLanes]": "网线",
+	"Services.DESCRIPTION[NetLanes]": "此类别包含所有网线资产。",
+	"Assets.NAME[Misc NetLanes]": "其他网线",
+	"Assets.DESCRIPTION[Misc NetLanes]": "此类别包含其他网线资产。",
+	"Assets.NAME[RoadMarking NetLanes]": "道路标线",
+	"Assets.DESCRIPTION[RoadMarking NetLanes]": "此类别包含道路标线资产。",
+	"Assets.NAME[Fence NetLanes]": "围栏网线",
+	"Assets.DESCRIPTION[Fence NetLanes]": "此类别包含所有围栏网线资产。"
 }
