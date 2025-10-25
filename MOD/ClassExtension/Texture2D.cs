@@ -1,8 +1,5 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using UnityEngine;
-using static Colossal.AssetPipeline.Importers.DidimoImporter.DidimoData;
-using static Game.Rendering.Debug.RenderPrefabRenderer;
 
 namespace ExtraLib.ClassExtension
 {

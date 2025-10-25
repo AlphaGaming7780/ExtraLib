@@ -11,7 +11,6 @@ using Game.UI.InGame;
 using Game.UI.Menu;
 using Unity.Entities;
 using UnityEngine;
-
 using ExtraLib.Systems;
 using ExtraLib.Systems.UI;
 using ExtraLib.Helpers;
