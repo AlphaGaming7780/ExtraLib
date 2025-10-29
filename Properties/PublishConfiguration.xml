@@ -14,18 +14,18 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 
 # Translation
 ⚠️ This mod uses crowdin so there maybe inconsistencies with translations due to translations from different translators ⚠️
-- ⚠️French 97% : aricoseco, Morgan Touverey Quilling (mtouverey), Edou24
-- ⚠️Chinese Simplified 97% : RilkeXS(无手文) (RilkeXS), 一叶杳舟 (Yao_Zhou)
+- ✔️French 100% : aricoseco, Morgan Touverey Quilling (mtouverey), Edou24
+- ✔️Chinese Simplified 100% : RilkeXS(无手文) (RilkeXS), 一叶杳舟 (Yao_Zhou)
 - ⚠️Chinese Traditional 97% : CBEdwin, allegretic, Hans Law (ZENITHALIZE)
 - ⚠️German 97% : Konsi, Jannik Bartmann (raptor09), KaeseKuchen (KaeseMitKuchen), FearMyFeedEU, Fuchs23
 - ⚠️Italian 84% : Stefano (Furios)
-- ⚠️Japanese 97% : karigane
-- ⚠️Korean 97% : Hinanchovo
-- ⚠️Polish 97% : Lisek, karmel68
-- ⚠️Portuguese 97% -> [European Portuguese Localization mod](https://mods.paradoxplaza.com/mods/92599/Windows)
+- ✔️Japanese 100% : karigane
+- ✔️Korean 100% : Hinanchovo
+- ✔️Polish 100% : Lisek, karmel68
+- ✔️Portuguese 100% -> [European Portuguese Localization mod](https://mods.paradoxplaza.com/mods/92599/Windows)
 - ⚠️Portuguese, Brazilian 84% : Miguel Pereira Campos (mpcamposz)
 - ⚠️Russian 87% :  MrSandcraft, Mihail (kaktyc), Denis Lee (B3lka), Sergey (TraceXR)
-- ⚠️Spanish 97% : elGendo87
+- ✔️Spanish 100% : elGendo87
 	</LongDescription>
 	<!--Thumbnail-->
 	<Thumbnail Value="Properties/EL.png" />
@@ -36,7 +36,7 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 	<!--Link to the forum post where the Mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the Mod-->
-	<ModVersion Value="1.4.4" />
+	<ModVersion Value="1.4.5" />
 	<!--Recommended version of the base game to use the Mod-->
 	<GameVersion Value="1.3.*" />
 	<!--Dependency for the Mod, can be set multiple times-->
@@ -44,15 +44,15 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--<ChangeLog Value="TEST" />-->
 	<ChangeLog>
-### New
-- Flag decals category icon and translation.
-    
 ### Translation
-- ⚠️Chinese Simplified 97% : RilkeXS(无手文) (RilkeXS)
-- ⚠️German 97% : Fuchs23
-- ⚠️Japanese 97% : karigane
-- ⚠️Korean 97% : Hinanchovo
-	</ChangeLog>
+- ✔️French 100% : aricoseco, Morgan Touverey Quilling (mtouverey)
+- ✔️Chinese Simplified 100% : RilkeXS(无手文) (RilkeXS)
+- ✔️Japanese 100% : karigane
+- ✔️Korean 100% : Hinanchovo
+- ✔️Polish 100% : karmel68
+- ✔️Portuguese 100% -> [European Portuguese Localization mod](https://mods.paradoxplaza.com/mods/92599/Windows)
+- ✔️Spanish 100% : elGendo87
+  </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="crowdin" Url="https://crowdin.com/project/extralib" />
 	<ExternalLink Type="discord" Url="https://discord.gg/HTav7ARPs2" />
