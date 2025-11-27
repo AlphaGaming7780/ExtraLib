@@ -53,8 +53,9 @@ export const ExtraPanel = ({ extraPanel, children }: propsExtraPanel) => {
     const onDragEnd = (b: BetterDragEventData) => {
         const { x, y } = getTranslate(b);
 
-        SetPanelPosition(extraPanel, { x: extraPanel.panelLocation.x + x, y: extraPanel.panelLocation.y + y });
         setTranslate({ x: 0, y: 0 })
+        SetPanelPosition(extraPanel, { x: extraPanel.panelLocation.x + x, y: extraPanel.panelLocation.y + y });
+        //setTranslate({ x: 0, y: 0 })
     }
 
     return <Panel

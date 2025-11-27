@@ -5,15 +5,11 @@ using Game.SceneFlow;
 using Game.UI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Unity.Mathematics;
 
 namespace ExtraLib.Systems.UI.ExtraPanels
 {
-    internal partial class ExtraPanelsUISystem : UISystemBase
+    public partial class ExtraPanelsUISystem : UISystemBase
     {
         // Compatible gameMode;
         public override GameMode gameMode => GameMode.Game | GameMode.Editor | GameMode.MainMenu;
