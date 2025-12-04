@@ -7,6 +7,7 @@ using Game.UI.Menu;
 using Game.UI.InGame;
 using Game.Prefabs;
 using Colossal.PSI.Common;
+using Colossal.Core;
 using System;
 using System.Collections;
 using ExtraLib.ClassExtension;
@@ -53,7 +54,7 @@ namespace ExtraLib.Systems
             EL.m_NotificationUISystem = base.World.GetOrCreateSystemManaged<NotificationUISystem>();
             EL.m_EntityManager = EntityManager;
 
-            GameManager.instance.RegisterUpdater(Initialize);
+            MainThreadDispatcher.RegisterUpdater(Initialize);
 
         }
 
@@ -98,6 +99,8 @@ namespace ExtraLib.Systems
             EL.extraLibMonoScript.StartCoroutine(EditEntities());
 
             onInitialize?.Invoke();
+
+            EL.Logger.Info("ExtraLib Initialized.");
 
             return true;
         }

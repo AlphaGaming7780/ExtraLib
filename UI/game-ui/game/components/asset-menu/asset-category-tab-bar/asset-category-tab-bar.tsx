@@ -41,7 +41,7 @@ export const CategoryItem = (subCategory: AssetCategory, selected: Boolean, sing
     var child = <>
         {singleTab ?
             <div className={CategoryItemSCSS.singleTab} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} >
-                <TutorialTarget uiTag={subCategory.uiTag} active={!subCategory.locked} disableBlinking={singleTab} children={<div className={CategoryItemSCSS.itemInner}> </div>} />
+                {/*<TutorialTarget uiTag={subCategory.uiTag} active={!subCategory.locked} disableBlinking={singleTab} children={<div className={CategoryItemSCSS.itemInner}> </div>} />*/}
                 <img src={subCategory.icon} className={classNames(AssetCategoryTabBarSCSS.tabIcon, subCategory.locked && AssetCategoryTabBarSCSS.locked)} />
                 {subCategory.locked && <LockedBadge {...{ className: AssetCategoryTabBarSCSS.lock }} />}
             </div> :
@@ -56,7 +56,7 @@ export const CategoryItem = (subCategory: AssetCategory, selected: Boolean, sing
                 onMouseOver={onMouseOver}
                 onMouseLeave={onMouseLeave}
             >
-                <TutorialTarget uiTag={subCategory.uiTag} active={!subCategory.locked} disableBlinking={singleTab} children={ <div className={CategoryItemSCSS.itemInner}> </div> } />
+                {/*<TutorialTarget uiTag={subCategory.uiTag} active={!subCategory.locked} disableBlinking={singleTab} children={ <div className={CategoryItemSCSS.itemInner}> </div> } />*/}
 
                 {subCategory.highlight && UnlockHighlightBadge({ className: CategoryItemSCSS.highlight })}
                 {subCategory.locked && LockedBadge({ className: AssetCategoryTabBarSCSS.lock } )}

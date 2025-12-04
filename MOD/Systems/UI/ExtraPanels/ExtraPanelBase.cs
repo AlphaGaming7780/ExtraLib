@@ -1,20 +1,11 @@
 ﻿using Colossal.UI.Binding;
 using Game;
-using Game.Areas;
-using Game.City;
-using Game.Objects;
-using Game.SceneFlow;
 using Game.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Unity.Mathematics;
 
 namespace ExtraLib.Systems.UI.ExtraPanels
 {
-    internal abstract partial class ExtraPanelBase : UISystemBase, IJsonWritable
+    public abstract partial class ExtraPanelBase : UISystemBase, IJsonWritable
     {
         public string ID => GetType().FullName;
         public override GameMode gameMode => GameMode.Game;
@@ -131,7 +122,7 @@ namespace ExtraLib.Systems.UI.ExtraPanels
         public void SetPanelLocation(float2 panelLocation)
         {
             PanelLocation = panelLocation;
-            m_ExtraPanelsUISystem.RequestBindingUpdate();
+            //m_ExtraPanelsUISystem.RequestBindingUpdate();
         }
     }
 }

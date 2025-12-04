@@ -14,7 +14,7 @@ namespace ExtraLib.Patches
             private static ILog moddingLog = LogManager.GetLogger("Modding").SetShowsErrorsInUI(showsErrorsInUI: false);
             static void Postfix(ModManager.ModInfo __instance, UpdateSystem updateSystem)
             {
-                moddingLog.Info($"Calling mod OnLoad : {__instance.asset.mod.id} | {__instance.asset.mod.displayName}");
+                moddingLog.Info($"Calling mod OnLoad : {__instance.asset.id} | {__instance.asset.name}");
             }
         }
     }

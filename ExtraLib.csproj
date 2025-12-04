@@ -32,6 +32,13 @@
     <Reference Include="$(CustomManagedPath)\PDX.*.dll" Private="False" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Compile Remove="UI\node_modules\**" />
+    <EmbeddedResource Remove="UI\node_modules\**" />
+    <None Remove="UI\node_modules\**" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Lib.Harmony" Version="2.2.2" />
   </ItemGroup>
