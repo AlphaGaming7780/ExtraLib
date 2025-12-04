@@ -15,30 +15,27 @@ export interface propsExtraPanel {
 
 export const ExtraPanel = ({ extraPanel, children }: propsExtraPanel) => {
 
-    //const [position, setPosition] = useState(extraPanel.panelLocation); 
     const [translate, setTranslate] = useState({ x: 0, y: 0 }); 
-    //const [ fullScreen , setFullScreen ] = useState(extraPanel.isFullScreen)
 
-    //const handleDragMouseUp = () => {
-    //    //if (fullScreen) {
-    //    //    SetFullScreenExtraPanel(extraPanel, true)
-    //    //} else {
-    //    //    SetPanelPosition(extraPanel, position);
-    //    //    extraPanel.isFullScreen && SetFullScreenExtraPanel(extraPanel, false)
-    //    //}
-    //    SetPanelPosition(extraPanel, { x: extraPanel.panelLocation.x + translate.x, y: extraPanel.panelLocation.y + translate.y });
-    //    setTranslate({ x: 0, y: 0 })
-    //    //extraPanel.isFullScreen && SetFullScreenExtraPanel(extraPanel, false)
-    //}
+    const getTranslate = (
+        { x, y, startX, startY }: BetterDragEventData
+    ): Number2 => {
 
-    const getTranslate = ({ x, y, startX, startY }: BetterDragEventData) : Number2 => {
-        x = Math.min(Math.max(x, 0), window.innerWidth);
-        y = Math.min(Math.max(y, 0), window.innerHeight);
+        let transX = x - startX;
+        let transY = y - startY;
 
-        x = x - startX - extraPanel.panelLocation.x;
-        y = y - startY - extraPanel.panelLocation.y;
-        return {x:x, y:y}
-    }
+        let finalPanelX = extraPanel.panelLocation.x + transX;
+        let finalPanelY = extraPanel.panelLocation.y + transY;
+
+        var clampedPanelPosx = Math.min(Math.max(finalPanelX, 0), window.innerWidth);
+        var clampedPanelPosy = Math.min(Math.max(finalPanelY, 0), window.innerHeight);
+
+        const translateX = clampedPanelPosx - extraPanel.panelLocation.x;
+        const translateY = clampedPanelPosy - extraPanel.panelLocation.y;
+
+        return { x: translateX, y: translateY };
+    };
+
 
     const onDragStart = (b: BetterDragEventData): boolean => {
         return !extraPanel.isFullScreen
@@ -53,19 +50,17 @@ export const ExtraPanel = ({ extraPanel, children }: propsExtraPanel) => {
     const onDragEnd = (b: BetterDragEventData) => {
         const { x, y } = getTranslate(b);
 
-        setTranslate({ x: 0, y: 0 })
-        SetPanelPosition(extraPanel, { x: extraPanel.panelLocation.x + x, y: extraPanel.panelLocation.y + y });
-        //setTranslate({ x: 0, y: 0 })
+        extraPanel.panelLocation = { x: extraPanel.panelLocation.x + x, y: extraPanel.panelLocation.y + y }
+        setTranslate({ x: 0.0, y: 0.0 })
+        SetPanelPosition(extraPanel, extraPanel.panelLocation);
     }
 
     return <Panel
-        header={BetterDragHandle({ onDragStart: onDragStart, onDrag: onDrag, onDragEnd: onDragEnd, children: ExtraPanelHeader({ extraPanel }) })} //, onMouseUp:handleDragMouseUp 
+        header={BetterDragHandle({ onDragStart: onDragStart, onDrag: onDrag, onDragEnd: onDragEnd, children: ExtraPanelHeader({ extraPanel }) })}
         footer={"FOOTER"}
         className={classNames("draggable-panel", ExtraPanelSCSS.ExtraPanel, extraPanel.isFullScreen && ExtraPanelSCSS.FullScreen, !extraPanel.isExpanded && ExtraPanelSCSS.Collapsed ) }
         style={
             {
-                // left: `${extraPanel.isFullScreen ? 0 : position.x}px`,
-                // top: `${extraPanel.isFullScreen ? 0 : position.y}px`,
                 left: `${extraPanel.isFullScreen ? 0 : extraPanel.panelLocation.x}px`,
                 top: `${extraPanel.isFullScreen ? 0 : extraPanel.panelLocation.y}px`,
                 visibility: extraPanel.visible ? "visible" : "hidden",

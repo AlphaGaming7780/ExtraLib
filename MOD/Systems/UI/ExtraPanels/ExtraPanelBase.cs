@@ -122,7 +122,7 @@ namespace ExtraLib.Systems.UI.ExtraPanels
         public void SetPanelLocation(float2 panelLocation)
         {
             PanelLocation = panelLocation;
-            m_ExtraPanelsUISystem.RequestBindingUpdate();
+            //m_ExtraPanelsUISystem.RequestBindingUpdate();
         }
     }
 }

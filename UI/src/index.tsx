@@ -10,7 +10,7 @@ const register: ModRegistrar = (moduleRegistry) => {
 
     moduleRegistry.extend("game-ui/game/components/asset-menu/asset-category-tab-bar/asset-category-tab-bar.tsx", 'AssetCategoryTabBar', AssetMultiCategory)
     moduleRegistry.append('GameTopLeft', ExtraPanelsButton);
-    moduleRegistry.extend('game-ui/editor/components/editor-top-panels.tsx', 'EditorTopPanels', ExtraPanelsButtonEditor);
+    moduleRegistry.extend('game-ui/editor/components/toolbar/toolbar.tsx', 'Toolbar', ExtraPanelsButtonEditor);
     moduleRegistry.append('Editor', ExtraPanelsRoot);
     
 

@@ -230,7 +230,7 @@ namespace ExtraLib.Systems.UI.ExtraPanels
 
             extraPanelBase.SetPanelLocation(newLocation);
 
-            EL.Logger.Info(newLocation);
+            //EL.Logger.Info(newLocation);
 
         }
 

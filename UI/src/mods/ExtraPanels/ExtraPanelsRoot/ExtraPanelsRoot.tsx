@@ -1,10 +1,9 @@
 import { bindValue, useValue } from "cs2/api";
-import { ExtraPanelType } from "../ExtraPanelType";
-import { Panel } from "cs2/ui";
-import { ExtraPanel } from "../ExtraPanel/ExtraPanel";
-import { TypeFromMap } from "cs2/bindings";
 import { TypedRenderer } from "../../../../game-ui/common/typed-renderer/typed-renderer";
+import { ExtraPanel } from "../ExtraPanel/ExtraPanel";
+import { ExtraPanelType } from "../ExtraPanelType";
 
+const path$ = "game-ui/editor/data-binding/editor-tool-bindings.ts"
 
 const ExtraPanelsList$ = bindValue<ExtraPanelType[]>("el", 'ExtraPanels');
 
