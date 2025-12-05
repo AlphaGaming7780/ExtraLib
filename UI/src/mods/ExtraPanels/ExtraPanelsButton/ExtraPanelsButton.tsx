@@ -17,9 +17,11 @@ export type ExtraPanelsPlacement = "bottom" | "top" | "left" | "right";
 
 export type ExtraPanelsButtonProps = {
     placement?: ExtraPanelsPlacement;
+    buttonClassName?: string;
+    menuClassName?: string;
 }
 
-export const ExtraPanelsButton = ({ placement = "bottom" } : ExtraPanelsButtonProps): JSX.Element | null => {
+export const ExtraPanelsButton = ({ placement = "bottom", buttonClassName, menuClassName } : ExtraPanelsButtonProps): JSX.Element | null => {
     const showButton = useValue(ShowExtraPanelsButton$);
     const opened = useValue(ExtraPanelsMenuOpened$);
     const panels = useValue(ExtraPanelsList$);
@@ -40,7 +42,7 @@ export const ExtraPanelsButton = ({ placement = "bottom" } : ExtraPanelsButtonPr
         const paddingRight = parseFloat(menuStyle.paddingRight) || 0;
 
         const totalHeight = menu.offsetHeight + paddingTop + paddingBottom;
-        const totalWidth = menu.offsetWidth + paddingLeft + paddingRight;
+        const totalWidth = menu.offsetWidth; // + paddingLeft + paddingRight; // this work better for centering
 
         const btnRect = button.getBoundingClientRect();
 
@@ -103,7 +105,7 @@ export const ExtraPanelsButton = ({ placement = "bottom" } : ExtraPanelsButtonPr
                 ref={buttonRef}
             >
                 <FloatingButton
-                    className={classNames(styles.mainButton, opened && styles.opened)}
+                    className={buttonClassName ? buttonClassName : classNames(styles.mainButton, opened && styles.opened)}
                     selected={opened}
                     src="coui://extralib/Icons/ExtraTools/ButtonIcon.svg"
                     onClick={toggleMenu}
@@ -123,6 +125,7 @@ export const ExtraPanelsButton = ({ placement = "bottom" } : ExtraPanelsButtonPr
                     <Tooltip key={panel.__Type} tooltip={panel.__Type}>
                         <FloatingButton
                             className={classNames(
+                                menuClassName,
                                 styles.panelButton,
                                 panel.visible && styles.active
                             )}
