@@ -4,8 +4,16 @@ import { ExtraPanelsButton } from "./ExtraPanelsButton";
 import classNames from "classnames";
 
 export const ExtraPanelsButtonEditor = (Component: any) => {
-    return (props: any) => <div {...props} style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-end", paddingRight:"810rem", pointerEvents: "auto" }}>
-        <ExtraPanelsButton placement="top" buttonClassName={ classNames(EditorToolButtonSCSS.button, EditorToolbarSCSS.button) } />
-        <Component />
-    </div>;
+
+    var extraPanelsButton = <ExtraPanelsButton placement="top" buttonClassName={classNames(EditorToolButtonSCSS.button, EditorToolbarSCSS.button)} />;
+
+    if (extraPanelsButton.key === null)
+        return (props: any) => <Component {...props} />
+
+
+    return (props: any) =>
+        <div {...props} style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-end", paddingRight: "810rem", pointerEvents: "auto" }}>
+            {extraPanelsButton}
+            <Component />
+        </div>;
 }
