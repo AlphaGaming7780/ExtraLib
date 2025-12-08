@@ -36,7 +36,7 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 	<!--Link to the forum post where the Mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the Mod-->
-	<ModVersion Value="1.4.6" />
+	<ModVersion Value="1.4.7" />
 	<!--Recommended version of the base game to use the Mod-->
 	<GameVersion Value="1.5.*" />
 	<!--Dependency for the Mod, can be set multiple times-->
@@ -45,10 +45,7 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 	<!--<ChangeLog Value="TEST" />-->
 	<ChangeLog>
 ### Fixes
-- Fixes for v1.5.2f1 game update
-### Translation
-- ✔️Italian 86% : Rasindu Warnakulasooriya (here.is.rasi) 
-- ✔️Portuguese, Brazilian 100% :Matheus Bernardes da Rocha Reis (matheusbreis10)
+- Fix an UI bug in the editor
   </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="crowdin" Url="https://crowdin.com/project/extralib" />

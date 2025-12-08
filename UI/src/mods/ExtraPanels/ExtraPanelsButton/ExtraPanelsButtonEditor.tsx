@@ -7,12 +7,8 @@ export const ExtraPanelsButtonEditor = (Component: any) => {
 
     var extraPanelsButton = <ExtraPanelsButton placement="top" buttonClassName={classNames(EditorToolButtonSCSS.button, EditorToolbarSCSS.button)} />;
 
-    if (extraPanelsButton.key === null)
-        return (props: any) => <Component {...props} />
-
-
     return (props: any) =>
-        <div {...props} style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-end", paddingRight: "810rem", pointerEvents: "auto" }}>
+        <div {...props} style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-end", paddingRight: "810rem", pointerEvents: "none" }}>
             {extraPanelsButton}
             <Component />
         </div>;
