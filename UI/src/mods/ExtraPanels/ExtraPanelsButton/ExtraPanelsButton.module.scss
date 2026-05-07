@@ -83,3 +83,15 @@
     .panelButton.active {
         transform: scale(1.12);
     }
+
+.panelButtonUM {
+    transition: transform 0.15s ease;
+}
+
+    .panelButtonUM:hover {
+        transform: scale(1.08) !important; 
+    }
+
+    .panelButtonUM.active {
+        transform: scale(1.12) !important;
+    }    

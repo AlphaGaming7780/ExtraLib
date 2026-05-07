@@ -2,7 +2,7 @@
    ExtraPanelsButton.tsx
    =============================== */
 
-import { FloatingButton, Tooltip } from "cs2/ui";
+import { Button, FloatingButton, Tooltip } from "cs2/ui";
 import styles from "./ExtraPanelsButton.module.scss";
 import classNames from "classnames";
 import { bindValue, trigger, useValue } from "cs2/api";
@@ -143,3 +143,34 @@ export const ExtraPanelsButton = ({ placement = "bottom", buttonClassName, menuC
         </div>
     );
 };
+
+export const ExtraPanelButtonsUniversalMod = () => {
+
+    const showButton = useValue(ShowExtraPanelsButton$);
+    const panels = useValue(ExtraPanelsList$);
+
+    const selectorPanels = panels.filter(p => p.showInSelector);
+
+    if(!showButton) return <></>;
+
+    return <>
+        {selectorPanels.map(panel => (
+        <Tooltip key={panel.__Type} tooltip={panel.__Type}>
+            <Button
+                variant="floating"
+                className={classNames(
+                    styles.panelButtonUM,
+                    panel.visible && styles.active
+                )}
+                selected={panel.visible}
+                src={panel.icon}
+                onClick={() =>
+                    panel.visible
+                        ? CloseExtraPanel(panel)
+                        : OpenExtraPanel(panel)
+                }
+            />
+        </Tooltip>
+    ))}
+    </>
+}
