@@ -96,7 +96,7 @@ namespace ExtraLib.Systems
 
             //CreateCustomPrefab();
 
-            EL.extraLibMonoScript.StartCoroutine(EditEntities());
+            GameManager.instance.StartCoroutine(EditEntities());
 
             onInitialize?.Invoke();
 
