@@ -67,6 +67,7 @@ namespace ExtraLib.Systems.UI.ExtraPanels
             AddBinding(new TriggerBinding<string, bool>("el", "SetFullScreenExtraPanel", SetFullScreenExtraPanel));
 
             AddBinding(new TriggerBinding<string, float2>("el", "LocationChanged", UpdatePanelLocation));
+            AddBinding(new TriggerBinding<string, float2>("el", "SizeChanged", UpdatePanelSize));
         }
 
         protected override void OnGameLoadingComplete(Purpose purpose, GameMode mode)
@@ -139,7 +140,7 @@ namespace ExtraLib.Systems.UI.ExtraPanels
 
         private void WritePanels(IJsonWriter writer)
         {
-            // To Do check if this setup using the m_ValidPanels isn't going to create useValue error on the UI side because nbr of hook sin't the same.
+            // To Do check if this setup using the m_ValidPanels isn't going to create useValue error on the UI side because nbr of hook isn't the same.
             // Edit, normally it shouldn't because their UI are called before rendering.
             writer.ArrayBegin(m_ValidPanels.Count);
             for (int i = 0; i < m_ValidPanels.Count; i++)
@@ -231,6 +232,21 @@ namespace ExtraLib.Systems.UI.ExtraPanels
             extraPanelBase.SetPanelLocation(newLocation);
 
             //EL.Logger.Info(newLocation);
+
+        }
+
+        private void UpdatePanelSize(string id, float2 newSize)
+        {
+
+            if (!TryToFindPanelByID(id, out ExtraPanelBase extraPanelBase))
+            {
+                EL.Logger.Warn($"Try to update the location of an Extra Panel with id : {id}, but this id doesn't exist in the valide panels.");
+                return;
+            }
+
+            extraPanelBase.SetPanelSize(newSize);
+
+            EL.Logger.Info(newSize);
 
         }
 

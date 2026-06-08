@@ -1,27 +1,28 @@
 
 .ExtraPanel {
     z-index: 3;
-    width: auto;
-    height: auto;
-    //transition-property: width, height, left, top;
-    //transition-delay: 0s;
-    //transition-duration: 0.1s;
-    //transition-timing-function: ease-in-out;
-
+    border-radius: 4rem;
 
     &.FullScreen {
-        height: 100vh;
-        width: 100vw
+        border-radius: 0;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        transform: none !important;
     }
 
     &.Collapsed {
-        height: auto
+        height: auto !important;
+    }
+
+    &.Hidden {
+        visibility: hidden;
     }
 
     .Content {
         transform-origin: top center;
         transform: scaleY(1);
-
         height: auto;
 
         transition-property: transform;
@@ -31,7 +32,207 @@
         &.Collapsed {
             transform: scaleY(0);
         }
+    }
+}
 
+/* =========================================================
+ * RESIZE HANDLES
+ * ======================================================= */
+
+$edge-size: 3rem;
+$corner-size: 12rem;
+$indicator-color: rgba(120, 180, 255, 0.35);
+$indicator-color-active: rgba(120, 180, 255, 0.6);
+$indicator-thickness: 3rem;
+$panel-radius: 12rem;
+
+@mixin resize-handle {
+    position: absolute;
+    z-index: 10;
+
+    &:hover > .Indicator {
+        opacity: 1;
     }
 
+    &:active > .Indicator {
+        opacity: 1;
+    }
+}
+
+// Active state for edge handles (uses .Indicator background directly)
+@mixin edge-active {
+    &:active > .Indicator {
+        background: $indicator-color-active;
+    }
+}
+
+// Active state for corner handles (uses border color)
+@mixin corner-active {
+    &:active > .Indicator {
+        border-color: $indicator-color-active;
+    }
+}
+
+.Indicator {
+    position: absolute;
+    background: $indicator-color;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+/* ---- Edges ---- */
+
+.ResizeN {
+    @include resize-handle;
+    @include edge-active;
+    top: 0;
+    left: $corner-size;
+    right: $corner-size;
+    height: $edge-size;
+
+    > .Indicator {
+        left: 0;
+        right: 0;
+        top: 0;
+        height: $indicator-thickness;
+    }
+}
+
+.ResizeS {
+    @include resize-handle;
+    @include edge-active;
+    bottom: 0;
+    left: $corner-size;
+    right: $corner-size;
+    height: $edge-size;
+
+    > .Indicator {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: $indicator-thickness;
+    }
+}
+
+.ResizeE {
+    @include resize-handle;
+    @include edge-active;
+    right: 0;
+    top: $corner-size;
+    bottom: $corner-size;
+    width: $edge-size;
+
+    > .Indicator {
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: $indicator-thickness;
+    }
+}
+
+.ResizeW {
+    @include resize-handle;
+    @include edge-active;
+    left: 0;
+    top: $corner-size;
+    bottom: $corner-size;
+    width: $edge-size;
+
+    > .Indicator {
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: $indicator-thickness;
+    }
+}
+
+/* ---- Corners ---- */
+
+.ResizeNE {
+    @include resize-handle;
+    @include corner-active;
+    top: 0;
+    right: 0;
+    width: $corner-size;
+    height: $corner-size;
+    cursor: nesw-resize;
+
+    > .Indicator {
+        top: 0;
+        right: 0;
+        width: $corner-size;
+        height: $corner-size;
+        background: transparent;
+        border-top: $indicator-thickness solid $indicator-color;
+        border-right: $indicator-thickness solid $indicator-color;
+        border-top-right-radius: $panel-radius;
+        transition: opacity 0.15s ease, border-color 0.15s ease;
+    }
+}
+
+.ResizeNW {
+    @include resize-handle;
+    @include corner-active;
+    top: 0;
+    left: 0;
+    width: $corner-size;
+    height: $corner-size;
+    cursor: nwse-resize;
+
+    > .Indicator {
+        top: 0;
+        left: 0;
+        width: $corner-size;
+        height: $corner-size;
+        background: transparent;
+        border-top: $indicator-thickness solid $indicator-color;
+        border-left: $indicator-thickness solid $indicator-color;
+        border-top-left-radius: $panel-radius;
+        transition: opacity 0.15s ease, border-color 0.15s ease;
+    }
+}
+
+.ResizeSE {
+    @include resize-handle;
+    @include corner-active;
+    bottom: 0;
+    right: 0;
+    width: $corner-size;
+    height: $corner-size;
+    cursor: nwse-resize;
+
+    > .Indicator {
+        bottom: 0;
+        right: 0;
+        width: $corner-size;
+        height: $corner-size;
+        background: transparent;
+        border-bottom: $indicator-thickness solid $indicator-color;
+        border-right: $indicator-thickness solid $indicator-color;
+        // border-bottom-right-radius: $panel-radius;
+        transition: opacity 0.15s ease, border-color 0.15s ease;
+    }
+}
+
+.ResizeSW {
+    @include resize-handle;
+    @include corner-active;
+    bottom: 0;
+    left: 0;
+    width: $corner-size;
+    height: $corner-size;
+    cursor: nesw-resize;
+
+    > .Indicator {
+        bottom: 0;
+        left: 0;
+        width: $corner-size;
+        height: $corner-size;
+        background: transparent;
+        border-bottom: $indicator-thickness solid $indicator-color;
+        border-left: $indicator-thickness solid $indicator-color;
+        // border-bottom-left-radius: $panel-radius;
+        transition: opacity 0.15s ease, border-color 0.15s ease;
+    }
 }

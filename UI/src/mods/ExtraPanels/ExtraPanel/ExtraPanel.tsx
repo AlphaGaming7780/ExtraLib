@@ -1,5 +1,5 @@
-import { Panel } from "cs2/ui"
-import { ExtraPanelType, SetFullScreenExtraPanel, SetPanelPosition } from "../ExtraPanelType"
+import { Panel, ResizeResult } from "./Panel"
+import { ExtraPanelType, SetFullScreenExtraPanel, SetPanelPosition, SetPanelSize } from "../ExtraPanelType"
 import { ExtraPanelHeader } from "./Header/ExtraPanelHeader"
 import { useState } from "react"
 import { DragHandle } from "../../../../game-ui/common/input/drag-handle"
@@ -36,7 +36,6 @@ export const ExtraPanel = ({ extraPanel, children }: propsExtraPanel) => {
         return { x: translateX, y: translateY };
     };
 
-
     const onDragStart = (b: BetterDragEventData): boolean => {
         return !extraPanel.isFullScreen
     }
@@ -55,19 +54,51 @@ export const ExtraPanel = ({ extraPanel, children }: propsExtraPanel) => {
         SetPanelPosition(extraPanel, extraPanel.panelLocation);
     }
 
+    const onResizing = ({ width, height, deltaX, deltaY }: ResizeResult) => 
+    {
+        if (deltaX !== 0 || deltaY !== 0) {
+            setTranslate({x: deltaX, y: deltaY});
+        }
+    }
+
+    const onResizeEnd = ({ width, height, deltaX, deltaY }: ResizeResult) => 
+    {
+        extraPanel.panelSize = { x: width, y: height }
+        SetPanelSize(extraPanel, extraPanel.panelSize);
+        if (deltaX !== 0 || deltaY !== 0) {
+            const newPos = {
+                x: extraPanel.panelLocation.x + deltaX,
+                y: extraPanel.panelLocation.y + deltaY,
+            };
+            extraPanel.panelLocation = newPos;
+            SetPanelPosition(extraPanel, extraPanel.panelLocation);
+        }
+        setTranslate({ x: 0.0, y: 0.0 });
+    }
+
     return <Panel
         header={BetterDragHandle({ onDragStart: onDragStart, onDrag: onDrag, onDragEnd: onDragEnd, children: ExtraPanelHeader({ extraPanel }) })}
         footer={"FOOTER"}
-        className={classNames("draggable-panel", ExtraPanelSCSS.ExtraPanel, extraPanel.isFullScreen && ExtraPanelSCSS.FullScreen, !extraPanel.isExpanded && ExtraPanelSCSS.Collapsed ) }
-        style={
-            {
-                left: `${extraPanel.isFullScreen ? 0 : extraPanel.panelLocation.x}px`,
-                top: `${extraPanel.isFullScreen ? 0 : extraPanel.panelLocation.y}px`,
-                visibility: extraPanel.visible ? "visible" : "hidden",
-                transform: `translate(${translate.x}px, ${translate.y}px)`
-            }}
+        className={classNames(
+            "draggable-panel",
+            ExtraPanelSCSS.ExtraPanel,
+            extraPanel.isFullScreen && ExtraPanelSCSS.FullScreen,
+            !extraPanel.isExpanded && ExtraPanelSCSS.Collapsed,
+            !extraPanel.visible && ExtraPanelSCSS.Hidden,
+        )}
+        resizable={!extraPanel.isFullScreen && extraPanel.isExpanded}
+        onResizing={onResizing}
+        onResizeEnd={onResizeEnd}
+        style={{
+            left: extraPanel.panelLocation.x,
+            top: extraPanel.panelLocation.y,
+            width: extraPanel.panelSize.x,
+            height: extraPanel.panelSize.y,
+            transform: (translate.x || translate.y)
+                ? `translate(${translate.x}px, ${translate.y}px)`
+                : undefined,
+        }}
     >
         {extraPanel.isExpanded && children}
-        
     </Panel>
 }

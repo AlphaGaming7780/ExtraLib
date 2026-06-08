@@ -14,6 +14,7 @@ export interface ExtraPanelType extends Typed < "" > {
 }
 
 export function SetPanelPosition(extraPanel: ExtraPanelType, newPos: Number2) { trigger("el", "LocationChanged", extraPanel.__Type, newPos)}
+export function SetPanelSize(extraPanel: ExtraPanelType, newSize: Number2) { trigger("el", "SizeChanged", extraPanel.__Type, newSize) }
 
 export const OpenExtraPanel = (extraPanel: ExtraPanelType) => { trigger("el", "OpenExtraPanel", extraPanel.__Type) }
 export const CloseExtraPanel = (extraPanel: ExtraPanelType) => { trigger("el", "CloseExtraPanel", extraPanel.__Type) }

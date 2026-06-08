@@ -4,13 +4,8 @@ import { NodeGraphEditor } from "./NodeGraph/NodeGraphEditor";
 
 
 export const HelloWorldComponent = () => {
-    // This is a void component that does not output anynthing.
-    // Cities: Skylines 2 UI is built with React and mods support outputting standard
-    // React JSX elements!
-    console.log("ExtraLib have been loaded.");
-
+    console.log("ExtraLib UI is loading...");
     return null
-
 }
 
 const ExtraPanelsList$ = bindValue<ExtraPanelType[]>("el", 'ExtraPanels');

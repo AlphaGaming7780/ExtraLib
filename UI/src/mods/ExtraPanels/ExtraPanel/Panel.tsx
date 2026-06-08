@@ -1,49 +1,35 @@
-﻿import React, {
+import React, {
     forwardRef,
     useMemo,
     useContext,
+    useCallback,
+    useRef,
+    useState,
     ReactNode,
 } from "react";
-import classNames from "classnames"
+import classNames from "classnames";
+
+import { InputActionConsumer } from "../../../../game-ui/common/input-events/input-action-consumer";
+import { ClassNameTransition } from "../../../../game-ui/common/animations/class-name-transition";
+import { useTransitionSounds } from "../../../../game-ui/common/animations/transition-sounds";
+import { ActiveFocusDiv } from "../../../../game-ui/common/focus/focus-div";
+import { AutoNavigationScope } from "../../../../game-ui/common/focus/auto-navigation-scope";
+import { FocusKeyOverride } from "../../../../game-ui/common/focus/focus-key-override";
+import { FocusRoot } from "../../../../game-ui/common/focus/focus-root";
+import { useFocused } from "../../../../game-ui/common/focus/focus-hooks";
+import { FocusContext } from "../../../../game-ui/common/focus/focus-controller";
+import { NavigationDirection } from "../../../../game-ui/common/focus/navigation";
+import { useGamepadActive } from "../../../../game-ui/common/hooks/use-control-scheme";
+import { useInputActionActive } from "../../../../game-ui/common/data-binding/input-bindings";
+import { FloatingInputHint } from "../../../../game-ui/common/input-events/action-hints/input-hint/floating-input-hint";
+import { usePanelTheme } from "../../../../game-ui/common/panel/panel-theme";
+import { PanelContext } from "../../../../game-ui/common/panel/panel-context";
+import { DefaultPanelSCSS } from "../../../../game-ui/common/panel/themes/default.module.scss";
+import { PanelTransitionSCSS } from "../../../../game-ui/common/panel/themes/panel-transition.module.scss";
+import styles from "./ExtraPanel.module.scss";
 
 /* =========================================================
- * 🔧 OBFUSCATED DEPENDENCIES (TO REPLACE LATER)
- * ======================================================= */
-
-// Focus key factory (ex: new Og("PanelHeader"))
-const createFocusKey = (name: string) => ({ name });
-
-// Theme resolver (YE(theme))
-const resolveTheme = (theme: PanelTheme) => theme;
-
-// Detect TV / Gamepad mode (Km())
-const useIsTVMode = (): boolean => false;
-
-// Play transition sounds (bp)
-const playTransitionSounds = (sounds?: unknown) => { };
-
-// Focus + action stubs
-const ActionHandler = (props: any) => <>{props.children}</>; // --> "game-ui/common/input-events/input-action-consumer.tsx"
-const FocusTrap = ({ children }: any) => <>{children}</>;
-const TransitionWrapper = ({ children }: any) => <>{children}</>; // --> ""game-ui/common/animations/class-name-transition.tsx""
-const FocusPanel = forwardRef<HTMLDivElement, any>((props, ref) => ( // --> "game-ui/common/focus/focus-div.tsx"
-    <div ref={ref} {...props} /> 
-));
-const FocusGroup = ({ children }: any) => <>{children}</>; // --> "game-ui/common/focus/auto-navigation-scope.tsx"
-const FocusItem = ({ children }: any) => <>{children}</>; // --> ""game-ui/common/focus/focus-key-override.tsx""
-const Hint = (_props: any) => null; // --> "game-ui/common/input-events/action-hints/input-hint/floating-input-hint.tsx"
-
-// Action resolution (Vm)
-const hasAction = (_opts: { action: string; context?: any }) => false; // --> ""game-ui/common/data-binding/input-bindings.ts""
-
-// Focus state detection (kh)
-const useHasFocus = (_ctx: any) => true; // --> "game-ui/common/focus/focus-hooks.tsx"
-
-// Context stub
-const FocusContext = React.createContext<any>(null); // --> "game-ui/common/focus/controller/focus-controller.ts"
-
-/* =========================================================
- * 🎨 TYPES
+ * TYPES
  * ======================================================= */
 
 export interface PanelTheme {
@@ -51,9 +37,18 @@ export interface PanelTheme {
     header?: string;
     content?: string;
     footer?: string;
+    floatingHint?: string;
+    tooltipHint?: string;
 }
 
-export interface PanelProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ResizeEdge {
+    top?: boolean;
+    bottom?: boolean;
+    left?: boolean;
+    right?: boolean;
+}
+
+export interface PanelProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onResize"> {
     focusKey?: any;
 
     header?: ReactNode;
@@ -61,7 +56,7 @@ export interface PanelProps extends React.HTMLAttributes<HTMLDivElement> {
 
     theme?: PanelTheme;
     transition?: any;
-    transitionSounds?: unknown;
+    transitionSounds?: { enter?: string; exit?: string };
 
     contentClassName?: string;
 
@@ -76,29 +71,160 @@ export interface PanelProps extends React.HTMLAttributes<HTMLDivElement> {
 
     backActionOverride?: string;
     actionContext?: any;
+
+    resizable?: boolean | ResizeEdge;
+    minWidth?: number;
+    minHeight?: number;
+    maxWidth?: number;
+    maxHeight?: number;
+    onResizing?: (result: ResizeResult) => void;
+    onResizeEnd?: (result: ResizeResult) => void;
 }
 
 /* =========================================================
- * 🔑 FOCUS KEYS
+ * FOCUS KEYS
  * ======================================================= */
 
-const PANEL_HEADER_KEY = createFocusKey("PanelHeader");
-const PANEL_CONTENT_KEY = createFocusKey("PanelContent");
-const PANEL_FOOTER_KEY = createFocusKey("PanelFooter");
+import { useUniqueFocusKey, FOCUS_AUTO$ } from "../../../../game-ui/common/focus/focus-key";
 
 /* =========================================================
- * 🧠 CONTEXT
+ * RESIZE HANDLE
  * ======================================================= */
 
-interface PanelContextValue {
-    theme: PanelTheme;
-    onClose?: () => void;
+type ResizeDirection = "n" | "s" | "e" | "w" | "ne" | "nw" | "se" | "sw";
+
+const RESIZE_CLASSES: Record<ResizeDirection, string> = {
+    n: styles.ResizeN,
+    s: styles.ResizeS,
+    e: styles.ResizeE,
+    w: styles.ResizeW,
+    ne: styles.ResizeNE,
+    nw: styles.ResizeNW,
+    se: styles.ResizeSE,
+    sw: styles.ResizeSW,
+};
+
+interface ResizeHandleProps {
+    direction: ResizeDirection;
+    onResizeStart: (direction: ResizeDirection, e: React.MouseEvent) => void;
 }
 
-const PanelContext = React.createContext<PanelContextValue | null>(null);
+const ResizeHandle = ({ direction, onResizeStart }: ResizeHandleProps) => (
+    <div
+        className={RESIZE_CLASSES[direction]}
+        onMouseDown={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onResizeStart(direction, e);
+        }}
+    >
+        <div className={styles.Indicator} />
+    </div>
+);
+
+export interface ResizeResult {
+    width: number;
+    height: number;
+    /** Delta X of the panel origin (non-zero when resizing from left/top edge) */
+    deltaX: number;
+    /** Delta Y of the panel origin (non-zero when resizing from top edge) */
+    deltaY: number;
+}
+
+function useResize(
+    ref: React.RefObject<HTMLDivElement | null>,
+    opts: {
+        enabled: boolean;
+        edges: ResizeEdge;
+        minWidth: number;
+        minHeight: number;
+        maxWidth: number;
+        maxHeight: number;
+        onResizing?: (result: ResizeResult) => void;
+        onResizeEnd?: (result: ResizeResult) => void;
+    }
+) {
+    const [sizeOverride, setSizeOverride] = useState<{ width: number; height: number } | null>(null);
+
+    const handleResizeStart = useCallback(
+        (direction: ResizeDirection, e: React.MouseEvent) => {
+            if (!opts.enabled || !ref.current) return;
+            const el = ref.current;
+            const rect = el.getBoundingClientRect();
+            const startX = e.clientX;
+            const startY = e.clientY;
+            const startW = rect.width;
+            const startH = rect.height;
+
+            const computeResize = (dx: number, dy: number): ResizeResult => {
+                let newW = startW;
+                let newH = startH;
+                let deltaX = 0;
+                let deltaY = 0;
+
+                if (direction.includes("e")) newW = startW + dx;
+                if (direction.includes("w")) { newW = startW - dx; }
+                if (direction.includes("s")) newH = startH + dy;
+                if (direction.includes("n")) { newH = startH - dy; }
+
+                // Clamp
+                const clampedW = Math.min(Math.max(newW, opts.minWidth), opts.maxWidth);
+                const clampedH = Math.min(Math.max(newH, opts.minHeight), opts.maxHeight);
+
+                // When resizing from left/top, the panel origin needs to move
+                if (direction.includes("w")) deltaX = startW - clampedW;
+                if (direction.includes("n")) deltaY = startH - clampedH;
+
+                return { width: clampedW, height: clampedH, deltaX, deltaY };
+            };
+
+            const onMouseMove = (ev: MouseEvent) => {
+                const dx = ev.clientX - startX;
+                const dy = ev.clientY - startY;
+                const result = computeResize(dx, dy);
+                setSizeOverride({ width: result.width, height: result.height });
+                opts.onResizing?.(result);
+            };
+
+            const onMouseUp = (ev: MouseEvent) => {
+                document.removeEventListener("mousemove", onMouseMove);
+                document.removeEventListener("mouseup", onMouseUp);
+
+                const dx = ev.clientX - startX;
+                const dy = ev.clientY - startY;
+                const result = computeResize(dx, dy);
+                setSizeOverride(null);
+                opts.onResizeEnd?.(result);
+            };
+
+            document.addEventListener("mousemove", onMouseMove);
+            document.addEventListener("mouseup", onMouseUp);
+        },
+        [opts.enabled, opts.minWidth, opts.minHeight, opts.maxWidth, opts.maxHeight, opts.onResizing, opts.onResizeEnd, ref]
+    );
+
+    const resizeHandles = useMemo(() => {
+        if (!opts.enabled) return null;
+        const edges = opts.edges;
+        const handles: ResizeDirection[] = [];
+        if (edges.top) handles.push("n");
+        if (edges.bottom) handles.push("s");
+        if (edges.left) handles.push("w");
+        if (edges.right) handles.push("e");
+        if (edges.top && edges.right) handles.push("ne");
+        if (edges.top && edges.left) handles.push("nw");
+        if (edges.bottom && edges.right) handles.push("se");
+        if (edges.bottom && edges.left) handles.push("sw");
+        return handles.map((dir) => (
+            <ResizeHandle key={dir} direction={dir} onResizeStart={handleResizeStart} />
+        ));
+    }, [opts.enabled, opts.edges, handleResizeStart]);
+
+    return { sizeOverride, resizeHandles };
+}
 
 /* =========================================================
- * 📦 PANEL COMPONENT
+ * PANEL COMPONENT
  * ======================================================= */
 
 export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
@@ -106,13 +232,14 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
         focusKey,
         header,
         footer,
-        theme = {},
-        transition,
+        theme = DefaultPanelSCSS,
+        transition = PanelTransitionSCSS,
         transitionSounds,
 
         className,
         contentClassName,
         children,
+        style,
 
         onClose,
         allowFocusExit = false,
@@ -126,24 +253,35 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
         backActionOverride,
         actionContext,
 
+        resizable = false,
+        minWidth = 165,
+        minHeight = 68,
+        maxWidth = Infinity,
+        maxHeight = Infinity,
+        onResizing,
+        onResizeEnd,
+
         ...rest
     },
     ref
 ) {
-    /* -----------------------------
-     * Setup
-     * ---------------------------- */
+    const internalRef = useRef<HTMLDivElement>(null);
+    const panelRef = (ref as React.RefObject<HTMLDivElement>) || internalRef;
 
-    playTransitionSounds(transitionSounds);
+    const PANEL_HEADER_KEY = useUniqueFocusKey(FOCUS_AUTO$, "PanelHeader");
+    const PANEL_CONTENT_KEY = useUniqueFocusKey(FOCUS_AUTO$, "PanelContent");
+    const PANEL_FOOTER_KEY = useUniqueFocusKey(FOCUS_AUTO$, "PanelFooter");
 
-    const resolvedTheme = resolveTheme(theme);
-    const isTVMode = useIsTVMode();
+    useTransitionSounds(transitionSounds);
+
+    const resolvedTheme = usePanelTheme(theme);
+    const isGamepad = useGamepadActive();
 
     const hasHeader = React.Children.count(header) > 0;
     const hasContent = React.Children.count(children) > 0;
     const hasFooter = React.Children.count(footer) > 0;
 
-    const contextValue = useMemo<PanelContextValue>(
+    const contextValue = useMemo(
         () => ({
             theme: resolvedTheme,
             onClose,
@@ -151,74 +289,98 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
         [resolvedTheme, onClose]
     );
 
-    /* -----------------------------
-     * UI
-     * ---------------------------- */
+    const resizeEdges = useMemo<ResizeEdge>(() => {
+        if (resizable === true) return { top: true, bottom: true, left: true, right: true };
+        if (resizable === false) return {};
+        return resizable;
+    }, [resizable]);
+
+    const { sizeOverride, resizeHandles } = useResize(panelRef, {
+        enabled: !!resizable,
+        edges: resizeEdges,
+        minWidth,
+        minHeight,
+        maxWidth,
+        maxHeight,
+        onResizing,
+        onResizeEnd,
+    });
+
+    const mergedStyle = useMemo<React.CSSProperties | undefined>(() => {
+        if (!sizeOverride && !style) return undefined;
+        return {
+            ...style,
+            ...(sizeOverride ? { width: sizeOverride.width, height: sizeOverride.height } : {}),
+        };
+    }, [sizeOverride, style]);
 
     const panelUI = (
-        <ActionHandler
+        <InputActionConsumer
             onAction={onClose}
             action={backActionOverride}
             actionContext={actionContext}
         >
             <PanelContext.Provider value={contextValue}>
-                <TransitionWrapper styles={transition}>
-                    <FocusPanel
-                        ref={ref}
+                <ClassNameTransition styles={transition}>
+                    <ActiveFocusDiv
+                        ref={panelRef}
                         focusKey={focusKey}
-                        className={resolvedTheme.panel || className}
+                        className={classNames(resolvedTheme.panel, className)}
+                        style={mergedStyle}
                         {...rest}
                     >
-                        <FocusGroup
+                        <AutoNavigationScope
                             initialFocused={PANEL_CONTENT_KEY}
                             allowLooping={allowLooping}
-                            direction="vertical"
+                            direction={NavigationDirection.Vertical}
                         >
                             {hasHeader && (
-                                <FocusItem focusKey={PANEL_HEADER_KEY}>
+                                <FocusKeyOverride focusKey={PANEL_HEADER_KEY}>
                                     <div className={resolvedTheme.header}>{header}</div>
-                                </FocusItem>
+                                </FocusKeyOverride>
                             )}
 
                             {hasContent && (
-                                <FocusItem focusKey={PANEL_CONTENT_KEY}>
-                                    <div className={contentClassName || resolvedTheme.content}>
+                                <FocusKeyOverride focusKey={PANEL_CONTENT_KEY}>
+                                    <div className={classNames(resolvedTheme.content, contentClassName)}>
                                         {children}
                                     </div>
-                                </FocusItem>
+                                </FocusKeyOverride>
                             )}
 
                             {hasFooter && (
-                                <FocusItem focusKey={PANEL_FOOTER_KEY}>
+                                <FocusKeyOverride focusKey={PANEL_FOOTER_KEY}>
                                     <div className={resolvedTheme.footer}>{footer}</div>
-                                </FocusItem>
+                                </FocusKeyOverride>
                             )}
-                        </FocusGroup>
+                        </AutoNavigationScope>
 
-                        {isTVMode && (showCloseHint || unfocusedHintAction) && (
+                        {isGamepad && (showCloseHint || unfocusedHintAction) && (
                             <PanelHint
+                                asTooltip={footerHintAsTooltip}
+                                actionContext={actionContext}
                                 focusedAction={
                                     typeof showCloseHint === "boolean"
                                         ? undefined
                                         : showCloseHint
                                 }
                                 unfocusedAction={unfocusedHintAction}
-                                asTooltip={footerHintAsTooltip}
-                                actionContext={actionContext}
-                                className={hintClassName} // --> + "game-ui/common/panel/themes/panel-transition.module.scss".floatingHint
+                                className={classNames(DefaultPanelSCSS.floatingHint, hintClassName)}
                             />
                         )}
-                    </FocusPanel>
-                </TransitionWrapper>
+
+                        {resizeHandles}
+                    </ActiveFocusDiv>
+                </ClassNameTransition>
             </PanelContext.Provider>
-        </ActionHandler>
+        </InputActionConsumer>
     );
 
-    return allowFocusExit ? panelUI : <FocusTrap>{panelUI}</FocusTrap>;
+    return allowFocusExit ? panelUI : <FocusRoot>{panelUI}</FocusRoot>;
 });
 
 /* =========================================================
- * 💡 PANEL HINT
+ * PANEL HINT
  * ======================================================= */
 
 interface PanelHintProps {
@@ -235,18 +397,17 @@ const PanelHint = ({
     asTooltip,
     ...props
 }: PanelHintProps) => {
-    const hasFocus = useHasFocus(useContext(FocusContext));
+    const hasFocus = useFocused(useContext(FocusContext));
 
-    const canClose = hasAction({ action: "Close", context: props.actionContext });
-    const canBack = hasAction({ action: "Back", context: props.actionContext });
+    const canClose = useInputActionActive({ action: "Close", context: props.actionContext });
+    const canBack = useInputActionActive({ action: "Back", context: props.actionContext });
 
     if (hasFocus || (unfocusedAction && !asTooltip)) {
         return (
-            <Hint
+            <FloatingInputHint
                 {...props}
                 action={
-                    focusedAction ??
-                    (canClose ? "Close" : canBack ? "Back" : undefined)
+                    focusedAction || canClose ? "Close" : canBack ? "Back" : undefined
                 }
                 active={!!focusedAction}
             />
@@ -255,10 +416,11 @@ const PanelHint = ({
 
     if (unfocusedAction && asTooltip) {
         return (
-            <Hint
+            <FloatingInputHint
                 {...props}
                 action={unfocusedAction}
-                tooltip // --> "game-ui/common/panel/themes/panel-transition.module.scss".tooltipHint
+                tooltipClassName={DefaultPanelSCSS.tooltipHint}
+                tooltip
                 active
             />
         );
