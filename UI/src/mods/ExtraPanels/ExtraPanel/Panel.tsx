@@ -59,6 +59,7 @@ export interface PanelProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "
     transitionSounds?: { enter?: string; exit?: string };
 
     contentClassName?: string;
+    contentStyle?: React.CSSProperties;
 
     onClose?: () => void;
     allowFocusExit?: boolean;
@@ -238,6 +239,7 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
 
         className,
         contentClassName,
+        contentStyle,
         children,
         style,
 
@@ -342,7 +344,7 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
 
                             {hasContent && (
                                 <FocusKeyOverride focusKey={PANEL_CONTENT_KEY}>
-                                    <div className={classNames(resolvedTheme.content, contentClassName)}>
+                                    <div className={classNames(resolvedTheme.content, contentClassName)} style={contentStyle}>
                                         {children}
                                     </div>
                                 </FocusKeyOverride>

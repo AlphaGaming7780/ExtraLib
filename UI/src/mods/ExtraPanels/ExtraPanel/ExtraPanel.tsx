@@ -113,7 +113,6 @@ export const ExtraPanel = ({ extraPanel, children }: propsExtraPanel) => {
             !extraPanel.isExpanded && ExtraPanelSCSS.Collapsed,
             !extraPanel.visible && ExtraPanelSCSS.Hidden,
         )}
-        contentClassName={ExtraPanelSCSS.ContentExpand}
         resizable={!extraPanel.isFullScreen}
         onResizing={onResizing}
         onResizeEnd={onResizeEnd}
