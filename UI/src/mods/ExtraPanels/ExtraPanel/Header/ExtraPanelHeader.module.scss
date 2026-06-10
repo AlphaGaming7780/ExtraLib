@@ -9,11 +9,23 @@
     }
 
     .PanelName {
-        
+
     }
 
     .PanelCloseButton {
 
     }
 
+}
+
+.animatedIcon {
+    transition: transform 0.3s ease;
+}
+
+.expandedRotation {
+    transform: rotate(90deg);
+}
+
+.fullScreenRotation {
+    transform: rotate(-90deg);
 }

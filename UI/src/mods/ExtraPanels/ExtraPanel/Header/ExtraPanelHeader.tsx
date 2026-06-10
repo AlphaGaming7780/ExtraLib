@@ -22,19 +22,19 @@ export const ExtraPanelHeader = ({ extraPanel }: propsExtraPanelHeader): ReactNo
         
         <img src={extraPanel.icon} className={classNames( PanelSCSS.icon)} />
 
-        <div className={classNames(PanelSCSS.iconSpace)} />
+        {/* <div className={classNames(PanelSCSS.iconSpace)} />
 
         {
             extraPanel.canFullScreen && <div className={classNames(PanelSCSS.iconSpace)} />
-        }  
+        }   */}
 
         <div className={classNames( PanelSCSS.title) }>
             {translate(`ExtraPanelHeaderName[${extraPanel.__Type}]`, `ExtraPanelHeaderName[${extraPanel.__Type}]`) }
         </div>
 
         <IconButton
-            src={ extraPanel.isExpanded ? PanelSCSS.toggleIconExpanded : PanelSCSS.toggleIcon}
-            className={classNames( PanelSCSS.closeButton)}
+            src={PanelSCSS.toggleIcon}
+            className={classNames(PanelSCSS.closeButton, ExtraPanelHeaderSCSS.animatedIcon, { [ExtraPanelHeaderSCSS.expandedRotation]: extraPanel.isExpanded })}
             tinted={true}
             focusKey={FOCUS_DISABLED$}
             theme={RoundHighlightButtonSCSS}
@@ -52,8 +52,8 @@ export const ExtraPanelHeader = ({ extraPanel }: propsExtraPanelHeader): ReactNo
         {
             extraPanel.canFullScreen &&
             <IconButton
-                src={extraPanel.isFullScreen ? "/Media/Glyphs/ThickStrokeArrowUp.svg" : PanelSCSS.toggleIcon}
-                className={classNames(PanelSCSS.closeButton)}
+                src={PanelSCSS.toggleIcon}
+                className={classNames(PanelSCSS.closeButton, ExtraPanelHeaderSCSS.animatedIcon, { [ExtraPanelHeaderSCSS.fullScreenRotation]: extraPanel.isFullScreen })}
                 tinted={true}
                 focusKey={FOCUS_DISABLED$}
                 theme={RoundHighlightButtonSCSS}

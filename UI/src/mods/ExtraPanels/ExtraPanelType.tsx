@@ -19,6 +19,7 @@ export function SetPanelSize(extraPanel: ExtraPanelType, newSize: Number2) { tri
 export const OpenExtraPanel = (extraPanel: ExtraPanelType) => { trigger("el", "OpenExtraPanel", extraPanel.__Type) }
 export const CloseExtraPanel = (extraPanel: ExtraPanelType) => { trigger("el", "CloseExtraPanel", extraPanel.__Type) }
 
+export const SetCollapsedExtraPanel = (extraPanel: ExtraPanelType, isExpanded: boolean) => { if(isExpanded) { ExpandExtraPanel(extraPanel) } else { CollapseExtraPanel(extraPanel) } }
 export const CollapseExtraPanel = (extraPanel: ExtraPanelType) => { trigger("el", "CollapseExtraPanel", extraPanel.__Type) }
 export const ExpandExtraPanel = (extraPanel: ExtraPanelType) => { trigger("el", "ExpandExtraPanel", extraPanel.__Type) }
 
