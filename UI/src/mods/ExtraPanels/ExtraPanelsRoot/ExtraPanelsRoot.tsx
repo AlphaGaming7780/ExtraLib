@@ -16,6 +16,13 @@ export const ExtraPanelsRoot = () => {
 
     let ExtraPanelsList: ExtraPanelType[] = useValue(ExtraPanelsList$)
 
+    console.log("Rendering Extra Panels Root")
+
+    for (const key in extraPanelsComponents) 
+    {
+        console.log("Registered Extra Panel: " + key)
+    }
+
     return <div>
         {
             ExtraPanelsList && ExtraPanelsList.length > 0 && ExtraPanelsList.map((extraPanel: ExtraPanelType, index: number) => {

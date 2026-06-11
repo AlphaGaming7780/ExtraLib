@@ -85,6 +85,7 @@ namespace ExtraLib.Systems.UI.ExtraPanels
 
         public void SetVisible( bool visible )
         {
+            if( visible == m_Visible ) return;
             m_Visible = visible;
             if (visible) RequestUpdate();
             m_ExtraPanelsUISystem.RequestBindingUpdate();

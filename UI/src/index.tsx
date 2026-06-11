@@ -8,6 +8,7 @@ import { ExtraPanelsButtonEditor } from "./mods/ExtraPanels/ExtraPanelsButton/Ex
 
 const register: ModRegistrar = (moduleRegistry) => {
 
+    console.log("ExtraLib UI loading...")
     moduleRegistry.extend("game-ui/game/components/asset-menu/asset-category-tab-bar/asset-category-tab-bar.tsx", 'AssetCategoryTabBar', AssetMultiCategory)
 
     moduleRegistry.append('UniversalModMenu', ExtraPanelButtonsUniversalMod);
@@ -24,6 +25,7 @@ const register: ModRegistrar = (moduleRegistry) => {
 
     moduleRegistry.extend("ExtraLib/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot", "extraPanelsComponents", extraPanelsComponentsExtended)
 
+    console.log("ExtraLib UI loaded")
 }
 
 export default register;

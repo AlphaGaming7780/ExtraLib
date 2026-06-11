@@ -25,9 +25,11 @@ namespace ExtraLib.Systems.UI.ExtraPanels
         private bool m_DirtyPanelBinding = false;
         private RawValueBinding m_PanelsBinding;
 
-        public void AddExtraPanel<T>() where T : ExtraPanelBase
+        public T AddExtraPanel<T>() where T : ExtraPanelBase
         {
-            AddExtraPanel(World.GetOrCreateSystemManaged<T>());
+            T v = World.GetOrCreateSystemManaged<T>();
+            AddExtraPanel(v);
+            return v;
         }
 
         public void AddExtraPanel(ExtraPanelBase panel)
@@ -230,9 +232,6 @@ namespace ExtraLib.Systems.UI.ExtraPanels
             }
 
             extraPanelBase.SetPanelLocation(newLocation);
-
-            //EL.Logger.Info(newLocation);
-
         }
 
         private void UpdatePanelSize(string id, float2 newSize)
@@ -245,9 +244,6 @@ namespace ExtraLib.Systems.UI.ExtraPanels
             }
 
             extraPanelBase.SetPanelSize(newSize);
-
-            EL.Logger.Info(newSize);
-
         }
 
     }

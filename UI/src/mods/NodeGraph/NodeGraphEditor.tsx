@@ -8,7 +8,7 @@ export interface NodeGraphEditorPorps {
 
 export const NodeGraphEditor = (props: NodeGraphEditorPorps) : JSX.Element => {
     return (
-        //<div style={{ width: "auot", height: "auto"}} >
+        //<div style={{ width: "auto", height: "auto"}} >
             <GraphBoard>
                 YES
             </GraphBoard>
