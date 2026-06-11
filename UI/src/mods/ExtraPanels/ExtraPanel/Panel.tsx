@@ -58,6 +58,7 @@ export interface PanelProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "
     transition?: any;
     transitionSounds?: { enter?: string; exit?: string };
 
+    headerClassName?: string;
     contentClassName?: string;
     contentStyle?: React.CSSProperties;
 
@@ -238,6 +239,7 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
         transitionSounds,
 
         className,
+        headerClassName,
         contentClassName,
         contentStyle,
         children,
@@ -279,9 +281,9 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
     const resolvedTheme = usePanelTheme(theme);
     const isGamepad = useGamepadActive();
 
-    const hasHeader = React.Children.count(header) > 0;
-    const hasContent = React.Children.count(children) > 0;
-    const hasFooter = React.Children.count(footer) > 0;
+    const hasHeader = React.Children.toArray(header).length > 0;
+    const hasContent = React.Children.toArray(children).length > 0;
+    const hasFooter = React.Children.toArray(footer).length > 0;
 
     const contextValue = useMemo(
         () => ({
@@ -338,13 +340,13 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
                         >
                             {hasHeader && (
                                 <FocusKeyOverride focusKey={PANEL_HEADER_KEY}>
-                                    <div className={resolvedTheme.header}>{header}</div>
+                                    <div className={classNames(resolvedTheme.header, headerClassName, { [styles.borderBottom]: !hasFooter && !hasContent })}>{header}</div>
                                 </FocusKeyOverride>
                             )}
 
                             {hasContent && (
                                 <FocusKeyOverride focusKey={PANEL_CONTENT_KEY}>
-                                    <div className={classNames(resolvedTheme.content, contentClassName)} style={contentStyle}>
+                                    <div className={classNames(resolvedTheme.content, contentClassName, { [styles.borderBottom]: !hasFooter })} style={contentStyle}>
                                         {children}
                                     </div>
                                 </FocusKeyOverride>
@@ -352,7 +354,7 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
 
                             {hasFooter && (
                                 <FocusKeyOverride focusKey={PANEL_FOOTER_KEY}>
-                                    <div className={resolvedTheme.footer}>{footer}</div>
+                                    <div className={classNames(resolvedTheme.footer, styles.borderBottom)}>{footer}</div>
                                 </FocusKeyOverride>
                             )}
                         </AutoNavigationScope>

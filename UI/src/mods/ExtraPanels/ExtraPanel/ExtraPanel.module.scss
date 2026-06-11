@@ -1,7 +1,6 @@
 
 .ExtraPanel {
     z-index: 3;
-    border-radius: 4rem;
 
     &.FullScreen {
         border-radius: 0;
@@ -22,6 +21,11 @@
 
 }
 
+.borderBottom {
+    border-bottom-left-radius: var(--panelRadius);
+    border-bottom-right-radius: var(--panelRadius);
+}
+
 /* =========================================================
  * RESIZE HANDLES
  * ======================================================= */
@@ -31,7 +35,6 @@ $corner-size: 12rem;
 $indicator-color: rgba(120, 180, 255, 0.35);
 $indicator-color-active: rgba(120, 180, 255, 0.6);
 $indicator-thickness: 3rem;
-$panel-radius: 12rem;
 
 @mixin resize-handle {
     position: absolute;
@@ -153,7 +156,7 @@ $panel-radius: 12rem;
         background: transparent;
         border-top: $indicator-thickness solid $indicator-color;
         border-right: $indicator-thickness solid $indicator-color;
-        border-top-right-radius: $panel-radius;
+        border-top-right-radius: var(--panelRadius);
         transition: opacity 0.15s ease, border-color 0.15s ease;
     }
 }
@@ -175,7 +178,7 @@ $panel-radius: 12rem;
         background: transparent;
         border-top: $indicator-thickness solid $indicator-color;
         border-left: $indicator-thickness solid $indicator-color;
-        border-top-left-radius: $panel-radius;
+        border-top-left-radius: var(--panelRadius);
         transition: opacity 0.15s ease, border-color 0.15s ease;
     }
 }
@@ -197,7 +200,7 @@ $panel-radius: 12rem;
         background: transparent;
         border-bottom: $indicator-thickness solid $indicator-color;
         border-right: $indicator-thickness solid $indicator-color;
-        // border-bottom-right-radius: $panel-radius;
+        border-bottom-right-radius: var(--panelRadius);
         transition: opacity 0.15s ease, border-color 0.15s ease;
     }
 }
@@ -219,7 +222,7 @@ $panel-radius: 12rem;
         background: transparent;
         border-bottom: $indicator-thickness solid $indicator-color;
         border-left: $indicator-thickness solid $indicator-color;
-        // border-bottom-left-radius: $panel-radius;
+        border-bottom-left-radius: var(--panelRadius);
         transition: opacity 0.15s ease, border-color 0.15s ease;
     }
 }

@@ -19,7 +19,13 @@ const register: ModRegistrar = (moduleRegistry) => {
     moduleRegistry.append('Game', ExtraPanelsRoot)
     moduleRegistry.append('Menu', HelloWorldComponent);
 
-    if (!moduleRegistry.registry.has("ExtraLib/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot")) {
+    if (moduleRegistry.registry.has("ExtraLib/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot")) {
+        const existing = moduleRegistry.registry.get("ExtraLib/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot");
+        if (existing?.extraPanelsComponents) {
+            Object.assign(extraPanelsComponents, existing.extraPanelsComponents);
+        }
+        moduleRegistry.override("ExtraLib/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot", "extraPanelsComponents", extraPanelsComponents);
+    } else {
         moduleRegistry.add("ExtraLib/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot", { "extraPanelsComponents": extraPanelsComponents })
     }
 

@@ -1,26 +1,12 @@
 
 .ExtraPanelHeader {
-
     width:100%;
     cursor:grab;
-
-    .PanelIcon {
-
-    }
-
-    .PanelName {
-
-    }
-
-    .PanelCloseButton {
-
-    }
-
 }
 
-.iconSpacer {
-    flex: 1 1 0px;
-    min-width: 0px;
+.collapsed {
+    border-bottom-left-radius: var(--panelRadius);
+    border-bottom-right-radius: var(--panelRadius);
 }
 
 .animatedIcon {

@@ -105,7 +105,7 @@ export const ExtraPanel = ({ extraPanel, children }: propsExtraPanel) => {
 
     return <Panel
         header={BetterDragHandle({ onDragStart: onDragStart, onDrag: onDrag, onDragEnd: onDragEnd, children: ExtraPanelHeader({ extraPanel }) })}
-        footer={"FOOTER"}
+        // footer={"FOOTER"}
         className={classNames(
             "draggable-panel",
             ExtraPanelSCSS.ExtraPanel,
