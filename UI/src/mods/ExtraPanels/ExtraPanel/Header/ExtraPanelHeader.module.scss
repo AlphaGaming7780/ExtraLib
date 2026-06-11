@@ -18,6 +18,11 @@
 
 }
 
+.iconSpacer {
+    flex: 1 1 0px;
+    min-width: 0px;
+}
+
 .animatedIcon {
     transition: transform 0.3s ease;
 }

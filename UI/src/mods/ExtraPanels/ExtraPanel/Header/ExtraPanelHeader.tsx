@@ -22,11 +22,11 @@ export const ExtraPanelHeader = ({ extraPanel }: propsExtraPanelHeader): ReactNo
         
         <img src={extraPanel.icon} className={classNames( PanelSCSS.icon)} />
 
-        {/* <div className={classNames(PanelSCSS.iconSpace)} />
+        <div className={classNames(PanelSCSS.iconSpace, ExtraPanelHeaderSCSS.iconSpacer)} />
 
         {
-            extraPanel.canFullScreen && <div className={classNames(PanelSCSS.iconSpace)} />
-        }   */}
+            extraPanel.canFullScreen && <div className={classNames(PanelSCSS.iconSpace, ExtraPanelHeaderSCSS.iconSpacer)} />
+        }
 
         <div className={classNames( PanelSCSS.title) }>
             {translate(`ExtraPanelHeaderName[${extraPanel.__Type}]`, `ExtraPanelHeaderName[${extraPanel.__Type}]`) }
