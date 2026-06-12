@@ -23,13 +23,14 @@ namespace ExtraLib.Systems.UI.ExtraPanels
 
         public float2 PanelLocation { get; private set; }
         public float2 PanelSize { get; private set; }
+        public virtual float2 PanelMinSize => new float2(48, 48);
+
         public bool IsExpanded { get; private set; } = true;
         public bool IsFullScreen { get; private set; } = false;
 
         protected override void OnCreate()
         {
             base.OnCreate();
-
             PanelLocation = new float2(0.01f, 0.07f);
             m_ExtraPanelsUISystem = World.GetOrCreateSystemManaged<ExtraPanelsUISystem>();
         }
@@ -74,6 +75,8 @@ namespace ExtraLib.Systems.UI.ExtraPanels
             writer.Write(PanelLocation);
             writer.PropertyName("panelSize");
             writer.Write(PanelSize);
+            writer.PropertyName("panelMinSize");
+            writer.Write(PanelMinSize);
             writer.TypeEnd();
             return;
         }

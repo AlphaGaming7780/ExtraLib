@@ -1,6 +1,7 @@
 
 .ExtraPanel {
     z-index: 3;
+    overflow: hidden;
 
     &.FullScreen {
         border-radius: 0;

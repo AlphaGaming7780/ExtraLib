@@ -135,6 +135,7 @@ export interface ResizeResult {
 
 function useResize(
     ref: React.RefObject<HTMLDivElement | null>,
+    headerRef: React.RefObject<HTMLDivElement | null>,
     opts: {
         enabled: boolean;
         edges: ResizeEdge;
@@ -157,6 +158,8 @@ function useResize(
             const startY = e.clientY;
             const startW = rect.width;
             const startH = rect.height;
+            const headerHeight = headerRef.current?.getBoundingClientRect().height ?? 0;
+            const effectiveMinHeight = opts.minHeight + headerHeight;
 
             const computeResize = (dx: number, dy: number): ResizeResult => {
                 let newW = startW;
@@ -171,7 +174,7 @@ function useResize(
 
                 // Clamp
                 const clampedW = Math.min(Math.max(newW, opts.minWidth), opts.maxWidth);
-                const clampedH = Math.min(Math.max(newH, opts.minHeight), opts.maxHeight);
+                const clampedH = Math.min(Math.max(newH, effectiveMinHeight), opts.maxHeight);
 
                 // When resizing from left/top, the panel origin needs to move
                 if (direction.includes("w")) deltaX = startW - clampedW;
@@ -258,8 +261,8 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
         actionContext,
 
         resizable = false,
-        minWidth = 165,
-        minHeight = 68,
+        minWidth = 10,
+        minHeight = 10,
         maxWidth = Infinity,
         maxHeight = Infinity,
         onResizing,
@@ -271,6 +274,7 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
 ) {
     const internalRef = useRef<HTMLDivElement>(null);
     const panelRef = (ref as React.RefObject<HTMLDivElement>) || internalRef;
+    const headerRef = useRef<HTMLDivElement>(null);
 
     const PANEL_HEADER_KEY = useUniqueFocusKey(FOCUS_AUTO$, "PanelHeader");
     const PANEL_CONTENT_KEY = useUniqueFocusKey(FOCUS_AUTO$, "PanelContent");
@@ -299,7 +303,7 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
         return resizable;
     }, [resizable]);
 
-    const { sizeOverride, resizeHandles } = useResize(panelRef, {
+    const { sizeOverride, resizeHandles } = useResize(panelRef, headerRef, {
         enabled: !!resizable,
         edges: resizeEdges,
         minWidth,
@@ -340,7 +344,7 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
                         >
                             {hasHeader && (
                                 <FocusKeyOverride focusKey={PANEL_HEADER_KEY}>
-                                    <div className={classNames(resolvedTheme.header, headerClassName, { [styles.borderBottom]: !hasFooter && !hasContent })}>{header}</div>
+                                    <div ref={headerRef} className={classNames(resolvedTheme.header, headerClassName, { [styles.borderBottom]: !hasFooter && !hasContent })}>{header}</div>
                                 </FocusKeyOverride>
                             )}
 

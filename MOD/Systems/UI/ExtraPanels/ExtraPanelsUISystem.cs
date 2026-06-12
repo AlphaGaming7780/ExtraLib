@@ -239,10 +239,13 @@ namespace ExtraLib.Systems.UI.ExtraPanels
 
             if (!TryToFindPanelByID(id, out ExtraPanelBase extraPanelBase))
             {
-                EL.Logger.Warn($"Try to update the location of an Extra Panel with id : {id}, but this id doesn't exist in the valide panels.");
+                EL.Logger.Warn($"Try to update the size of an Extra Panel with id : {id}, but this id doesn't exist in the valide panels.");
                 return;
             }
-
+            if( newSize.x < extraPanelBase.PanelMinSize.x || newSize.y < extraPanelBase.PanelMinSize.y )
+            {
+                newSize = math.max(newSize, extraPanelBase.PanelMinSize);
+            }
             extraPanelBase.SetPanelSize(newSize);
         }
 

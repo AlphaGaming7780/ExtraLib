@@ -1,5 +1,5 @@
 import { Panel, ResizeResult } from "./Panel"
-import { ExtraPanelType, SetCollapsedExtraPanel, SetFullScreenExtraPanel, SetPanelPosition, SetPanelSize } from "../ExtraPanelType"
+import { ExtraPanelType, SetExpandedExtraPanel, SetFullScreenExtraPanel, SetPanelPosition, SetPanelSize } from "../ExtraPanelType"
 import { ExtraPanelHeader } from "./Header/ExtraPanelHeader"
 import { useState } from "react"
 import classNames from "classnames"
@@ -12,7 +12,10 @@ export interface propsExtraPanel {
     children: any
 }
 
-const MIN_PANEL_HEIGHT = 68;
+const ROOT_FONT_SIZE_VH = parseFloat(getComputedStyle(document.documentElement).fontSize);
+const getRemInPx = () => (ROOT_FONT_SIZE_VH / 100) * window.innerHeight;
+const pxToRem = (px: number) => px / getRemInPx();
+const remToPx = (rem: number) => rem * getRemInPx();
 
 export const ExtraPanel = ({ extraPanel, children }: propsExtraPanel) => {
 
@@ -55,17 +58,13 @@ export const ExtraPanel = ({ extraPanel, children }: propsExtraPanel) => {
         SetPanelPosition(extraPanel, extraPanel.panelLocation);
     }
 
-    const onResizing = ({ width, height, deltaX, deltaY }: ResizeResult) => 
+    const onResizing = ({ width, height, deltaX, deltaY }: ResizeResult) =>
     {
-        
-        if(height <= MIN_PANEL_HEIGHT && extraPanel.isExpanded)
-        {
-            extraPanel.isExpanded = false;
-            SetCollapsedExtraPanel(extraPanel, false);
-        } else if(height > MIN_PANEL_HEIGHT && !extraPanel.isExpanded)
+
+        if(deltaY !== 0 && !extraPanel.isExpanded)
         {
             extraPanel.isExpanded = true;
-            SetCollapsedExtraPanel(extraPanel, true);
+            SetExpandedExtraPanel(extraPanel, true);
         }
 
         if (deltaX !== 0 || deltaY !== 0) {
@@ -77,21 +76,17 @@ export const ExtraPanel = ({ extraPanel, children }: propsExtraPanel) => {
         }
     }
 
-    const onResizeEnd = ({ width, height, deltaX, deltaY }: ResizeResult) => 
+    const onResizeEnd = ({ width, height, deltaX, deltaY }: ResizeResult) =>
     {
-    
-        if(height <= MIN_PANEL_HEIGHT)
-        {
-            extraPanel.isExpanded = false;
-            extraPanel.panelSize = { x: width, y: extraPanel.panelSize.y }
-        } else
-        {
-            extraPanel.isExpanded = true;
-            extraPanel.panelSize = { x: width, y: height }
-        }
+        const widthRem = pxToRem(width);
+        const heightRem = pxToRem(height);
+
+        // console.log(`Resizing ended. New size: ${widthRem}rem x ${heightRem}rem, New size in px: ${width}px x ${height}px, Delta: ${deltaX}px x ${deltaY}px, font size: ${getRemInPx()}px, getComputedStyle font size: ${getComputedStyle(document.documentElement).fontSize}`);
+
+        extraPanel.panelSize = { x: widthRem, y: heightRem }
 
         SetPanelSize(extraPanel, extraPanel.panelSize);
-        SetCollapsedExtraPanel(extraPanel, extraPanel.isExpanded);
+
         if (deltaX !== 0 || deltaY !== 0) {
             const newPos = {
                 x: extraPanel.panelLocation.x + deltaX,
@@ -116,11 +111,13 @@ export const ExtraPanel = ({ extraPanel, children }: propsExtraPanel) => {
         resizable={!extraPanel.isFullScreen}
         onResizing={onResizing}
         onResizeEnd={onResizeEnd}
+        minWidth={remToPx(extraPanel.panelMinSize.x)}
+        minHeight={remToPx(extraPanel.panelMinSize.y)}
         style={{
             left: extraPanel.panelLocation.x,
             top: extraPanel.panelLocation.y,
-            width: extraPanel.panelSize.x == 0 ? "auto" : extraPanel.panelSize.x,
-            height: extraPanel.panelSize.y == 0 ? "auto" : extraPanel.panelSize.y,
+            width: extraPanel.panelSize.x == 0 ? "auto" : `${extraPanel.panelSize.x}rem`,
+            height: extraPanel.panelSize.y == 0 ? "auto" : `${extraPanel.panelSize.y}rem`,
             transform: (translate.x || translate.y)
                 ? `translate(${translate.x}px, ${translate.y}px)`
                 : undefined,
