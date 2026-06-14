@@ -9,7 +9,9 @@ import { Number2 } from "cs2/bindings"
 
 export interface propsExtraPanel {
     extraPanel: ExtraPanelType,
-    children: any
+    children: any,
+    zIndex?: number,
+    onBringToFront?: () => void,
 }
 
 const ROOT_FONT_SIZE_VH = parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -17,7 +19,7 @@ const getRemInPx = () => (ROOT_FONT_SIZE_VH / 100) * window.innerHeight;
 const pxToRem = (px: number) => px / getRemInPx();
 const remToPx = (rem: number) => rem * getRemInPx();
 
-export const ExtraPanel = ({ extraPanel, children }: propsExtraPanel) => {
+export const ExtraPanel = ({ extraPanel, children, zIndex, onBringToFront }: propsExtraPanel) => {
 
     const [translate, setTranslate] = useState({ x: 0, y: 0 }); 
 
@@ -99,6 +101,7 @@ export const ExtraPanel = ({ extraPanel, children }: propsExtraPanel) => {
     }
 
     return <Panel
+        onMouseDown={onBringToFront}
         header={BetterDragHandle({ onDragStart: onDragStart, onDrag: onDrag, onDragEnd: onDragEnd, children: ExtraPanelHeader({ extraPanel }) })}
         // footer={"FOOTER"}
         className={classNames(
@@ -118,6 +121,7 @@ export const ExtraPanel = ({ extraPanel, children }: propsExtraPanel) => {
             top: extraPanel.panelLocation.y,
             width: extraPanel.panelSize.x == 0 ? "auto" : `${extraPanel.panelSize.x}rem`,
             height: extraPanel.panelSize.y == 0 ? "auto" : `${extraPanel.panelSize.y}rem`,
+            zIndex: zIndex,
             transform: (translate.x || translate.y)
                 ? `translate(${translate.x}px, ${translate.y}px)`
                 : undefined,
