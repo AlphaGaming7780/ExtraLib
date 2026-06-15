@@ -41,15 +41,19 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 	<GameVersion Value="1.5.*" />
 	<!--Dependency for the Mod, can be set multiple times-->
 	<Dependency Id="" />
+	<!-- Required DLC, can be set multiple times. Supported values are "Landmark Buildings", "San Fransisco Set", "Beach Properties", "Urban Promenades", "Modern Architecture" -->
+	<RequiredDLC Value=""/>
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--<ChangeLog Value="TEST" />-->
 	<ChangeLog>
 ### Fixes
 - Fix an UI bug in the editor
-  </ChangeLog>
+	</ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="crowdin" Url="https://crowdin.com/project/extralib" />
 	<ExternalLink Type="discord" Url="https://discord.gg/HTav7ARPs2" />
 	<ExternalLink Type="github" Url="https://github.com/AlphaGaming7780/ExtraLib" />
 	<ExternalLink Type="paypal" Url="https://www.paypal.com/paypalme/TritonSupreme" />
+	<!-- Supported values Public, Private, Unlisted -->
+	<AccessLevel Value="Public"/>
 </Publish>
