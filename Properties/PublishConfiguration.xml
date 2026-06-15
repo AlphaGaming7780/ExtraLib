@@ -14,16 +14,16 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 
 # Translation
 ⚠️ This mod uses crowdin so there maybe inconsistencies with translations due to translations from different translators ⚠️
-- ✔️French 100% : aricoseco, Morgan Touverey Quilling (mtouverey), Edou24
+- ✔️French 100% : aricoseco, Morgan · Toverux (toverux), Edou24
 - ✔️Chinese Simplified 100% : RilkeXS(无手文) (RilkeXS), 一叶杳舟 (Yao_Zhou)
 - ⚠️Chinese Traditional 97% : CBEdwin, allegretic, Hans Law (ZENITHALIZE)
-- ⚠️German 97% : Konsi, Jannik Bartmann (raptor09), KaeseKuchen (KaeseMitKuchen), FearMyFeedEU, Fuchs23
+- ✔️German 100% : Konsi, Jannik Bartmann (raptor09), KaeseKuchen (KaeseMitKuchen), FearMyFeedEU, Fuchs23, Frank Hartmann (hatina) (Zilbo)
 - ⚠️Italian 86% : Stefano (Furios)
 - ✔️Japanese 100% : karigane
 - ✔️Korean 100% : Hinanchovo
 - ✔️Polish 100% : Lisek, karmel68
 - ✔️Portuguese 100% -> [European Portuguese Localization mod](https://mods.paradoxplaza.com/mods/92599/Windows)
-- ⚠️Portuguese, Brazilian 100% : Miguel Pereira Campos (mpcamposz)
+- ✔️Portuguese, Brazilian 100% : Miguel Pereira Campos (mpcamposz), Matheus Bernardes da Rocha Reis (matheusbreis10)
 - ⚠️Russian 87% :  MrSandcraft, Mihail (kaktyc), Denis Lee (B3lka), Sergey (TraceXR)
 - ✔️Spanish 100% : elGendo87
 	</LongDescription>
@@ -48,6 +48,10 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 	<ChangeLog>
 ### Fixes
 - Fix an UI bug in the editor
+### Translation
+- Update French translation by Morgan · Toverux (toverux)
+- Update German translation by Frank Hartmann (hatina) (Zilbo)
+- Update Portuguese, Brazilian translation by Matheus Bernardes da Rocha Reis (matheusbreis10)
 	</ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="crowdin" Url="https://crowdin.com/project/extralib" />

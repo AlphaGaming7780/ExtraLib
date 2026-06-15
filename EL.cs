@@ -30,13 +30,11 @@ namespace ExtraLib
 #else
 		internal static Logger Logger = new(log, false);
 #endif
-		// private GameSetting m_Setting;
 
 		private Harmony harmony;
 
 		internal static string ResourcesIcons { get; private set; }
 
-        internal static readonly GameObject ExtraLibMonoObject = new();
         public static ExtraLibMonoScript extraLibMonoScript;
 
         public static PrefabSystem m_PrefabSystem;
@@ -62,11 +60,8 @@ namespace ExtraLib
 
 			ExtraLocalization.LoadLocalization(Logger, Assembly.GetExecutingAssembly(), false);
 
-            extraLibMonoScript = EL.ExtraLibMonoObject.AddComponent<ExtraLibMonoScript>();
-
 			updateSystem.UpdateAt<AssetMultiCategory>(SystemUpdatePhase.UIUpdate);
             updateSystem.UpdateAt<ExtraPanelsUISystem>(SystemUpdatePhase.UIUpdate);
-			//updateSystem.UpdateAt<ExtraAssetsMenu>(SystemUpdatePhase.UIUpdate);
             updateSystem.UpdateAt<MainSystem>(SystemUpdatePhase.LateUpdate);
 
 #if DEBUG
@@ -84,7 +79,6 @@ namespace ExtraLib
 			{
 				Logger.Info($"Patched method: {patchedMethod.Module.Name}:{patchedMethod.Name}");
 			}
-
         }
 
 		public void OnDispose()

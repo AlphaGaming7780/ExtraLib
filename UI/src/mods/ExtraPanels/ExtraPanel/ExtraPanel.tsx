@@ -14,8 +14,13 @@ export interface propsExtraPanel {
     onBringToFront?: () => void,
 }
 
-const ROOT_FONT_SIZE_VH = parseFloat(getComputedStyle(document.documentElement).fontSize);
-const getRemInPx = () => (ROOT_FONT_SIZE_VH / 100) * window.innerHeight;
+const getRemInPx = (): number => {
+    const raw = getComputedStyle(document.documentElement).fontSize;
+    const value = parseFloat(raw);
+    if (raw.endsWith('vw')) return (value / 100) * window.innerWidth;
+    if (raw.endsWith('vh')) return (value / 100) * window.innerHeight;
+    return value;
+};
 const pxToRem = (px: number) => px / getRemInPx();
 const remToPx = (rem: number) => rem * getRemInPx();
 
