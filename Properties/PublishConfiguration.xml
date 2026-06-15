@@ -10,10 +10,10 @@
 	<LongDescription>
 Extra Lib is a crucial dependency mod that is indispensable for the operation of any tools within the EXTRA mod suite. It ensures seamless integration and enhanced functionality across the entire mod collection.
 
-Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and assistance with coding and is help with the UI, as well as to CityRat for their exceptional contributions to thumbnails and all related graphic design work.
+Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and assistance with coding and his help with the UI, as well as to CityRat for their exceptional contributions to thumbnails and all related graphic design work.
 
 # Translation
-⚠️ This mod uses crowdin so there maybe inconsistencies with translations due to translations from different translators ⚠️
+⚠️ This mod uses crowdin so there may be inconsistencies with translations due to translations from different translators ⚠️
 - ✔️French 100% : aricoseco, Morgan · Toverux (toverux), Edou24
 - ✔️Chinese Simplified 100% : RilkeXS(无手文) (RilkeXS), 一叶杳舟 (Yao_Zhou)
 - ⚠️Chinese Traditional 97% : CBEdwin, allegretic, Hans Law (ZENITHALIZE)
@@ -36,7 +36,7 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 	<!--Link to the forum post where the Mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the Mod-->
-	<ModVersion Value="1.4.7" />
+	<ModVersion Value="1.4.8" />
 	<!--Recommended version of the base game to use the Mod-->
 	<GameVersion Value="1.5.*" />
 	<!--Dependency for the Mod, can be set multiple times-->
@@ -46,8 +46,8 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--<ChangeLog Value="TEST" />-->
 	<ChangeLog>
-### Fixes
-- Fix an UI bug in the editor
+### Improvements
+- Various improvements
 ### Translation
 - Update French translation by Morgan · Toverux (toverux)
 - Update German translation by Frank Hartmann (hatina) (Zilbo)
