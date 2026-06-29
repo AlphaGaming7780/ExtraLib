@@ -1,4 +1,3 @@
-import { AssetCategory, Entity } from "cs2/bindings"
 import { getModule } from "cs2/modding"
 
 const path$ = "game-ui/game/components/item-grid/badges/locked-badge.tsx"
