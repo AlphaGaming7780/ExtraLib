@@ -1,9 +1,11 @@
 import { FocusKey } from "cs2/bindings"
-import { ButtonSounds } from "cs2/input"
 import { getModule } from "cs2/modding"
-import { TooltipProps } from "cs2/ui"
 
 const path$ = "game-ui/game/components/tool-options/tool-button/tool-button.tsx"
+
+// =========================
+// ToolButton
+// =========================
 
 export type PropsToolButton = {
 	focusKey?: FocusKey
@@ -16,9 +18,49 @@ export type PropsToolButton = {
 	uiTag?: string
 	className?: string
 	children?: JSX.Element
-	onSelect?: (value: Event) => void,
+	onSelect?: (value: Event) => void
 }
 
-export function ToolButton(propsToolButton: PropsToolButton): JSX.Element {
-	return getModule(path$, "ToolButton")(propsToolButton)
+// =========================
+// ValueToolButton
+// =========================
+
+export type PropsValueToolButton<T = any> = {
+	focusKey?: FocusKey
+	value: T
+
+	src?: string
+	selected?: boolean
+	disabled?: boolean
+	highlight?: boolean
+	multiSelect?: boolean
+
+	tooltip?: any
+	uiTag?: string
+	shortcut?: string
+	className?: string
+
+	children?: JSX.Element
+
+	onSelect?: (value: T) => void
+	onClick?: (value: T) => void
+}
+
+// =========================
+// Modules
+// =========================
+
+const ToolButtonModule = getModule(path$, "ToolButton")
+const ValueToolButtonModule = getModule(path$, "ValueToolButton")
+
+// =========================
+// Wrappers
+// =========================
+
+export function ToolButton(props: PropsToolButton): JSX.Element {
+	return <ToolButtonModule {...props} />
+}
+
+export function ValueToolButton<T = any>(props: PropsValueToolButton<T>): JSX.Element {
+	return <ValueToolButtonModule {...props} />
 }

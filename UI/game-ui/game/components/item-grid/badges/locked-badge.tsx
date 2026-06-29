@@ -1,7 +1,7 @@
 import { AssetCategory, Entity } from "cs2/bindings"
 import { getModule } from "cs2/modding"
 
-const path$ = "game-ui/game/components/asset-menu/badges/locked-badge.tsx"
+const path$ = "game-ui/game/components/item-grid/badges/locked-badge.tsx"
 
 export type PropsLockedBadge = { style?: any, className?: string }
 

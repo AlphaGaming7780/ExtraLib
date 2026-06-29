@@ -124,13 +124,14 @@ namespace ExtraLib.Systems
                 notificationInfo.progress = (int)(curentIndex / (float)entityRequesters.Count * 100);
                 notificationInfo.text = entityRequester.onEditEnities.Method.DeclaringType.ToString();
                 EL.m_NotificationUISystem.AddOrUpdateNotification(ref notificationInfo);
-
                 EntityQuery entityQuery = GetEntityQuery(entityRequester.entityQueryDesc);
+                NativeArray<Entity> entities = entityQuery.ToEntityArray(AllocatorManager.Temp);
                 try
                 {
-                    entityRequester.onEditEnities.Invoke(entityQuery.ToEntityArray(AllocatorManager.Temp));
+                    entityRequester.onEditEnities.Invoke(entities);
                 }
                 catch (Exception e) { EL.Logger.Error(e); }
+                entities.Dispose();
                 curentIndex++;
                 yield return null;
             }
