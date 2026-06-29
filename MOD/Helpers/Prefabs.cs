@@ -187,9 +187,20 @@ namespace ExtraLib.Helpers
                 return parentCategory;
             }
 
+            return GetOrCreateUIAssetParentCategoryPrefab(parentCategoryName, GetOrCreateNewUIAssetMenuPrefab(CatTabName, Icons.GetIcon), iconPath);
+        }
+
+        public static UIAssetParentCategoryPrefab GetOrCreateUIAssetParentCategoryPrefab(string parentCategoryName, UIAssetMenuPrefab parentMenuOrCat, string iconPath = null)
+        {
+            if (EL.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetParentCategoryPrefab), parentCategoryName), out var p1)
+                && p1 is UIAssetParentCategoryPrefab parentCategory)
+            {
+                return parentCategory;
+            }
+
             parentCategory = ScriptableObject.CreateInstance<UIAssetParentCategoryPrefab>();
             parentCategory.name = parentCategoryName;
-            parentCategory.parentCategoryOrMenu = GetOrCreateNewUIAssetMenuPrefab(CatTabName, Icons.GetIcon);
+            parentCategory.parentCategoryOrMenu = parentMenuOrCat;
             var parentCategoryUI = parentCategory.AddComponent<UIObject>();
             parentCategoryUI.m_Icon = iconPath ?? Icons.GetIcon(parentCategory);
             parentCategoryUI.active = true;

@@ -69,6 +69,8 @@ namespace ExtraLib
             extraPanelsUISystem.AddExtraPanel<TestExtraPanel>();
 #endif
 
+            EAMSupport.SetupEditEntities();
+
             //PrefabsHelper.LoadPrefabsInDirectory(Path.Combine(fileInfo.Directory.FullName, "Prefabs"));
 
             harmony = new($"{nameof(ExtraLib)}.{nameof(EL)}");
