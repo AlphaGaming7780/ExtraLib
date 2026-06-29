@@ -36,7 +36,7 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 	<!--Link to the forum post where the Mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the Mod-->
-	<ModVersion Value="1.4.8" />
+	<ModVersion Value="1.4.9" />
 	<!--Recommended version of the base game to use the Mod-->
 	<GameVersion Value="1.5.*" />
 	<!--Dependency for the Mod, can be set multiple times-->
@@ -46,12 +46,13 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--<ChangeLog Value="TEST" />-->
 	<ChangeLog>
+### New Features
+- Add EAM (Extra Asset Menu) support for editor asset category override with hierarchical category paths
 ### Improvements
-- Various improvements
-### Translation
-- Update French translation by Morgan · Toverux (toverux)
-- Update German translation by Frank Hartmann (hatina) (Zilbo)
-- Update Portuguese, Brazilian translation by Matheus Bernardes da Rocha Reis (matheusbreis10)
+- Reorganize UI badge components to shared item-grid directory
+- Add new InfoSectionFoldout and ValueToolButton UI components
+### Bug Fixes
+- Fix a potential memory leak.
 	</ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="crowdin" Url="https://crowdin.com/project/extralib" />
