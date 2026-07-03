@@ -16,6 +16,16 @@ namespace ExtraLib.Debugger
             if(debugMod) Unity.Collections.NativeLeakDetection.Mode = Unity.Collections.NativeLeakDetectionMode.EnabledWithStackTrace;
         }
 
+        public void Debug(object LogMessage)
+        {
+            if (debugMod)
+            {
+                MethodBase caller = new StackFrame(1, false).GetMethod();
+                UnityEngine.Debug.Log($"[{caller.DeclaringType} : {caller.Name}] {LogMessage}");
+            }
+            logger.Debug(LogMessage);
+        }
+
         public void Info(object LogMessage)
         {
             if (debugMod)

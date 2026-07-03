@@ -8,11 +8,11 @@ import { CategoryItemSCSS } from "./category-item.module.scss"
 import { TutorialTarget } from "../../tutorials/tutorial-target/tutorial-target"
 import classNames from "classnames";
 import { AssetCategoryTabBarSCSS } from "./asset-category-tab-bar.module.scss"
+import { LockedBadge } from "../badges/locked-badge"
 import { IconButton } from "../../../../common/input/button/icon-button"
+import { UnlockHighlightBadge } from "../badges/unlock-highlight-badge"
 import engine from "cohtml/cohtml"
 import { FOCUS_DISABLED$ } from "../../../../common/focus/focus-key"
-import { LockedBadge } from "../../item-grid/badges/locked-badge"
-import { UnlockHighlightBadge } from "../../item-grid/badges/unlock-highlight-badge"
 
 const path$ = "game-ui/game/components/asset-menu/asset-category-tab-bar/asset-category-tab-bar.tsx"
 

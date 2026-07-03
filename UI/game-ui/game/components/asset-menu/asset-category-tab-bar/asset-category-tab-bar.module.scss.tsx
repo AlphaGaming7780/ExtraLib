@@ -2,12 +2,13 @@ import { getModule } from "cs2/modding"
 
 const path$ = "game-ui/game/components/asset-menu/asset-category-tab-bar/asset-category-tab-bar.module.scss"
 
-export const AssetCategoryTabBarSCSS = {
-	assetCategoryTabBar: getModule(path$, "classes").assetCategoryTabBar,
-	tabIcon: getModule(path$, "classes").tabIcon,
-	locked: getModule(path$, "classes").locked,
-	lock: getModule(path$, "classes").lock,
-	items: getModule(path$, "classes").items,
-	closeButton: getModule(path$, "classes").closeButton,
+export type PropsAssetCategoryTabBarSCSS = {
+    assetCategoryTabBar: string
+    tabIcon: string
+    locked: string
+    lock: string
+    items: string
+    closeButton: string
 }
 
+export const AssetCategoryTabBarSCSS: PropsAssetCategoryTabBarSCSS = getModule(path$, "classes")

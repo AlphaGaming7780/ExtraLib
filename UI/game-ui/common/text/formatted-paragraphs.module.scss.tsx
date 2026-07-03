@@ -2,6 +2,8 @@ import { getModule } from "cs2/modding"
 
 const path$ = "game-ui/common/text/formatted-paragraphs.module.scss"
 
-export const FormattedParagraphsSCSS = {
-	paragraphs: getModule(path$, "classes").paragraphs,
+export type PropsFormattedParagraphsSCSS = {
+    paragraphs: string
 }
+
+export const FormattedParagraphsSCSS: PropsFormattedParagraphsSCSS = getModule(path$, "classes")
