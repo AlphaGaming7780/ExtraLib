@@ -19,7 +19,7 @@ namespace ExtraLib.Systems.UI.ExtraPanels
 
         private bool m_Visible = false;
 
-        protected bool m_Dirty;
+        protected bool m_Dirty = false;
 
         public float2 PanelLocation { get; private set; }
         public float2 PanelSize { get; private set; }
@@ -31,7 +31,7 @@ namespace ExtraLib.Systems.UI.ExtraPanels
         protected override void OnCreate()
         {
             base.OnCreate();
-            PanelLocation = new float2(0.01f, 0.07f);
+            //PanelLocation = new float2(0.01f, 0.07f); // Do not work anymore, we use PX and not % for the panel location, so we need to set it to 0,0 for now.
             m_ExtraPanelsUISystem = World.GetOrCreateSystemManaged<ExtraPanelsUISystem>();
         }
 
@@ -132,6 +132,5 @@ namespace ExtraLib.Systems.UI.ExtraPanels
         {
             PanelSize = panelSize;
         }
-
     }
 }

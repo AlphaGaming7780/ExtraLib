@@ -4,11 +4,6 @@
     cursor:grab;
 }
 
-.collapsed {
-    border-bottom-left-radius: var(--panelRadius);
-    border-bottom-right-radius: var(--panelRadius);
-}
-
 .animatedIcon {
     transition: transform 0.3s ease;
 }

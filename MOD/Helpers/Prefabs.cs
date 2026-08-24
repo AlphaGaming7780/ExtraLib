@@ -262,8 +262,9 @@ namespace ExtraLib.Helpers
         /// <param name="getIcons">the function called that return the icon path.</param>
         /// <param name="toolBarGroup">The Tool bar group, can be : `Services Toolbar Group`, `Zones Toolbar Group` and `Tools Toolbar Group` or your custom tool bar group.</param>
         /// <param name="offset">The position of the menu in is group.</param>
-        public static UIAssetMenuPrefab GetOrCreateNewUIAssetMenuPrefab(string menuName, Func<PrefabBase, string> getIcons, string toolBarGroup = "Services Toolbar Group", int offset = 999)
+        public static UIAssetMenuPrefab GetOrCreateNewUIAssetMenuPrefab(string menuName, Func<PrefabBase, string> getIcons = null, string toolBarGroup = "Services Toolbar Group", int offset = 999)
         {
+            getIcons ??= Icons.GetIcon;
 
             if (EL.m_PrefabSystem.TryGetPrefab(new PrefabID(nameof(UIAssetMenuPrefab), menuName), out var p1) && p1 is UIAssetMenuPrefab menuPrefab)
             {
@@ -288,6 +289,11 @@ namespace ExtraLib.Helpers
             EL.m_PrefabSystem.AddPrefab(menuPrefab);
 
             return menuPrefab;
+        }
+
+        public static UIAssetMenuPrefab GetOrCreateEAM()
+        {
+            return GetOrCreateNewUIAssetMenuPrefab(CatTabName, Icons.GetIcon);
         }
     }
 }

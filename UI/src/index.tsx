@@ -3,7 +3,8 @@ import { extraPanelsComponentsExtended, HelloWorldComponent } from "mods/hello-w
 //import { ExtraDetailingDetails, ExtraAssetsMenu } from "../REMOVED/ExtraAssetsMenu";
 import { AssetMultiCategory } from "./mods/AssetMultiCategory";
 import { ExtraPanelButtonsUniversalMod, ExtraPanelsButton } from "./mods/ExtraPanels/ExtraPanelsButton/ExtraPanelsButton";
-import { extraPanelsComponents, ExtraPanelsRoot } from "mods/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot"
+import { ExtraPanelsRoot } from "mods/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot"
+import { extraPanelsComponents, extraPanelsFooterComponents } from "mods/ExtraPanels/ExtraPanelEntryPoint"
 import { ExtraPanelsButtonEditor } from "./mods/ExtraPanels/ExtraPanelsButton/ExtraPanelsButtonEditor";
 
 const register: ModRegistrar = (moduleRegistry) => {
@@ -24,9 +25,16 @@ const register: ModRegistrar = (moduleRegistry) => {
         if (existing?.extraPanelsComponents) {
             Object.assign(extraPanelsComponents, existing.extraPanelsComponents);
         }
+        if (existing?.extraPanelsFooterComponents) {
+            Object.assign(extraPanelsFooterComponents, existing.extraPanelsFooterComponents);
+        }
         moduleRegistry.override("ExtraLib/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot", "extraPanelsComponents", extraPanelsComponents);
+        moduleRegistry.override("ExtraLib/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot", "extraPanelsFooterComponents", extraPanelsFooterComponents);
     } else {
-        moduleRegistry.add("ExtraLib/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot", { "extraPanelsComponents": extraPanelsComponents })
+        moduleRegistry.add("ExtraLib/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot", {
+            "extraPanelsComponents": extraPanelsComponents,
+            "extraPanelsFooterComponents": extraPanelsFooterComponents,
+        })
     }
 
     moduleRegistry.extend("ExtraLib/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot", "extraPanelsComponents", extraPanelsComponentsExtended)

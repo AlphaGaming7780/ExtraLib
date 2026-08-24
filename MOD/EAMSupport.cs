@@ -47,7 +47,11 @@ namespace ExtraLib
                     if (!s.StartsWith("EAM"))
                         continue;
 
-                    string[] cats = s.Split('/', '\\');
+                    // Allow an optional trailing slash right before the priority separator,
+                    // e.g. "EAM/Surfaces/Ground/:2558" is treated the same as "EAM/Surfaces/Ground:2558".
+                    string normalized = s.Replace("/:", ":").Replace("\\:", ":");
+
+                    string[] cats = normalized.Split('/', '\\');
                     if (cats.Length < 3)
                         continue;
 
@@ -81,13 +85,17 @@ namespace ExtraLib
                     }
 
                     prefabUI.m_Group?.RemoveElement(entity);
-                    prefabUI.m_Group = PrefabsHelper.GetOrCreateUIAssetChildCategoryPrefab(
+                    UIGroupPrefab uIGroupe = PrefabsHelper.GetOrCreateUIAssetChildCategoryPrefab(
                         assetCat,
                         $"{catName} {assetCat.name}"
                     );
-                    prefabUI.m_Group.AddElement(entity);
-
-                    EL.m_EntityManager.AddOrSetComponentData(entity, prefabUI.ToComponentData());
+                    uIGroupe.AddElement(entity);
+                    EL.m_EntityManager.AddOrSetComponentData(entity, new UIObjectData
+                    {
+                        m_Group = EL.m_PrefabSystem.GetEntity(uIGroupe),
+                        m_Priority = priorityValue
+                    }
+                    );
 
                     break;
                 }

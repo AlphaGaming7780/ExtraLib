@@ -21,6 +21,12 @@
 
 }
 
+.headerFullScreen
+{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
 .borderBottom {
     border-bottom-left-radius: var(--panelRadius);
     border-bottom-right-radius: var(--panelRadius);
