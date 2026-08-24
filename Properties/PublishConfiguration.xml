@@ -36,7 +36,7 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 	<!--Link to the forum post where the Mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the Mod-->
-	<ModVersion Value="1.4.10" />
+	<ModVersion Value="1.4.11" />
 	<!--Recommended version of the base game to use the Mod-->
 	<GameVersion Value="1.6.*" />
 	<!--Dependency for the Mod, can be set multiple times-->
@@ -46,11 +46,6 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--<ChangeLog Value="TEST" />-->
 	<ChangeLog>
-### Fixes
-- EAM doesn't edit the prefab anymore.
-### Improvements
-- Improved EAM category path handling.
-- Various optimizations and fixes.
 ### Translation
 - Chinese Traditional now at 100%, thanks to graimeck.
 	</ChangeLog>
