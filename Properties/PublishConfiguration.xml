@@ -16,7 +16,7 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 ⚠️ This mod uses crowdin so there may be inconsistencies with translations due to translations from different translators ⚠️
 - ✔️French 100% : aricoseco, Morgan · Toverux (toverux), Edou24
 - ✔️Chinese Simplified 100% : RilkeXS(无手文) (RilkeXS), 一叶杳舟 (Yao_Zhou)
-- ⚠️Chinese Traditional 97% : CBEdwin, allegretic, Hans Law (ZENITHALIZE)
+- ✔️Chinese Traditional 100% : CBEdwin, allegretic, Hans Law (ZENITHALIZE), graimeck
 - ✔️German 100% : Konsi, Jannik Bartmann (raptor09), KaeseKuchen (KaeseMitKuchen), FearMyFeedEU, Fuchs23, Frank Hartmann (hatina) (Zilbo)
 - ⚠️Italian 86% : Stefano (Furios)
 - ✔️Japanese 100% : karigane
@@ -36,7 +36,7 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 	<!--Link to the forum post where the Mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the Mod-->
-	<ModVersion Value="1.4.9" />
+	<ModVersion Value="1.4.10" />
 	<!--Recommended version of the base game to use the Mod-->
 	<GameVersion Value="1.6.*" />
 	<!--Dependency for the Mod, can be set multiple times-->
@@ -46,13 +46,13 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<!--<ChangeLog Value="TEST" />-->
 	<ChangeLog>
-### New Features
-- Add EAM (Extra Asset Menu) support for editor asset category override with hierarchical category paths
+### Fixes
+- EAM doesn't edit the prefab anymore.
 ### Improvements
-- Reorganize UI badge components to shared item-grid directory
-- Add new InfoSectionFoldout and ValueToolButton UI components
-### Bug Fixes
-- Fix a potential memory leak.
+- Improved EAM category path handling.
+- Various optimizations and fixes.
+### Translation
+- Chinese Traditional now at 100%, thanks to graimeck.
 	</ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="crowdin" Url="https://crowdin.com/project/extralib" />
