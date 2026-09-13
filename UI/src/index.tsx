@@ -15,9 +15,11 @@ const register: ModRegistrar = (moduleRegistry) => {
     moduleRegistry.append('UniversalModMenu', ExtraPanelButtonsUniversalMod);
     // moduleRegistry.append('GameTopLeft', ExtraPanelsButton);
     moduleRegistry.extend('game-ui/editor/components/toolbar/toolbar.tsx', 'Toolbar', ExtraPanelsButtonEditor);
-    moduleRegistry.append('Editor', ExtraPanelsRoot);
     
+    moduleRegistry.append('Editor', ExtraPanelsRoot);
     moduleRegistry.append('Game', ExtraPanelsRoot)
+    moduleRegistry.append('Menu', ExtraPanelsRoot)
+
     moduleRegistry.append('Menu', HelloWorldComponent);
 
     if (moduleRegistry.registry.has("ExtraLib/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot")) {
