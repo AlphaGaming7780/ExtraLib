@@ -2,13 +2,14 @@ import { Panel, ResizeResult } from "./Panel"
 import { ExtraPanelType, SetExpandedExtraPanel, SetFullScreenExtraPanel, SetPanelPosition, SetPanelSize } from "../ExtraPanelType"
 import { ExtraPanelHeader } from "./Header/ExtraPanelHeader"
 import { ExtraFooterRenderer } from "./Footer/ExtraFooterRenderer"
-import { useMemo, useState } from "react"
+import { memo, useMemo, useState } from "react"
 import classNames from "classnames"
 import ExtraPanelSCSS from "./ExtraPanel.module.scss"
 import { BetterDragEventData, BetterDragHandle } from "../../Utilities/BetterDragHandle"
 import { Number2 } from "cs2/bindings"
 import { TypedRenderer } from "../../../../game-ui/common/typed-renderer/typed-renderer"
 import { extraPanelsComponents, extraPanelsFooterComponents } from "../ExtraPanelEntryPoint"
+import { pxToRem, remToPx } from "../../Utilities/RemHelper"
 
 export interface propsExtraPanel {
     extraPanel: ExtraPanelType,
@@ -16,25 +17,26 @@ export interface propsExtraPanel {
     onBringToFront?: () => void,
 }
 
-const getRemInPx = (): number => {
-    const raw = getComputedStyle(document.documentElement).fontSize;
-    const value = parseFloat(raw);
-    if (raw.endsWith('vw')) return (value / 100) * window.innerWidth;
-    if (raw.endsWith('vh')) return (value / 100) * window.innerHeight;
-    return value;
-};
-const pxToRem = (px: number) => px / getRemInPx();
-const remToPx = (rem: number) => rem * getRemInPx();
+
+const MemoizedPanelContent = memo(
+    ({ components, data, props }: { components: any; data: ExtraPanelType; props: ExtraPanelType }) =>
+        <TypedRenderer components={components} data={data} props={props} />,
+    (prev, next) =>
+        prev.data.__Type === next.data.__Type &&
+        prev.data.visible === next.data.visible &&
+        prev.data.isExpanded === next.data.isExpanded &&
+        prev.data.canFullScreen === next.data.canFullScreen &&
+        prev.data.isFullScreen === next.data.isFullScreen &&
+        prev.data.showInSelector === next.data.showInSelector &&
+        prev.data.panelMinSize.x === next.data.panelMinSize.x &&
+        prev.data.panelMinSize.y === next.data.panelMinSize.y &&
+        prev.data.icon === next.data.icon
+);
 
 export const ExtraPanel = ({ extraPanel, zIndex, onBringToFront }: propsExtraPanel) => {
 
     const [translate, setTranslate] = useState({ x: 0, y: 0 });
-    // In-progress resize preview (rem, panel-space) - see onResizing/onResizeEnd and
-    // effectiveExtraPanel below. `extraPanel` itself only ever reflects the server-confirmed size
-    // (SetPanelSize's own round-trip), so without this, panel content rendered from `extraPanel`
-    // would see a stale (pre-resize) panelSize for however long that round-trip takes, mirroring
-    // the same class of "child reads a value from before the round-trip landed" issue this
-    // project has already hit with other locally-previewed, server-confirmed state.
+
     const [sizePreview, setSizePreview] = useState<Number2 | null>(null);
 
     const getTranslate = (
@@ -117,13 +119,6 @@ export const ExtraPanel = ({ extraPanel, zIndex, onBringToFront }: propsExtraPan
         setTranslate({ x: 0.0, y: 0.0 });
     }
 
-    // The exact `extraPanel` object handed to this panel's own content (below, via TypedRenderer)
-    // - live-merged with whatever's currently being dragged/resized, not just the last
-    // server-confirmed value. Rendering content from the raw `extraPanel` prop directly (the
-    // previous approach, in ExtraPanelsRoot.tsx) meant any content reading e.g. panelSize/
-    // panelLocation always saw the value from *before* the in-progress gesture, for however long
-    // SetPanelSize/SetPanelPosition's own round-trip takes to land - the same class of staleness
-    // this project has already hit (and fixed) for its own node-drag preview.
     const effectiveExtraPanel: ExtraPanelType = useMemo(() => ({
         ...extraPanel,
         panelSize: sizePreview ?? extraPanel.panelSize,
@@ -132,10 +127,6 @@ export const ExtraPanel = ({ extraPanel, zIndex, onBringToFront }: propsExtraPan
             : extraPanel.panelLocation,
     }), [extraPanel, sizePreview, translate]);
 
-    // Only passed to <Panel> when this panel type actually registered a footer - Panel's own
-    // hasFooter check (Panel.tsx) is just "was a footer prop passed at all", so passing an always-
-    // present-but-empty-rendering element here would still draw the footer row/border for every
-    // panel that never opted in. See ExtraPanelEntryPoint.tsx.
     const hasFooterComponent = extraPanel.__Type in extraPanelsFooterComponents;
 
     return <Panel
@@ -166,7 +157,7 @@ export const ExtraPanel = ({ extraPanel, zIndex, onBringToFront }: propsExtraPan
         }}
     >
         {extraPanel.isExpanded && (
-            <TypedRenderer components={extraPanelsComponents} data={effectiveExtraPanel} props={effectiveExtraPanel} />
+            <MemoizedPanelContent components={extraPanelsComponents} data={effectiveExtraPanel} props={effectiveExtraPanel} />
         )}
     </Panel>
 }

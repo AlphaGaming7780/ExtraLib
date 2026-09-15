@@ -195,17 +195,28 @@ function useResize(
                 return { width: clampedW, height: clampedH, deltaX, deltaY };
             };
 
+            let latestDelta = { dx: 0, dy: 0 };
+            let rafId: number | null = null;
+
             const onMouseMove = (ev: MouseEvent) => {
-                const dx = ev.clientX - startX;
-                const dy = ev.clientY - startY;
-                const result = computeResize(dx, dy);
-                setSizeOverride({ width: result.width, height: result.height });
-                opts.onResizing?.(result);
+                latestDelta = { dx: ev.clientX - startX, dy: ev.clientY - startY };
+                if (rafId !== null) return;
+                rafId = requestAnimationFrame(() => {
+                    rafId = null;
+                    const result = computeResize(latestDelta.dx, latestDelta.dy);
+                    setSizeOverride({ width: result.width, height: result.height });
+                    opts.onResizing?.(result);
+                });
             };
 
             const onMouseUp = (ev: MouseEvent) => {
                 document.removeEventListener("mousemove", onMouseMove);
                 document.removeEventListener("mouseup", onMouseUp);
+
+                if (rafId !== null) {
+                    cancelAnimationFrame(rafId);
+                    rafId = null;
+                }
 
                 const dx = ev.clientX - startX;
                 const dy = ev.clientY - startY;
