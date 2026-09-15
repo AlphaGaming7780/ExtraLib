@@ -26,6 +26,7 @@ import { usePanelTheme } from "../../../../game-ui/common/panel/panel-theme";
 import { PanelContext } from "../../../../game-ui/common/panel/panel-context";
 import { DefaultPanelSCSS } from "../../../../game-ui/common/panel/themes/default.module.scss";
 import { PanelTransitionSCSS } from "../../../../game-ui/common/panel/themes/panel-transition.module.scss";
+import { CursorSCSS } from "../../../../game-ui/editor/widgets/fields/animation-curve-field/cursor.module.scss";
 import styles from "./ExtraPanel.module.scss";
 
 /* =========================================================
@@ -106,6 +107,17 @@ const RESIZE_CLASSES: Record<ResizeDirection, string> = {
     sw: styles.ResizeSW,
 };
 
+const RESIZE_CURSOR_CLASSES: Record<ResizeDirection, string> = {
+    n: CursorSCSS.y,
+    s: CursorSCSS.y,
+    e: CursorSCSS.x,
+    w: CursorSCSS.x,
+    ne: CursorSCSS.xy,
+    nw: CursorSCSS.xy,
+    se: CursorSCSS.xy,
+    sw: CursorSCSS.xy,
+};
+
 interface ResizeHandleProps {
     direction: ResizeDirection;
     onResizeStart: (direction: ResizeDirection, e: React.MouseEvent) => void;
@@ -113,7 +125,7 @@ interface ResizeHandleProps {
 
 const ResizeHandle = ({ direction, onResizeStart }: ResizeHandleProps) => (
     <div
-        className={RESIZE_CLASSES[direction]}
+        className={classNames(RESIZE_CLASSES[direction], RESIZE_CURSOR_CLASSES[direction])}
         onMouseDown={(e) => {
             e.preventDefault();
             e.stopPropagation();
