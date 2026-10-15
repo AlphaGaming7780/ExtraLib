@@ -3,66 +3,121 @@
    UNITY SAFE
    =============================== */
 
+$menu-gap: 8rem;
+
 .root {
     position: relative;
     pointer-events: auto;
+}
+
+/* Main menu (title screen) : top-left corner */
+.mainMenuPosition {
+    position: absolute;
+    top: 10rem;
+    left: 10rem;
+    z-index: 5;
+}
+
+/* Editor toolbar : the wrapper takes the toolbar's own layout class, and the button
+ * hangs off a zero-width anchor so the vanilla toolbar stays exactly centered. */
+.editorToolbarWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.editorButtonAnchor {
+    position: relative;
+    width: 0;
+}
+
+.editorButton {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
 }
 
 /* Bouton principal */
 .mainButton {
     width: 40rem;
     height: 40rem;
-    position: relative;
-    z-index: 0;
     transition: transform 0.2s ease;
 }
 
     .mainButton.opened {
-        transform: scale(1.15);
+        transform: scale(1.1);
     }
+
+/* ===== MENU ANCHOR =====
+ * Covers one side of the button; the menu is aligned inside it with flex,
+ * so its position follows its content size without any JS measuring. */
+
+.menuAnchor {
+    position: absolute;
+    display: flex;
+    z-index: 2;
+    pointer-events: none;
+
+    &.top, &.bottom {
+        left: 0;
+        right: 0;
+        flex-direction: row;
+    }
+
+    &.left, &.right {
+        top: 0;
+        bottom: 0;
+        flex-direction: column;
+    }
+
+    &.top { bottom: 100%; padding-bottom: $menu-gap; align-items: flex-end; }
+    &.bottom { top: 100%; padding-top: $menu-gap; align-items: flex-start; }
+    &.left { right: 100%; padding-right: $menu-gap; align-items: flex-end; }
+    &.right { left: 100%; padding-left: $menu-gap; align-items: flex-start; }
+
+    &.start { justify-content: flex-start; }
+    &.center { justify-content: center; }
+    &.end { justify-content: flex-end; }
+
+    /* Scale from the point touching the button */
+    &.top.start > .menu { transform-origin: left bottom; }
+    &.top.center > .menu { transform-origin: center bottom; }
+    &.top.end > .menu { transform-origin: right bottom; }
+    &.bottom.start > .menu { transform-origin: left top; }
+    &.bottom.center > .menu { transform-origin: center top; }
+    &.bottom.end > .menu { transform-origin: right top; }
+    &.left.start > .menu { transform-origin: right top; }
+    &.left.center > .menu { transform-origin: right center; }
+    &.left.end > .menu { transform-origin: right bottom; }
+    &.right.start > .menu { transform-origin: left top; }
+    &.right.center > .menu { transform-origin: left center; }
+    &.right.end > .menu { transform-origin: left bottom; }
+}
 
 /* ===== MENU ===== */
 
-
 .menu {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    background-color: var(--panelColorNormal);
-    backdrop-filter: var(--panelBlur);
-    padding: 4rem;
-    border-radius: 12rem;
+    flex-shrink: 0;
     display: flex;
     flex-wrap: wrap;
-    min-width: 50rem;
-    max-width: 140rem;
+    padding: 4rem;
+    border-radius: 12rem;
+    background-color: var(--panelColorNormal);
+    backdrop-filter: var(--panelBlur);
     pointer-events: none;
     opacity: 0;
-    transform-origin: center top; // ⚡ important pour animation
+    transform: scale(0.8);
+    transition: transform 0.2s ease, opacity 0.15s ease;
 }
 
     .menu.visible {
         pointer-events: auto;
         opacity: 1;
-    }
-
-    /* ===== PLACEMENTS ===== */
-
-    .menu.top {
-        transform-origin: center bottom;
-    }
-
-    .menu.bottom {
-        transform-origin: center top;
-    }
-
-    .menu.left {
-        transform-origin: right center;
-    }
-
-    .menu.right {
-        transform-origin: left center;
+        transform: scale(1);
     }
 
 /* ===== BOUTONS INTERNES ===== */
@@ -71,7 +126,6 @@
     height: 40rem;
     flex: 0 0 40rem;
     margin: 2rem;
-    z-index: 1;
     transition: transform 0.15s ease;
 }
 
@@ -88,9 +142,9 @@
 }
 
     .panelButtonUM:hover {
-        transform: scale(1.08) !important; 
+        transform: scale(1.08) !important;
     }
 
     .panelButtonUM.active {
         transform: scale(1.12) !important;
-    }    
+    }

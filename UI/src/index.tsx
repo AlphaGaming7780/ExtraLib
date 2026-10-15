@@ -2,9 +2,10 @@ import { ModRegistrar } from "cs2/modding";
 import { extraPanelsComponentsExtended, HelloWorldComponent } from "mods/hello-world";
 //import { ExtraDetailingDetails, ExtraAssetsMenu } from "../REMOVED/ExtraAssetsMenu";
 import { AssetMultiCategory } from "./mods/AssetMultiCategory";
-import { ExtraPanelButtonsUniversalMod, ExtraPanelsButton } from "./mods/ExtraPanels/ExtraPanelsButton/ExtraPanelsButton";
+import { ExtraPanelButtonsUniversalMod, ExtraPanelsButtonMenu } from "./mods/ExtraPanels/ExtraPanelsButton/ExtraPanelsButton";
 import { ExtraPanelsRoot } from "mods/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot"
 import { extraPanelsComponents, extraPanelsFooterComponents } from "mods/ExtraPanels/ExtraPanelEntryPoint"
+import { ScreenOrigin } from "./mods/Utilities/ScreenOrigin";
 import { ExtraPanelsButtonEditor } from "./mods/ExtraPanels/ExtraPanelsButton/ExtraPanelsButtonEditor";
 
 const register: ModRegistrar = (moduleRegistry) => {
@@ -18,9 +19,11 @@ const register: ModRegistrar = (moduleRegistry) => {
     
     moduleRegistry.append('Editor', ExtraPanelsRoot);
     moduleRegistry.append('Game', ExtraPanelsRoot)
-    moduleRegistry.append('Menu', ExtraPanelsRoot)
+    // The "Menu" slot isn't full screen, ScreenOrigin puts panels back in screen coordinates.
+    moduleRegistry.append('Menu', () => <ScreenOrigin><ExtraPanelsRoot /></ScreenOrigin>)
+    moduleRegistry.append('Menu', ExtraPanelsButtonMenu)
 
-    moduleRegistry.append('Menu', HelloWorldComponent);
+    // moduleRegistry.append('Menu', HelloWorldComponent)
 
     if (moduleRegistry.registry.has("ExtraLib/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot")) {
         const existing = moduleRegistry.registry.get("ExtraLib/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot");

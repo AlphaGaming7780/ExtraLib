@@ -1,4 +1,4 @@
-﻿/* ===============================
+/* ===============================
    ExtraPanelsButton.tsx
    =============================== */
 
@@ -7,170 +7,101 @@ import styles from "./ExtraPanelsButton.module.scss";
 import classNames from "classnames";
 import { bindValue, trigger, useValue } from "cs2/api";
 import { CloseExtraPanel, ExtraPanelType, OpenExtraPanel } from "../ExtraPanelType";
-import { useEffect, useRef } from "react";
+import { ScreenOrigin } from "../../Utilities/ScreenOrigin";
+
+// Must match .panelButton size + margins and .menu padding in the scss.
+const MENU_BUTTON_REM = 44;
+const MENU_PADDING_REM = 4;
+const MENU_MAX_COLUMNS = 3;
 
 const ShowExtraPanelsButton$ = bindValue<boolean>("el", "ShowExtraPanelsButton");
 const ExtraPanelsMenuOpened$ = bindValue<boolean>("el", "ExtraPanelsMenuOpened");
 const ExtraPanelsList$ = bindValue<ExtraPanelType[]>("el", "ExtraPanels");
 
 export type ExtraPanelsPlacement = "bottom" | "top" | "left" | "right";
+export type ExtraPanelsAlign = "start" | "center" | "end";
 
 export type ExtraPanelsButtonProps = {
     placement?: ExtraPanelsPlacement;
+    // Alignment of the menu along the button's side (start = left/top edge of the button).
+    align?: ExtraPanelsAlign;
+    className?: string;
     buttonClassName?: string;
     menuClassName?: string;
 }
 
-export const ExtraPanelsButton = ({ placement = "bottom", buttonClassName, menuClassName } : ExtraPanelsButtonProps): JSX.Element | null => {
+const togglePanel = (panel: ExtraPanelType) =>
+    panel.visible ? CloseExtraPanel(panel) : OpenExtraPanel(panel);
+
+export const ExtraPanelsButton = ({ placement = "bottom", align = "center", className, buttonClassName, menuClassName }: ExtraPanelsButtonProps): JSX.Element | null => {
     const showButton = useValue(ShowExtraPanelsButton$);
     const opened = useValue(ExtraPanelsMenuOpened$);
     const panels = useValue(ExtraPanelsList$);
 
-    const buttonRef = useRef<HTMLDivElement>(null);
-    const menuRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (!menuRef.current || !buttonRef.current) return;
-
-        const menu = menuRef.current;
-        const button = buttonRef.current;
-
-        const menuStyle = getComputedStyle(menu);
-        const paddingTop = parseFloat(menuStyle.paddingTop) || 0;
-        const paddingBottom = parseFloat(menuStyle.paddingBottom) || 0;
-        const paddingLeft = parseFloat(menuStyle.paddingLeft) || 0;
-        const paddingRight = parseFloat(menuStyle.paddingRight) || 0;
-
-        const totalHeight = menu.offsetHeight + paddingTop + paddingBottom;
-        const totalWidth = menu.offsetWidth; // + paddingLeft + paddingRight; // this work better for centering
-
-        const btnRect = button.getBoundingClientRect();
-
-        let translateX = 0;
-        let translateY = 0;
-
-        switch (placement) {
-            case "top":
-                translateY = -totalHeight;
-                translateX = (btnRect.width / 2) - (totalWidth / 2);
-                break;
-            case "bottom":
-                translateY = btnRect.height + paddingTop + paddingBottom;
-                translateX = (btnRect.width / 2) - (totalWidth / 2);
-                break;
-            case "left":
-                translateX = -totalWidth;
-                translateY = (btnRect.height / 2) - (totalHeight / 2);
-                break;
-            case "right":
-                translateX = btnRect.width;
-                translateY = (btnRect.height / 2) - (totalHeight / 2);
-                break;
-        }
-
-        menu.style.transform = `translate(${translateX}px, ${translateY}px) scale(${opened ? 1 : 0.6})`;
-        menu.style.transition = "transform 0.25s ease, opacity 0.2s ease";
-    }, [opened, placement]);
-
-
-    //var pan2 = [...panels];
-    //pan2.push(...panels);
-    //pan2.push(...panels);
-    //pan2.push(...panels);
-    //pan2.push(...panels);
-    //pan2.push(...panels);
-    //pan2.push(...panels);
-    //pan2.push(...panels);
-    //pan2.push(...panels);
-    //pan2.push(...panels);
-    //pan2.push(...panels);
-    //pan2.push(...panels);
-    //pan2.push(...panels);
-    //pan2.push(...panels);
-    //pan2.push(...panels);
-    //pan2.push(...panels);
-    //pan2.push(...panels);
-    //panels = pan2;
-    function toggleMenu() {
-        trigger("el", "ExtraPanelsMenuOpened", !opened);
-    }
-
-    const selectorPanels = panels.filter(p => p.showInSelector);
-
     if (!showButton) return null;
 
+    // DEBUG: duplicate the list to test the menu with many panels. Set back to 1 when done.
+    const DEBUG_DUPLICATE = 1;
+    const selectorPanels = Array.from({ length: DEBUG_DUPLICATE }, () => panels.filter(p => p.showInSelector)).flat();
+
     return (
-        <div className={styles.root}>
-            <div
-                ref={buttonRef}
-            >
-                <FloatingButton
-                    className={buttonClassName ? buttonClassName : classNames(styles.mainButton, opened && styles.opened)}
-                    selected={opened}
-                    src="coui://extralib/Icons/ExtraTools/ButtonIcon.svg"
-                    onClick={toggleMenu}
-                />
-            </div>
+        <div className={classNames(styles.root, className)}>
+            <FloatingButton
+                className={buttonClassName ?? classNames(styles.mainButton, opened && styles.opened)}
+                selected={opened}
+                src="coui://extralib/Icons/ExtraTools/ButtonIcon.svg"
+                onClick={() => trigger("el", "ExtraPanelsMenuOpened", !opened)}
+            />
 
-
-            <div
-                ref={menuRef}
-                className={classNames(
-                    styles.menu,
-                    styles[placement],
-                    opened && styles.visible
-                )}
-            >
-                {selectorPanels.map(panel => (
-                    <Tooltip key={panel.__Type} tooltip={panel.__Type}>
-                        <FloatingButton
-                            className={classNames(
-                                menuClassName,
-                                styles.panelButton,
-                                panel.visible && styles.active
-                            )}
-                            selected={panel.visible}
-                            src={panel.icon}
-                            onClick={() =>
-                                panel.visible
-                                    ? CloseExtraPanel(panel)
-                                    : OpenExtraPanel(panel)
-                            }
-                        />
-                    </Tooltip>
-                ))}
+            {/* The anchor matches the button's side, so the menu is placed with flex alignment only (no JS measuring). */}
+            <div className={classNames(styles.menuAnchor, styles[placement], styles[align])}>
+                {/* Gameface doesn't size a wrapping flex box to its content, so the width is set from the column count. */}
+                <div
+                    className={classNames(styles.menu, opened && styles.visible)}
+                    style={{ width: `${Math.max(1, Math.min(selectorPanels.length, MENU_MAX_COLUMNS)) * MENU_BUTTON_REM + MENU_PADDING_REM * 2}rem` }}
+                >
+                    {selectorPanels.map((panel, i) => (
+                        <Tooltip key={`${panel.__Type}-${i}`} tooltip={panel.__Type}>
+                            <FloatingButton
+                                className={classNames(menuClassName, styles.panelButton, panel.visible && styles.active)}
+                                selected={panel.visible}
+                                src={panel.icon}
+                                onClick={() => togglePanel(panel)}
+                            />
+                        </Tooltip>
+                    ))}
+                </div>
             </div>
         </div>
     );
 };
+
+// The "Menu" slot isn't full screen: ScreenOrigin brings it back to the real top-left corner.
+export const ExtraPanelsButtonMenu = () =>
+    <ScreenOrigin>
+        <ExtraPanelsButton className={styles.mainMenuPosition} placement="bottom" align="start" />
+    </ScreenOrigin>;
 
 export const ExtraPanelButtonsUniversalMod = () => {
 
     const showButton = useValue(ShowExtraPanelsButton$);
     const panels = useValue(ExtraPanelsList$);
 
-    const selectorPanels = panels.filter(p => p.showInSelector);
+    if (!showButton) return <></>;
 
-    if(!showButton) return <></>;
+    const selectorPanels = panels.filter(p => p.showInSelector);
 
     return <>
         {selectorPanels.map(panel => (
-        <Tooltip key={panel.__Type} tooltip={panel.__Type}>
-            <Button
-                variant="floating"
-                className={classNames(
-                    styles.panelButtonUM,
-                    panel.visible && styles.active
-                )}
-                selected={panel.visible}
-                src={panel.icon}
-                onClick={() =>
-                    panel.visible
-                        ? CloseExtraPanel(panel)
-                        : OpenExtraPanel(panel)
-                }
-            />
-        </Tooltip>
-    ))}
+            <Tooltip key={panel.__Type} tooltip={panel.__Type}>
+                <Button
+                    variant="floating"
+                    className={classNames(styles.panelButtonUM, panel.visible && styles.active)}
+                    selected={panel.visible}
+                    src={panel.icon}
+                    onClick={() => togglePanel(panel)}
+                />
+            </Tooltip>
+        ))}
     </>
 }
