@@ -172,8 +172,7 @@ namespace ExtraLib.Systems.UI.ExtraPanels
                 return;
             }
 
-            extraPanelBase.SetVisible(true);
-            
+            extraPanelBase.OnOpen();
         }
 
         private void CloseExtraPanel(string id)
@@ -185,7 +184,7 @@ namespace ExtraLib.Systems.UI.ExtraPanels
                 return;
             }
 
-            extraPanelBase.SetVisible(false);
+            extraPanelBase.OnClose();
         }
 
         private void ExpandExtraPanel(string id)

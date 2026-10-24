@@ -81,6 +81,16 @@ namespace ExtraLib.Systems.UI.ExtraPanels
             return;
         }
 
+        public virtual void OnOpen()
+        {
+            SetVisible(true);
+        }
+
+        public virtual void OnClose() 
+        {
+            SetVisible(false);
+        }
+
         public void RequestUpdate()
         {
             m_Dirty = true;
