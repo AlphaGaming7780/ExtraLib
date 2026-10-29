@@ -7,6 +7,7 @@ import { ExtraPanelsRoot } from "mods/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoo
 import { extraPanelsComponents, extraPanelsFooterComponents } from "mods/ExtraPanels/ExtraPanelEntryPoint"
 import { ScreenOrigin } from "./mods/Utilities/ScreenOrigin";
 import { ExtraPanelsButtonEditor } from "./mods/ExtraPanels/ExtraPanelsButton/ExtraPanelsButtonEditor";
+import { FileBrowserPanel, FileBrowserPanelType } from "./mods/ExtraPanels/FileBrowser/FileBrowserPanel";
 
 const register: ModRegistrar = (moduleRegistry) => {
 
@@ -24,6 +25,8 @@ const register: ModRegistrar = (moduleRegistry) => {
     moduleRegistry.append('Menu', ExtraPanelsButtonMenu)
 
     // moduleRegistry.append('Menu', HelloWorldComponent)
+
+    extraPanelsComponents[FileBrowserPanelType] = FileBrowserPanel;
 
     if (moduleRegistry.registry.has("ExtraLib/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot")) {
         const existing = moduleRegistry.registry.get("ExtraLib/ExtraPanels/ExtraPanelsRoot/ExtraPanelsRoot");

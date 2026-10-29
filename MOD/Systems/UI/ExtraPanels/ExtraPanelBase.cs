@@ -11,6 +11,8 @@ namespace ExtraLib.Systems.UI.ExtraPanels
         public override GameMode gameMode => GameMode.Game;
         public virtual string Icon => "Media/Placeholder.svg";
 
+        public virtual string Title => $"ExtraPanelHeaderName[{ID}]";
+
 
         protected ExtraPanelsUISystem m_ExtraPanelsUISystem;
 
@@ -61,6 +63,8 @@ namespace ExtraLib.Systems.UI.ExtraPanels
             writer.TypeBegin(ID);
             writer.PropertyName("icon");
             writer.Write( Icon );
+            writer.PropertyName("title");
+            writer.Write(Title);
             writer.PropertyName("visible");
             writer.Write(m_Visible);
             writer.PropertyName("isExpanded");
@@ -77,9 +81,13 @@ namespace ExtraLib.Systems.UI.ExtraPanels
             writer.Write(PanelSize);
             writer.PropertyName("panelMinSize");
             writer.Write(PanelMinSize);
+            OnWrite(writer);
             writer.TypeEnd();
             return;
         }
+
+        // Write extra properties for the panel UI. Only PropertyName/value pairs, no TypeBegin/TypeEnd.
+        protected virtual void OnWrite(IJsonWriter writer) { }
 
         public virtual void OnOpen()
         {

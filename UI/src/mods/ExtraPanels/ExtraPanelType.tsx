@@ -4,6 +4,7 @@ import { Number2 } from "cs2/ui";
 
 export interface ExtraPanelType extends Typed < "" > {
     icon: string;
+    title: string;
     visible: boolean;
     isExpanded: boolean;
     canFullScreen: boolean;

@@ -27,7 +27,7 @@ export const ExtraPanelHeader = ({ extraPanel }: propsExtraPanelHeader): ReactNo
         {/* { extraPanel.canFullScreen && <div className={classNames(PanelSCSS.iconSpace, ExtraPanelHeaderSCSS.iconSpacer)} /> } */}
 
         <div className={classNames( PanelSCSS.title) }>
-            {translate(`ExtraPanelHeaderName[${extraPanel.__Type}]`, `ExtraPanelHeaderName[${extraPanel.__Type}]`) }
+            {translate(extraPanel.title, extraPanel.title) }
         </div>
 
         <IconButton

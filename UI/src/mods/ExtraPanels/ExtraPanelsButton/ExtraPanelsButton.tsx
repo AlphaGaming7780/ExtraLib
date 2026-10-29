@@ -8,6 +8,7 @@ import classNames from "classnames";
 import { bindValue, trigger, useValue } from "cs2/api";
 import { CloseExtraPanel, ExtraPanelType, OpenExtraPanel } from "../ExtraPanelType";
 import { ScreenOrigin } from "../../Utilities/ScreenOrigin";
+import { useLocalization } from "cs2/l10n";
 
 // Must match .panelButton size + margins and .menu padding in the scss.
 const MENU_BUTTON_REM = 44;
@@ -17,6 +18,12 @@ const MENU_MAX_COLUMNS = 3;
 const ShowExtraPanelsButton$ = bindValue<boolean>("el", "ShowExtraPanelsButton");
 const ExtraPanelsMenuOpened$ = bindValue<boolean>("el", "ExtraPanelsMenuOpened");
 const ExtraPanelsList$ = bindValue<ExtraPanelType[]>("el", "ExtraPanels");
+
+// Same text as the panel header.
+const PanelTitle = ({ panel }: { panel: ExtraPanelType }) => {
+    const { translate } = useLocalization();
+    return <>{translate(panel.title, panel.title)}</>;
+};
 
 export type ExtraPanelsPlacement = "bottom" | "top" | "left" | "right";
 export type ExtraPanelsAlign = "start" | "center" | "end";
@@ -61,7 +68,7 @@ export const ExtraPanelsButton = ({ placement = "bottom", align = "center", clas
                     style={{ width: `${Math.max(1, Math.min(selectorPanels.length, MENU_MAX_COLUMNS)) * MENU_BUTTON_REM + MENU_PADDING_REM * 2}rem` }}
                 >
                     {selectorPanels.map((panel, i) => (
-                        <Tooltip key={`${panel.__Type}-${i}`} tooltip={panel.__Type}>
+                        <Tooltip key={`${panel.__Type}-${i}`} tooltip={<PanelTitle panel={panel} />}>
                             <FloatingButton
                                 className={classNames(menuClassName, styles.panelButton, panel.visible && styles.active)}
                                 selected={panel.visible}
@@ -93,7 +100,7 @@ export const ExtraPanelButtonsUniversalMod = () => {
 
     return <>
         {selectorPanels.map(panel => (
-            <Tooltip key={panel.__Type} tooltip={panel.__Type}>
+            <Tooltip key={panel.__Type} tooltip={<PanelTitle panel={panel} />}>
                 <Button
                     variant="floating"
                     className={classNames(styles.panelButtonUM, panel.visible && styles.active)}

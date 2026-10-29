@@ -1,4 +1,4 @@
-using Colossal.Logging;
+﻿using Colossal.Logging;
 using Game;
 using Game.Modding;
 using HarmonyLib;
@@ -64,8 +64,10 @@ namespace ExtraLib
             updateSystem.UpdateAt<ExtraPanelsUISystem>(SystemUpdatePhase.UIUpdate);
             updateSystem.UpdateAt<MainSystem>(SystemUpdatePhase.LateUpdate);
 
-#if DEBUG
             ExtraPanelsUISystem extraPanelsUISystem = updateSystem.World.GetOrCreateSystemManaged<ExtraPanelsUISystem>();
+            extraPanelsUISystem.AddExtraPanel<FileBrowserPanel>();
+
+#if DEBUG
             extraPanelsUISystem.AddExtraPanel<TestExtraPanel>();
 #endif
 
