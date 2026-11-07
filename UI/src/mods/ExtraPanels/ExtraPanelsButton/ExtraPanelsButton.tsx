@@ -19,10 +19,10 @@ const ShowExtraPanelsButton$ = bindValue<boolean>("el", "ShowExtraPanelsButton")
 const ExtraPanelsMenuOpened$ = bindValue<boolean>("el", "ExtraPanelsMenuOpened");
 const ExtraPanelsList$ = bindValue<ExtraPanelType[]>("el", "ExtraPanels");
 
-// Same text as the panel header.
-const PanelTitle = ({ panel }: { panel: ExtraPanelType }) => {
+// Tooltip key of the panel, or the panel header text when it has no translation.
+const PanelTooltip = ({ panel }: { panel: ExtraPanelType }) => {
     const { translate } = useLocalization();
-    return <>{translate(panel.title, panel.title)}</>;
+    return <>{translate(panel.tooltip, translate(panel.title, panel.title))}</>;
 };
 
 export type ExtraPanelsPlacement = "bottom" | "top" | "left" | "right";
@@ -68,7 +68,7 @@ export const ExtraPanelsButton = ({ placement = "bottom", align = "center", clas
                     style={{ width: `${Math.max(1, Math.min(selectorPanels.length, MENU_MAX_COLUMNS)) * MENU_BUTTON_REM + MENU_PADDING_REM * 2}rem` }}
                 >
                     {selectorPanels.map((panel, i) => (
-                        <Tooltip key={`${panel.__Type}-${i}`} tooltip={<PanelTitle panel={panel} />}>
+                        <Tooltip key={`${panel.__Type}-${i}`} tooltip={<PanelTooltip panel={panel} />}>
                             <FloatingButton
                                 className={classNames(menuClassName, styles.panelButton, panel.visible && styles.active)}
                                 selected={panel.visible}
@@ -100,7 +100,7 @@ export const ExtraPanelButtonsUniversalMod = () => {
 
     return <>
         {selectorPanels.map(panel => (
-            <Tooltip key={panel.__Type} tooltip={<PanelTitle panel={panel} />}>
+            <Tooltip key={panel.__Type} tooltip={<PanelTooltip panel={panel} />}>
                 <Button
                     variant="floating"
                     className={classNames(styles.panelButtonUM, panel.visible && styles.active)}

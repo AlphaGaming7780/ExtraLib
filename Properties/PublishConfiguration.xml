@@ -36,7 +36,7 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 	<!--Link to the forum post where the Mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the Mod-->
-	<ModVersion Value="1.4.12" />
+	<ModVersion Value="1.4.13" />
 	<!--Recommended version of the base game to use the Mod-->
 	<GameVersion Value="1.6.*" />
 	<!--Dependency for the Mod, can be set multiple times-->
@@ -48,7 +48,7 @@ Special thanks to YenYang, T.D.W and krzychu124 for their invaluable tips and as
 	<ChangeLog>
 ### Improvements
 - EDT BETA stuff
-- And some UI optimizations
+- EAI BETA stuff
 	</ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon-->
 	<ExternalLink Type="crowdin" Url="https://crowdin.com/project/extralib" />

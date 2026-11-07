@@ -12,6 +12,8 @@ namespace ExtraLib.Systems.UI.ExtraPanels
         public virtual string Icon => "Media/Placeholder.svg";
 
         public virtual string Title => $"ExtraPanelHeaderName[{ID}]";
+        // Tooltip of the panel button in the selector. Falls back to Title when the key has no translation.
+        public virtual string Tooltip => $"ExtraPanelTooltip[{ID}]";
 
 
         protected ExtraPanelsUISystem m_ExtraPanelsUISystem;
@@ -65,6 +67,8 @@ namespace ExtraLib.Systems.UI.ExtraPanels
             writer.Write( Icon );
             writer.PropertyName("title");
             writer.Write(Title);
+            writer.PropertyName("tooltip");
+            writer.Write(Tooltip);
             writer.PropertyName("visible");
             writer.Write(m_Visible);
             writer.PropertyName("isExpanded");
