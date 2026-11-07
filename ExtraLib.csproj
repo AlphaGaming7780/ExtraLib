@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 		<TargetFramework>net472</TargetFramework>
+		<LangVersion>9</LangVersion>
 		<Configurations>Debug;Release</Configurations> <!---->
 		<!--<Version>1.3.0</Version>--> <!--Can't change or break mod using ExtraLib-->
 
